@@ -4,16 +4,14 @@
 #
 # Please read http://www.redblobgames.com/grids/hexagons/#coordinates
 # to understand what an axial coordinates system is
-class AxialHex extends BaseHex
 
-  # Directions around hex from top left clockwise
-  DIRECTIONS = [ [0,-1], [1,-1], [1,0], [0,1], [-1,+1], [-1,0] ] #:nodoc:
+class @AxialHex extends BaseHex
 
-  # Create an hexagon object
+   # Create an hexagon object
   # - +q+ and +r+ are the coordinates in the axial coords system
   # - +color+ : is a color, anything you want.
   # - +border+ is a boolean and mean that the hex is at the border of the map.
   #
   # *Returns* : a new Hex::Axial object.
-  constructor: ( @q, @r, color, border, data ) ->
-    super( color, border, data )
+  constructor: ( @q, @r, @color, @border ) ->
+    super(@color, @border)

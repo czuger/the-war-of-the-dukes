@@ -10,6 +10,14 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
+//= require jquery_ujs
 //= require rails-ujs
 //= require turbolinks
+
+//= require base_hex
+//= require axial_hex
+//= require axial_grid
+//= require square_grid
+
 //= require_tree .

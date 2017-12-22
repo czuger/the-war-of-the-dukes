@@ -1,2 +1,2 @@
-class BaseHex
+class @BaseHex
   constructor: (@color, @border, @data) ->
