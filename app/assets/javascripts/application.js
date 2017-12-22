@@ -17,6 +17,7 @@
 
 //= require base_hex
 //= require axial_hex
+//= require cube_hex
 //= require axial_grid
 //= require square_grid
 

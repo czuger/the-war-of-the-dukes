@@ -21,5 +21,13 @@ class @SquareGrid extends AxialGrid
   # @return [AxialHex] an hexagon
   #
   cset: ( col, row, color, border, data ) ->
-    super( col, row, color, border )
+    @hset( @even_q_to_axial_hex( col, row, color, border ) )
 
+  even_q_to_axial_hex: ( col, row, color, border ) ->
+    # convert odd-r offset to cube
+    x = col - (row - (row&1)) / 2
+    z = row
+    y = -x-z
+
+    tmp_cube = new CubeHex( x, y, z, color, border )
+    tmp_cube.to_axial()

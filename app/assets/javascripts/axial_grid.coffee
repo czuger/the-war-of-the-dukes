@@ -26,6 +26,15 @@ class @AxialGrid
   cset: ( q, r, color, border ) ->
     @hexes[ [ q, r ] ] = new AxialHex( q, r, color, border )
 
+  # Insert an hexagon into the grid
+  #
+  # @param hex [AxialHex] the hexagon you want to add into the grid
+  #
+  # @return [AxialHex] the hexagon you inserted
+  #
+  hset: ( hex ) ->
+    @hexes[ [ hex.q, hex.r ] ] = hex
+
   # Return the grid as a json_array object
   #
   # @return [Array] the grid as a hash object
