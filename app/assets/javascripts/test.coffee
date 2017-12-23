@@ -2,10 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+ag = 1
 
 load = () ->
-  ag = new SquareGrid( 16 )
+  ag = new SquareGrid( 24 )
   ag.from_json( $('#map').val() )
+
+  $('#board').mousemove (event) ->
+    console.log( event.pageX, event.pageY )
+    console.log( ag.pixel_to_hex_flatt_topped( event.pageX-10, event.pageY-10 ) )
 
 #$(window).load ->
 #  load()

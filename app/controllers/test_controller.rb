@@ -6,7 +6,7 @@ class TestController < ApplicationController
     g = SquareGrid.new
 
     # Load it with
-    g.read_ascii_file( 'app/controllers/map' )
+    g.read_ascii_file_flat( 'app/controllers/map' )
 
     @map = g.to_json
   end

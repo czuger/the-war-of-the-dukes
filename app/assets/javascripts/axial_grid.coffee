@@ -26,6 +26,16 @@ class @AxialGrid
   cset: ( q, r, color, border ) ->
     @hexes[ [ q, r ] ] = new AxialHex( q, r, color, border )
 
+  # Get the hexagon at a given position (q, r)
+  #
+  # @param q [Integer] the q coordinate of the hexagon
+  # @param r [Integer] the r coordinate of the hexagon
+  #
+  # @return [AxialHex] the hexagon at the requested position. nil if nothing
+  #
+  cget: ( q, r ) ->
+    @hexes[ [ q, r ] ]
+
   # Insert an hexagon into the grid
   #
   # @param hex [AxialHex] the hexagon you want to add into the grid

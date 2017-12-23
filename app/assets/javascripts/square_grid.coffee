@@ -31,3 +31,13 @@ class @SquareGrid extends AxialGrid
 
     tmp_cube = new CubeHex( x, y, z, color, border )
     tmp_cube.to_axial()
+
+  pixel_to_hex_flatt_topped: (x, y) ->
+    x -= 24
+    y -= 20
+
+    q = x * 2/3 / @hex_ray
+    r = (-x / 3 + Math.sqrt(3)/3 * y) / @hex_ray
+
+    console.log( 'checking for q = ' + Math.round( q ) + 'r = ' + Math.round( r ) )
+    return @cget( Math.round( q ), Math.round( r ) )
