@@ -5,15 +5,15 @@
 ag = 1
 
 load = () ->
-  ag = new AxialGrid( 25 )
+  ag = new AxialGrid( 24 )
   ag.from_json( $('#map').val() )
 
   $('#board').mousemove (event) ->
 #    console.log( event.pageX, event.pageY )
 
     o = $('#board').offset()
-    nx = event.pageX - o.left - 1 - ag.hex_ray
-    ny = event.pageY - o.top - 1 - ag.hex_ray
+    nx = event.pageX - o.left - ag.hex_ray
+    ny = event.pageY - o.top - ag.hex_ray
     hex = ag.pixel_to_hex_flat_topped( nx, ny )
 
     if hex
