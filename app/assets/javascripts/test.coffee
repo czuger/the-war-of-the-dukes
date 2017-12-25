@@ -5,7 +5,7 @@
 ag = 1
 
 load = () ->
-  ag = new AxialGrid( 24 )
+  ag = new AxialGrid( 25.7 )
   ag.from_json( $('#map').val() )
 
   $('#board').mousemove (event) ->
