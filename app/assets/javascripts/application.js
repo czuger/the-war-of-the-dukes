@@ -20,5 +20,6 @@
 //= require cube_hex
 //= require axial_grid
 //= require square_grid
+//= require map_methods
 
 //= require_tree .

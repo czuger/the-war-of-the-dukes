@@ -2,13 +2,10 @@
 
 class TestController < ApplicationController
 
+  include MapHandler
+
   def show
-    g = SquareGridFlatTopped.new
-
-    # Load it with
-    g.read_ascii_file_flat( 'app/controllers/map' )
-
-    @map = g.to_json
+    set_map
   end
 
 end
