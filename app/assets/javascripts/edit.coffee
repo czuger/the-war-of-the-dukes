@@ -8,7 +8,7 @@ manage_changes = () ->
   ag = new AxialGrid( 25.7 )
   ag.from_json( $('#map').val() )
 
-  $('#board').click (event) ->
+  $('#board').mousedown  (event) ->
 
     [ hex, _ ] = MapMethods.get_current_hex(ag, event)
 
@@ -20,5 +20,11 @@ manage_changes = () ->
 
     ag.hset( hex )
 
+    $.post '/edit/update',
+      q: hex.q
+      r: hex.r
+      color: hex.color
 
-$(document).on( 'turbolinks:load', manage_changes )
+
+$(window).load ->
+  manage_changes()

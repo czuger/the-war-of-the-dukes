@@ -17,7 +17,5 @@ load = () ->
     $('#hex_info').show()
     $('#hex_info').html(hex_info)
 
-#$(window).load ->
-#  load()
-
-$(document).on( 'turbolinks:load', load )
+$(window).load ->
+  load()

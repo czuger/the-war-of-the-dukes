@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require rails-ujs
-//= require turbolinks
 
 //= require base_hex
 //= require axial_hex
