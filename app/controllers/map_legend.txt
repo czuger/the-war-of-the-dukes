@@ -1,0 +1,6 @@
+c = city
+p = plain
+f = forest
+h = hill
+b = bastion(fortress)
+r = road

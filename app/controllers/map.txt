@@ -1,45 +1,45 @@
-c c p h p p h f p p f f
- c p b p p p f f f h f
-c c p p p p h f p f p f
- c p b p p p h p f h p
-c c h p p p p h p p p c
- c h p p p p p b p h f
-c h p p p p p h p h p p
- h p p p p p p h h f p
-h p p p p p p p f f p p
- p p p p p p p f f p p
-p p p f p p p p f p p p
- p p p p p p p f p c p
-f p p c p p p p f c p p
- f p f p p p p p c p b p h f f
-f f p f p p p p c c p p h p f p
- f p f p p p p p c p f h p f p p
-f f p p p p p p p p f f p p p p
- f p p p p b p p p p f f p p p p
-f f p p p p p p f p p f p p p p
- f p p p p p p f f p f p p p p p
-f p p p p p p f f p f c p p p p
- f p p p f p p f p p c p p p p p
-f p p p f p p p p p h p p p p p
- p p p p f p b p p p p p p p p f
-p p f p f p p p p p h p p p p f
- p f f p f p p p p p p p p p f f
-p p f p p p p p p p h p p f f f
- p f f p p p p p p p p p p f f f
-p c f p p p p p p p h p p f f f
- p c p c p p p p p h p p p p p p
-f p p p p p p p p h p p p p p p
- p p p p p p p p h p p p p p p p
-f p p p p p p p h p p p p p p b
- p p p p p p c p p p p p p p p p
-f p p p p p c p h p p p p p p p
- p p p p p p c p p p p p p p c c
-p p p p p p p p h p p p p f c c
- p p p p p p p h p p p p f f c c
-p p p p p p p p p p p p p f c c
- p p p p p p p h p p p p f p c c
-f p f f p p p h p p p p p f p c
- f f p f p p p p p p p p p p c c
-f f f p p p p h p p p p f f p c
- f f f f p p h p p p p f f p p c
-f f f p f p p p p p p p f p p c
+c c r h p p h f p p f f
+ c r b p p p f f f h f
+c c p r p p h f p f p f
+ c p b r p p h p f h p
+c c h p r p p h p p p c
+ c h r p p p p b p h f
+c r p p r p p h r h p r
+ h p r p r p p h r f p
+h r p p p r r p f r p r
+ p r r p p r r r r p r
+p p r f p p r r r r p p
+ p r r p p r p r r c r
+f p p c p p p p r c p p
+ f r f r p r p p c p b p h f f
+f f p r p p p p c c p r h p f p
+ f r f r p r p p c r f r p f p r
+f f p p r p p p p p f f r p p r
+ f r p r r b p p r r f f r p r p
+f f p p p r p p f p p f r r r p
+ f r p r p r p f r r f r p r p p
+f r p p p p r f f p f c p r p p
+ f p p r f p r f r r c p p p p p
+f r p p f p p p p p r r p r p p
+ r p p r f p b p r p p p p p p f
+p p f p f p p r p p h r p r p f
+ r f f r f p p r r p p p p p f f
+p p f p p p p r r p h r p r f f
+ r f f r p p r p r p p p p f f f
+p c f p p p r p p r h r p r f f
+ r c p c p r p p p r p p p p p p
+f p r p r r p p p h r r p r p p
+ r p r p r p p p h p p p p p p p
+f p p r p p p p h p r r p r p b
+ r p p p p p c p p p r p p p p p
+f p p r p p c p h p p r p r p p
+ r p p p p r c p p p r r p p c c
+p p p r p r p p h p p p r r c c
+ r p p r r p p h p p r p r r c c
+p p p p r p p r p p p r p r c c
+ r p p p p p r r r p p r r r c c
+f p f f r r r h r r r p r r p c
+ r f p f r r p p p r r r r r c c
+r f f p p p p h p p p r r r r c
+ f f f f r p h p p p p f r r r c
+r f f p f p p p p p p p f p p c
