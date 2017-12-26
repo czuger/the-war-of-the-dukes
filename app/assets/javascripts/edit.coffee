@@ -18,6 +18,8 @@ manage_changes = () ->
     console.log( color )
     hex.color = color
 
+    console.log( hex )
+
     ag.hset( hex )
 
     $.post '/edit/update',

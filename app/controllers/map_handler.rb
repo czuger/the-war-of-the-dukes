@@ -1,12 +1,12 @@
 module MapHandler
 
   def set_map
-    g = SquareGridFlatTopped.new
+    @map = SquareGridFlatTopped.new
 
     # Load it with
-    g.read_ascii_file_flat_topped_odd( 'app/controllers/map' )
+    @map.read_ascii_file_flat_topped_odd( 'app/controllers/map.txt' )
 
-    @map = g.to_json
+    @json_map = @map.to_json
   end
 
 end
