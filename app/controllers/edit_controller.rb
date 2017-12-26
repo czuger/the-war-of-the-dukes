@@ -1,7 +1,4 @@
-# require 'hex/square_grid'
-
-class TestController < ApplicationController
-
+class EditController < ApplicationController
   def show
     g = SquareGridFlatTopped.new
 
@@ -10,5 +7,4 @@ class TestController < ApplicationController
 
     @map = g.to_json
   end
-
 end
