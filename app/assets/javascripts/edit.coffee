@@ -29,4 +29,6 @@ manage_changes = () ->
 
 
 $(window).load ->
-  manage_changes()
+#  console.log( window.location.pathname )
+  if window.location.pathname == '/edit/show'
+    manage_changes()
