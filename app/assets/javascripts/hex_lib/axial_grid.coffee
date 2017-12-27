@@ -67,6 +67,11 @@ class @AxialGrid
 #    console.log( 'checking for q = ' + Math.round( q ) + 'r = ' + Math.round( r ) )
     return @cget( Math.round( q ), Math.round( r ) )
 
+  hex_to_pixel_flat_topped: ( hex ) ->
+    x = @hex_ray * 3/2 * hex.q
+    y = @hex_ray * Math.sqrt(3) * (hex.r + hex.q/2)
+    [ x, y ]
+
   surrounding_hexes: ( hex ) ->
     hexes_array = []
     for direction in directions

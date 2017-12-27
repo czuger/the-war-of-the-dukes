@@ -21,5 +21,15 @@ load = () ->
     $('#hex_info').show()
     $('#hex_info').html(hex_info)
 
+  pos = new AxialHex( 14, 4 )
+  [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
+
+  console.log( x, y )
+  console.log( Math.round( x ), Math.round( y ) )
+  console.log( $('#orf_infantery_1') )
+
+  $('#orf_infantery_1').css('top', Math.round( y ) )
+  $('#orf_infantery_1').css('left', Math.round( x )-17 )
+
 $(window).load ->
   load()
