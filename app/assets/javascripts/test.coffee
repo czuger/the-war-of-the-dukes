@@ -10,7 +10,7 @@ load = () ->
   ag.from_json( $('#map').val() )
 
   movement_graph = JSON.parse( $('#movement_hash').val() )
-  console.log( movement_graph )
+#  console.log( movement_graph )
 
   $('#board').mousemove (event) ->
 
@@ -24,12 +24,22 @@ load = () ->
   pos = new AxialHex( 14, 4 )
   [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
 
-  console.log( x, y )
-  console.log( Math.round( x ), Math.round( y ) )
-  console.log( $('#orf_infantery_1') )
+#  console.log( x, y )
+#  console.log( Math.round( x ), Math.round( y ) )
+#  console.log( $('#orf_infantery_1') )
 
   $('#orf_infantery_1').css('top', Math.round( y ) )
   $('#orf_infantery_1').css('left', Math.round( x )-17 )
+
+  $('#orf_infantery_1').mousedown (event) ->
+
+    [ hex, _ ] = MapMethods.get_current_hex(ag, event)
+
+    console.log( hex )
+
+    walkable_positions = []
+    BfsMovements.find( ag, movement_graph, walkable_positions, [ hex.q, hex.r ], hex, 6 )
+    console.log( walkable_positions )
 
 $(window).load ->
   load()

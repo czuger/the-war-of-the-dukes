@@ -75,7 +75,7 @@ class @AxialGrid
   surrounding_hexes: ( hex ) ->
     hexes_array = []
     for direction in directions
-      s_hex = cget( hex.q+direction[0], hex.r+direction[1] )
+      s_hex = @cget( hex.q+direction[0], hex.r+direction[1] )
       if s_hex
         hexes_array << s_hex
 

@@ -2,10 +2,6 @@ class @BfsMovements
 
   # Call with : find( map, movement_graph, [], [ current_hex.q, current_hex.r ], current_hex, n )
   @find: ( map, movement_graph, walkable_positions, processed_hex_positions, current_hex, remaining_movement ) ->
-    current_position_code_name = current_position_code_name.to_sym
-
-#    processed_hexes_locations = [ [ starting_hex.q, starting_hex.r ] ]
-
 
     surrounding_hexes = map.surrounding_hexes( current_hex )
 
