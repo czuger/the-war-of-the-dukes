@@ -14,11 +14,11 @@
 //= require jquery_ujs
 //= require rails-ujs
 
-//= require base_hex
-//= require axial_hex
-//= require cube_hex
-//= require axial_grid
-//= require square_grid
+//= require hex_lib/base_hex.coffee
+//= require hex_lib/axial_hex.coffee
+//= require hex_lib/cube_hex.coffee
+//= require hex_lib/axial_grid.coffee
+//= require hex_lib/square_grid.coffee
 //= require map_methods
 
 //= require_tree .
