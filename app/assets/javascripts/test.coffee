@@ -10,7 +10,7 @@ load = () ->
   ag.from_json( $('#map').val() )
 
   movement_graph = JSON.parse( $('#movement_hash').val() )
-  console.log( movement_graph )
+#  console.log( movement_graph )
 
   $('#board').mousemove (event) ->
 
@@ -35,7 +35,7 @@ load = () ->
 
     [ hex, _ ] = MapMethods.get_current_hex(ag, event)
 
-    console.log( hex )
+#    console.log( hex )
 
     walkable_positions = {}
     BfsMovements.find( ag, movement_graph, walkable_positions, hex, 6 )
@@ -50,8 +50,9 @@ load = () ->
       item.id = key
       item.appendTo( 'body' )
 
-      item.css('top', Math.round( y ) )
-      item.css('left', Math.round( x )-17 )
+      item.css( 'top', Math.round( y ) )
+      item.css( 'left', Math.round( x )-17 )
+      item.css( 'opacity', 0.7 )
 
 $(window).load ->
   load()
