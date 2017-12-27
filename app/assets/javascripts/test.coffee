@@ -2,11 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-ag = 1
+ag = null
+movement_graph = null
 
 load = () ->
   ag = new AxialGrid( 25.7 )
   ag.from_json( $('#map').val() )
+
+  movement_graph = JSON.parse( $('#movement_hash').val() )
+  console.log( movement_graph )
 
   $('#board').mousemove (event) ->
 
