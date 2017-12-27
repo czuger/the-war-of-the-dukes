@@ -7,7 +7,7 @@
 
 class @AxialHex extends BaseHex
 
-   # Create an hexagon object
+  # Create an hexagon object
   # - +q+ and +r+ are the coordinates in the axial coords system
   # - +color+ : is a color, anything you want.
   # - +border+ is a boolean and mean that the hex is at the border of the map.

@@ -7,6 +7,8 @@
 
 class @AxialGrid
 
+  directions = [ [0,-1], [1,-1], [1,0], [0,1], [-1,+1], [-1,0] ]
+
   # Create an axial hexagon grid
   #
   # @param hex_ray [Integer] the size of an hexagon. Please read : http://www.redblobgames.com/grids/hexagons/#basics for information about the size of an hexagon
@@ -64,3 +66,12 @@ class @AxialGrid
 
 #    console.log( 'checking for q = ' + Math.round( q ) + 'r = ' + Math.round( r ) )
     return @cget( Math.round( q ), Math.round( r ) )
+
+  surrounding_hexes: ( hex ) ->
+    hexes_array = []
+    for direction in directions
+      s_hex = cget( hex.q+direction[0], hex.r+direction[1] )
+      if s_hex
+        hexes_array << s_hex
+
+    hexes_array
