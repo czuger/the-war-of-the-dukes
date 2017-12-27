@@ -77,6 +77,6 @@ class @AxialGrid
     for direction in directions
       s_hex = @cget( hex.q+direction[0], hex.r+direction[1] )
       if s_hex
-        hexes_array << s_hex
+        hexes_array.push( s_hex )
 
     hexes_array

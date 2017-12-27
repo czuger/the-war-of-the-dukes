@@ -12,7 +12,7 @@ map.read_ascii_file_flat_topped_odd( '../data/map.txt' )
 
 map.each do |hex|
   map.h_surrounding_hexes( hex ).each do |s_hex|
-    graph[ [ hex.q, hex.r, s_hex.q, s_hex.r ] ] = movement_table[ s_hex.color ]
+    graph[ [ hex.q, hex.r, s_hex.q, s_hex.r ].join( '_' ) ] = movement_table[ s_hex.color ]
   end
 end
 
