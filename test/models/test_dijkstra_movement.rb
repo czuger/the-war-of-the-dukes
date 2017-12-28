@@ -20,14 +20,13 @@ class TestDijkstraMovement < ActiveSupport::TestCase
   # Fake test
   def test_movement_computation
 
-    walkable_positions = {}
     current_hex = AxialHex.new( 13, 4 )
 
-    DijkstraMovement.find( @map, @movement_graph, current_hex )
+    fh = DijkstraMovement.find( @map, @movement_graph, current_hex, 6 )
 
-    p walkable_positions.keys
+    p fh.select{ |e| e =~ /.+_3/ }
 
-    assert walkable_positions.has_key?( '3_3')
-    assert walkable_positions.has_key?( '2_3')
+    assert fh.include?( '3_3')
+    assert fh.include?( '2_3')
   end
 end

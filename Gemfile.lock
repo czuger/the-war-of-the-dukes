@@ -6,7 +6,6 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    PriorityQueue (0.1.2)
     actioncable (5.1.4)
       actionpack (= 5.1.4)
       nio4r (~> 2.0)
@@ -46,6 +45,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    algorithms (0.6.1)
     arel (8.0.0)
     bindex (0.5.0)
     builder (3.2.3)
@@ -201,7 +201,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  PriorityQueue (~> 0.1.2)
+  algorithms
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)

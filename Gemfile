@@ -56,3 +56,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'haml-rails'
 gem 'rhex', path: '../rhex'
 gem 'jquery-rails'
+
+gem 'algorithms'
