@@ -32,7 +32,8 @@ class TestDijkstraMovement < ActiveSupport::TestCase
     refute fh.include?( '2_2')
 
     assert fh.include?( '16_1')
-    refute fh.include?( '17_0')
+    assert fh.include?( '18_-1')
+    refute fh.include?( '19_-1')
 
   end
 end

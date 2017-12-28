@@ -31,9 +31,9 @@ class DijkstraMovement
       map.h_surrounding_hexes( current ).each do |n|
 
         new_cost = cost_so_far[ hex_key(current) ] + movement_graph[ movement_key( current, n ) ]
-        # puts "#{hex_key(current)} -> #{hex_key(n)}, cost_so_far = #{cost_so_far[ hex_key(current) ]}, cost = #{movement_graph[ movement_key( current, n ) ]}, new_cost = #{new_cost}"
+        puts "#{hex_key(current)} -> #{hex_key(n)}, cost_so_far = #{cost_so_far[ hex_key(current) ]}, cost = #{movement_graph[ movement_key( current, n ) ]}, new_cost = #{new_cost}"
         if new_cost > max_distance
-          # puts 'new cost > max distance, breaking ...'
+          puts 'new cost > max distance, breaking ...'
           next
         end
 
