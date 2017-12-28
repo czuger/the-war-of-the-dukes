@@ -14,8 +14,6 @@ class DijkstraMovement
   # Call with : find( map, movement_graph, [], [ current_hex.q, current_hex.r ], current_hex, n )
   def self.find( map, movement_graph, current_hex, max_distance )
 
-    goal = AxialHex.new( -1, -1 )
-
     frontier = Containers::PriorityQueue.new()
     frontier.push(current_hex, 0)
     frontier_history = []
@@ -26,21 +24,26 @@ class DijkstraMovement
 
     while not frontier.empty?
       current = frontier.pop()
-      frontier_history << hex_key( current )
+      frontier_history << hex_key( current ) unless frontier_history.include?( hex_key( current ) )
 
-      break if current == goal
+      # next unless [ 3, 4 ].include?( current.r )
 
       map.h_surrounding_hexes( current ).each do |n|
 
         new_cost = cost_so_far[ hex_key(current) ] + movement_graph[ movement_key( current, n ) ]
-        break if new_cost > max_distance
+        # puts "#{hex_key(current)} -> #{hex_key(n)}, cost_so_far = #{cost_so_far[ hex_key(current) ]}, cost = #{movement_graph[ movement_key( current, n ) ]}, new_cost = #{new_cost}"
+        if new_cost > max_distance
+          # puts 'new cost > max distance, breaking ...'
+          next
+        end
 
-        if not cost_so_far[ hex_key( n ) ] or new_cost < cost_so_far[ hex_key( n ) ]
+        if ( not cost_so_far[ hex_key( n ) ] ) or new_cost < cost_so_far[ hex_key( n ) ]
 
-          cost_so_far[ hex_key( n ) ]  = new_cost
+          cost_so_far[ hex_key( n ) ] = new_cost
           priority = new_cost
           frontier.push( n, priority )
           came_from[ hex_key( n ) ] = current
+
         end
       end
     end

@@ -24,9 +24,15 @@ class TestDijkstraMovement < ActiveSupport::TestCase
 
     fh = DijkstraMovement.find( @map, @movement_graph, current_hex, 6 )
 
-    p fh.select{ |e| e =~ /.+_3/ }
+    puts 'Frontier history = '
+    p fh.select{ |e| e =~ /.+_3/ }.sort
 
     assert fh.include?( '3_3')
     assert fh.include?( '2_3')
+    refute fh.include?( '2_2')
+
+    assert fh.include?( '16_1')
+    refute fh.include?( '17_0')
+
   end
 end
