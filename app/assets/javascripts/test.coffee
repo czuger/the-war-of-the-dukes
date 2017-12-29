@@ -34,15 +34,14 @@ load = () ->
   $('#orf_infantery_1').mousedown (event) ->
 
     [ hex, _ ] = MapMethods.get_current_hex(ag, event)
-
-#    console.log( hex )
+    # console.log( hex )
 
     walkable_positions = {}
-    BfsMovements.find( ag, movement_graph, walkable_positions, hex, 6 )
-#    console.log( walkable_positions )
+    result = DijkstraMovements.calc( ag, movement_graph, walkable_positions, hex, 6 )
+    console.log( result )
 
     for key, walkable_position of walkable_positions
-#      console.log( walkable_position )
+      # console.log( walkable_position )
 
       pos = new AxialHex( walkable_position[0], walkable_position[1] )
       [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
