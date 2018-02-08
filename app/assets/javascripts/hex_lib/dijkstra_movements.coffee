@@ -17,6 +17,7 @@ class @DijkstraMovements
 
     while not frontier.empty()
       current = frontier.pop()
+      console.log( current )
       frontier_history << @hex_key( current ) unless frontier_history.include?( @hex_key( current ) )
 
       for n in map.h_surrounding_hexes( current )

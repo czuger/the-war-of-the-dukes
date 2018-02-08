@@ -4,6 +4,8 @@ class @MapMethods
     o = $('#board').offset()
     nx = event.pageX - o.left - ag.hex_ray
     ny = event.pageY - o.top - ag.hex_ray
+
+#    console.log( nx, ny )
     hex = ag.pixel_to_hex_flat_topped( nx, ny )
 
     if hex

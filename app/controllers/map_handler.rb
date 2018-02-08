@@ -1,7 +1,7 @@
 module MapHandler
 
   def set_map
-    @map = SquareGridFlatTopped.new
+    @map = AxialGrid.new
 
     # Load it with
     @map.read_ascii_file_flat_topped_odd( 'data/map.txt' )

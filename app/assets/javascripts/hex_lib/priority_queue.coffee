@@ -1,7 +1,7 @@
 # Original code : https://jsfiddle.net/GRIFFnDOOR/r7tvg/
 
 class Node
-  consotructor: (data, priority) ->
+  constructor: (data, priority) ->
     @data = data
     @priority = priority
 
@@ -15,36 +15,21 @@ class @PriorityQueue
 
   push: (data, priority) ->
     node = new Node(data, priority)
-    @bubble @heap.push(node) - 1
+    @heap.push(node)
+    @sink()
 
   pop: ->
-    console.log( @heap )
-    topVal = @heap[0].data
-    @heap[0] = @heap.pop()
-    @sink 1
-    console.log( topVal )
-    topVal
+#    console.log( @heap )
+    topVal = @heap.pop()
+    topVal.data
 
-  bubble: (i) ->
-    while i > 1
-      parentIndex = i >> 1
-      # <=> floor(i/2)
-      # if equal, no bubble (maintains insertion order)
-      if !@isHigherPriority(i, parentIndex)
+  sink: ->
+    i = @heap.length - 2
+    while i >= 0
+      if @heap[i].priority > @heap[i+1].priority
+        @swap( i, i+1 )
+      else
         break
-      @swap i, parentIndex
-      i = parentIndex
-
-  sink: (i) ->
-    while i * 2 < @heap.length
-    # if equal, left bubbles (maintains insertion order)
-      leftHigher = !@isHigherPriority(i * 2 + 1, i * 2)
-      childIndex = if leftHigher then i * 2 else i * 2 + 1
-      # if equal, sink happens (maintains insertion order)
-      if @isHigherPriority(i, childIndex)
-        break
-      @swap i, childIndex
-      i = childIndex
 
   swap: (i, j) ->
     temp = @heap[i]
@@ -52,4 +37,12 @@ class @PriorityQueue
     @heap[j] = temp
 
   isHigherPriority: (i, j) ->
-    @heap[i].priority < @heap[j].priority
+
+
+tq = new PriorityQueue()
+tq.push("bob", 1)
+tq.push("rob", 16)
+tq.push("martin", 5)
+console.log(tq.pop())
+console.log(tq.pop())
+console.log(tq.pop())
