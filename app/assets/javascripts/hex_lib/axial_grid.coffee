@@ -72,7 +72,7 @@ class @AxialGrid
     y = @hex_ray * Math.sqrt(3) * (hex.r + hex.q/2)
     [ x, y ]
 
-  surrounding_hexes: ( hex ) ->
+  h_surrounding_hexes: ( hex ) ->
     hexes_array = []
     for direction in directions
       s_hex = @cget( hex.q+direction[0], hex.r+direction[1] )

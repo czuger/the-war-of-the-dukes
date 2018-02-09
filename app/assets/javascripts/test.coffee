@@ -36,23 +36,23 @@ load = () ->
     [ hex, _ ] = MapMethods.get_current_hex(ag, event)
     console.log( hex )
 
-#    walkable_positions = {}
-##    console.log( hex )
-#    result = DijkstraMovements.calc( ag, movement_graph, walkable_positions, hex, 6 )
-#    console.log( result )
-#
-#    for key, walkable_position of walkable_positions
-#      # console.log( walkable_position )
-#
-#      pos = new AxialHex( walkable_position[0], walkable_position[1] )
-#      [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
-#      item = $('#orf_infantery_1').clone()
-#      item.id = key
-#      item.appendTo( 'body' )
-#
-#      item.css( 'top', Math.round( y ) )
-#      item.css( 'left', Math.round( x )-17 )
-#      item.css( 'opacity', 0.7 )
+    walkable_positions = {}
+#    console.log( hex )
+    result = DijkstraMovements.calc( ag, movement_graph, hex, 6 )
+    console.log( result )
+
+    for key, walkable_position of walkable_positions
+      # console.log( walkable_position )
+
+      pos = new AxialHex( walkable_position[0], walkable_position[1] )
+      [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
+      item = $('#orf_infantery_1').clone()
+      item.id = key
+      item.appendTo( 'body' )
+
+      item.css( 'top', Math.round( y ) )
+      item.css( 'left', Math.round( x )-17 )
+      item.css( 'opacity', 0.7 )
 
 $(window).load ->
   load()
