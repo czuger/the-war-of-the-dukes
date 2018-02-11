@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount MochaRails::Engine => 'mocha' unless Rails.env.production?
   get 'edit/show'
   post 'edit/update'
 

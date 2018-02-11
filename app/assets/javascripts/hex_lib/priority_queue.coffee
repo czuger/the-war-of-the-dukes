@@ -42,13 +42,3 @@ class @PriorityQueue
     temp = @heap[i]
     @heap[i] = @heap[j]
     @heap[j] = temp
-
-  isHigherPriority: (i, j) ->
-
-#tq = new PriorityQueue()
-#tq.push("bob", 1)
-#tq.push("rob", 16)
-#tq.push("martin", 5)
-#console.log(tq.pop())
-#console.log(tq.pop())
-#console.log(tq.pop())
