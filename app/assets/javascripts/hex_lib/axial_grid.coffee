@@ -73,6 +73,7 @@ class @AxialGrid
     [ x, y ]
 
   h_surrounding_hexes: ( hex ) ->
+    console.log( "hexes = ", @hexes )
     hexes_array = []
     for direction in directions
       s_hex = @cget( hex.q+direction[0], hex.r+direction[1] )

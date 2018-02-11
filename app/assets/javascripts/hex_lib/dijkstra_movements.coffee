@@ -22,6 +22,7 @@ class @DijkstraMovements
       console.log( "frontier.pop() =", current )
       frontier_history << @hex_key( current ) unless frontier_history.include?( @hex_key( current ) )
 
+      console.log( "map.h_surrounding_hexes( current ) = ", map.h_surrounding_hexes( current ) )
       for n in map.h_surrounding_hexes( current )
         console.log( n )
         new_cost = cost_so_far[ @hex_key(current) ] + movement_graph[ movement_key( current, n ) ]
