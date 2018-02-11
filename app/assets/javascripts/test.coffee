@@ -7,9 +7,14 @@ movement_graph = null
 
 load = () ->
   ag = new AxialGrid( 25.7 )
-  ag.from_json( $('#map').val() )
 
-  movement_graph = JSON.parse( $('#movement_hash').val() )
+  map = $('#map')
+  if map.length != 0
+    ag.from_json( map.val() )
+
+  movement_graph = $('#movement_hash')
+  if movement_graph.length != 0
+    movement_graph = JSON.parse( movement_graph.val() )
 #  console.log( movement_graph )
 
   $('#board').mousemove (event) ->

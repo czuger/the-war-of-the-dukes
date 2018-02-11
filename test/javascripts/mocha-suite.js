@@ -12,4 +12,5 @@
 //= require application
 
 //= require priority-queue-test.js.coffee
+//= require test_data.js
 //= require dijkstra-movements-test.js.coffee
