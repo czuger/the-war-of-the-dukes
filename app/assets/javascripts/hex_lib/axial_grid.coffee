@@ -68,8 +68,8 @@ class @AxialGrid
     return @cget( Math.round( q ), Math.round( r ) )
 
   hex_to_pixel_flat_topped: ( hex ) ->
-    x = @hex_ray * 3/2 * hex.q
-    y = @hex_ray * Math.sqrt(3) * (hex.r + hex.q/2)
+    x = @hex_ray * 3.0/2.0 * hex.q
+    y = @hex_ray * Math.sqrt(3) * (hex.r + hex.q/2.0)
     [ x, y ]
 
   h_surrounding_hexes: ( hex ) ->

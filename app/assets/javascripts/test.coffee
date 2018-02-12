@@ -5,8 +5,30 @@
 ag = null
 movement_graph = null
 
+position_pawn = ( pawn_object, q, r, opacity=1 ) ->
+
+  new_object = clone_pawn( pawn_object, q, r )
+
+  pos = new AxialHex( q, r )
+  [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
+
+  console.log( "x = ", Math.round( x ), "y = ", Math.round( y ) )
+  console.log( new_object )
+
+  new_object.css('top', Math.round( y ) + 15 )
+  new_object.css('left', Math.round( x ) + 15 )
+  new_object.css( 'opacity', opacity )
+
+clone_pawn = ( pawn_object, q, r ) ->
+  item = pawn_object.clone()
+  item.attr( 'id', 'tmp_inf_' + q + '_' + r )
+  item.attr( 'q', q )
+  item.attr( 'r', r )
+  item.appendTo( 'body' )
+  item
+
 load = () ->
-  ag = new AxialGrid( 25.7 )
+  ag = new AxialGrid( 26 )
 
   map = $('#map')
   if map.length != 0
@@ -26,40 +48,32 @@ load = () ->
     $('#hex_info').show()
     $('#hex_info').html(hex_info)
 
-  pos = new AxialHex( 14, 4 )
-  [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
 
-  console.log( x, y )
-  console.log( Math.round( x ), Math.round( y ) )
-  console.log( $('#orf_infantery_1') )
-
-  $('#orf_infantery_1').css('top', Math.round( y ) )
-  $('#orf_infantery_1').css('left', Math.round( x )-17 )
+#  position_pawn( $('#orf_infantery_1'), 12, 4 )
+  for q in [1..20]
+    position_pawn( $('#orf_infantery_1'), q, 22 )
 
   $('#orf_infantery_1').mousedown (event) ->
 
     [ hex, _ ] = MapMethods.get_current_hex(ag, event)
     console.log( hex )
 
-
 #    console.log( hex )
     result = DijkstraMovements.calc( ag, movement_graph, hex, 6 )
-    console.log( result )
+    console.log( result.sort() )
 
     for key in result
-      # console.log( walkable_position )
+#      console.log( key )
 
-      [top, left] = key.split( '_' )
-#      console.log( top, left )
-      pos = new AxialHex( top, left )
-      [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
+      [q, r] = key.split( '_' )
+
       item = $('#orf_infantery_1').clone()
-      item.id = 'tmp_inf_' + key
+      item.attr( 'id', 'tmp_inf_' + key )
+      item.attr( 'q', q )
+      item.attr( 'r', r )
       item.appendTo( 'body' )
 
-      item.css( 'top', Math.round( y ) )
-      item.css( 'left', Math.round( x )-17 )
-      item.css( 'opacity', 0.7 )
+      position_pawn( item, q, r, 0.5 )
 
 $(window).load ->
   load()

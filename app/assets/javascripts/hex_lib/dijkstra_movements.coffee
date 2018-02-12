@@ -1,10 +1,10 @@
 class @DijkstraMovements
 
   @hex_key: ( hex ) ->
-    [ hex.q, hex.r ].join( '_')
+    [ hex.q, hex.r ].join( '_' )
 
   @movement_key: ( from, to ) ->
-    [ from.q, from.r, to.q, to.r ].join( '_')
+    [ @hex_key( from ), @hex_key( to ) ].join( '_' )
 
   @calc: ( map, movement_graph, current_hex, max_distance ) ->
     frontier = new PriorityQueue()
