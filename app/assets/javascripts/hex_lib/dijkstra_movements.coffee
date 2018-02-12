@@ -34,6 +34,6 @@ class @DijkstraMovements
             frontier.push( n, priority )
             came_from[ @hex_key( n ) ] = current
 
-#    console.log( frontier_history )
+    console.log( frontier_history.sort() )
 
     frontier_history

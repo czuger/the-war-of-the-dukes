@@ -15,3 +15,8 @@ class @AxialHex extends BaseHex
   # *Returns* : a new Hex::Axial object.
   constructor: ( @q, @r, @color, @border ) ->
     super(@color, @border)
+    if isNaN(@q) || typeof (@q) == 'string'
+      throw "q is not a number!"
+
+    if isNaN(@r) || typeof (@r) == 'string'
+      throw "q is not a number!"

@@ -13,13 +13,14 @@ position_pawn = ( pawn_object, q, r, opacity=1, clone=false ) ->
     new_object = pawn_object
 
   pos = new AxialHex( q, r )
+
   [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
 
-#  console.log( "x = ", Math.round( x ), "y = ", Math.round( y ) )
+#  console.log( "x = ", x, "y = ", y )
 #  console.log( new_object )
 
-  new_object.css('top', Math.round( y ) + 15 )
-  new_object.css('left', Math.round( x ) + 15 )
+  new_object.css('top', y + 15 )
+  new_object.css('left', x + 15 )
   new_object.css( 'opacity', opacity )
 
 clone_pawn = ( pawn_object, q, r ) ->
@@ -54,29 +55,27 @@ load = () ->
     position_pawn( $('#orf_infantery_1'), 13, 4 )
 #  position_pawn( $('#orf_infantery_1'), 12, 4 )
 #  for q in [1..20]
-#    position_pawn( $('#orf_infantery_1'), q, 22 )
+#    for r in [1..20]
+#      position_pawn( $('#orf_infantery_1'), q, r, 1, true )
 
   $('#orf_infantery_1').mousedown (event) ->
 
     [ hex, _ ] = MapMethods.get_current_hex(ag, event)
-    console.log( hex )
+#    console.log( hex )
 
 #    console.log( hex )
     result = DijkstraMovements.calc( ag, movement_graph, hex, 6 )
-    console.log( result.sort() )
+#    console.log( result.sort() )
 
     for key in result
 #      console.log( key )
 
       [q, r] = key.split( '_' )
+#      console.log( 'q, r = ', q, r )
 
-      item = $('#orf_infantery_1').clone()
-      item.attr( 'id', 'tmp_inf_' + key )
-      item.attr( 'q', q )
-      item.attr( 'r', r )
-      item.appendTo( 'body' )
+      position_pawn( $('#orf_infantery_1'), parseInt(q), parseInt(r), 0.5, true )
 
-      position_pawn( item, q, r, 0.5 )
+    null
 
 $(window).load ->
   load()
