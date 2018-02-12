@@ -13,6 +13,7 @@ describe 'DijkstraMovements', ->
       result = DijkstraMovements.calc( @ag, movement_graph, @hex, 6 )
 
       result.should.include('12_4')
+      result.should.include('13_5')
       result.should.include('2_3')
 
       result.should.include( '3_3')
@@ -20,7 +21,7 @@ describe 'DijkstraMovements', ->
       result.should.not.include( '2_2')
 
       result.should.include( '16_1')
-      result.should.include( '18_-1')
+      result.should.include( '8_-1')
       result.should.include( '19_-1')
       result.should.include( '19_-2')
       result.should.not.include( '20_-3')

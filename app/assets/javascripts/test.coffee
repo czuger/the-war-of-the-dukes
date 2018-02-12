@@ -5,15 +5,18 @@
 ag = null
 movement_graph = null
 
-position_pawn = ( pawn_object, q, r, opacity=1 ) ->
+position_pawn = ( pawn_object, q, r, opacity=1, clone=false ) ->
 
-  new_object = clone_pawn( pawn_object, q, r )
+  if clone
+    new_object = clone_pawn( pawn_object, q, r )
+  else
+    new_object = pawn_object
 
   pos = new AxialHex( q, r )
   [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
 
-  console.log( "x = ", Math.round( x ), "y = ", Math.round( y ) )
-  console.log( new_object )
+#  console.log( "x = ", Math.round( x ), "y = ", Math.round( y ) )
+#  console.log( new_object )
 
   new_object.css('top', Math.round( y ) + 15 )
   new_object.css('left', Math.round( x ) + 15 )
@@ -48,10 +51,10 @@ load = () ->
     $('#hex_info').show()
     $('#hex_info').html(hex_info)
 
-
+    position_pawn( $('#orf_infantery_1'), 13, 4 )
 #  position_pawn( $('#orf_infantery_1'), 12, 4 )
-  for q in [1..20]
-    position_pawn( $('#orf_infantery_1'), q, 22 )
+#  for q in [1..20]
+#    position_pawn( $('#orf_infantery_1'), q, 22 )
 
   $('#orf_infantery_1').mousedown (event) ->
 
