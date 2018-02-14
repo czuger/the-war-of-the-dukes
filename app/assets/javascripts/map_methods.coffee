@@ -10,8 +10,8 @@ class @MapMethods
 
     if hex
       color = hex.color
-      hex_info = "color = #{color}, x = #{event.pageX}, y = #{event.pageY}, nx = #{nx}, ny = #{ny}, q = #{hex.q}, r = #{hex.r}"
+      hex_info = [ "color = #{color}", "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}", "q = #{hex.q}, r = #{hex.r}" ]
     else
-      hex_info = "x = #{event.pageX}, y = #{event.pageY}, nx = #{nx}, ny = #{ny}"
+      hex_info = [ "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}" ]
 
     [ hex, hex_info ]

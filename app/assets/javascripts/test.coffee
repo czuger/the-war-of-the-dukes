@@ -31,7 +31,23 @@ clone_pawn = ( pawn_object, q, r ) ->
   item.appendTo( 'body' )
   item
 
+print_mouse_info = () ->
+  $('#board').mousemove (event) ->
+
+    [ hex, hex_info ] = MapMethods.get_current_hex(ag, event)
+
+#    $('#hex_info').css('top',event.pageY-20)
+#    $('#hex_info').css('left',event.pageX+30)
+  #  $('#hex_info').show()
+    html = ''
+    for info in hex_info
+      html += "<div>#{info}</div>"
+
+    $('#hex_info').html(html)
+
 load = () ->
+  print_mouse_info()
+
   ag = new AxialGrid( 26 )
 
   map = $('#map')
@@ -43,16 +59,9 @@ load = () ->
     movement_graph = JSON.parse( movement_graph.val() )
 #  console.log( movement_graph )
 
-  $('#board').mousemove (event) ->
 
-    [ hex, hex_info ] = MapMethods.get_current_hex(ag, event)
 
-    $('#hex_info').css('top',event.pageY-20)
-    $('#hex_info').css('left',event.pageX+30)
-    $('#hex_info').show()
-    $('#hex_info').html(hex_info)
-
-    position_pawn( $('#orf_infantery_1'), 13, 4 )
+#    position_pawn( $('#orf_infantery_1'), 13, 4 )
 #  position_pawn( $('#orf_infantery_1'), 12, 4 )
 #  for q in [1..20]
 #    for r in [1..20]
