@@ -5,11 +5,10 @@
 ag = null
 movement_graph = null
 
-
 print_mouse_info = () ->
   $('#board').mousemove (event) ->
 
-    [ hex, hex_info ] = MapMethods.get_current_hex(ag, event)
+    [ hex, hex_info ] = ag.get_current_hex(event)
 
 #    $('#hex_info').css('top',event.pageY-20)
 #    $('#hex_info').css('left',event.pageX+30)
@@ -21,6 +20,9 @@ print_mouse_info = () ->
     $('#hex_info').html(html)
 
 load = () ->
+
+  ag = new Map
+
   print_mouse_info()
 
 

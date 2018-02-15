@@ -19,6 +19,5 @@
 //= require hex_lib/cube_hex.coffee
 //= require hex_lib/axial_grid.coffee
 //= require hex_lib/square_grid.coffee
-//= require map_methods
 
 //= require_tree .

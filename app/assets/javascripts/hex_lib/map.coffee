@@ -11,7 +11,7 @@ class @Map
   #
   # @param hex_ray [Integer] the size of an hexagon. Please read : http://www.redblobgames.com/grids/hexagons/#basics for information about the size of an hexagon
   constructor: () ->
-    @map_hexes = new AxialGrid( 26 )
+    @map_hexes = new AxialGrid( 25.7 )
 
     map_json = $('#map')
     if map_json.length != 0
@@ -20,6 +20,8 @@ class @Map
     movement_graph_json = $('#movement_hash')
     if movement_graph_json.length != 0
       @movement_graph = JSON.parse( movement_graph_json.val() )
+
+#    console.log( @map_hexes )
 
   position_pawn: ( pawn_object, q, r, opacity=1, clone=false ) ->
 
@@ -35,8 +37,8 @@ class @Map
     #  console.log( "x = ", x, "y = ", y )
     #  console.log( new_object )
 
-    new_object.css('top', y + 15 )
-    new_object.css('left', x + 15 )
+    new_object.css('top', y + 22 )
+    new_object.css('left', x + 20 )
     new_object.css( 'opacity', opacity )
 
   clone_pawn: ( pawn_object, q, r ) ->
@@ -47,4 +49,21 @@ class @Map
     item.appendTo( 'body' )
     item
 
+  get_current_hex: (event) ->
 
+#    console.log( @map_hexes )
+
+    o = $('#board').offset()
+    nx = Math.round( event.pageX - o.left - @map_hexes.hex_ray )
+    ny = Math.round( event.pageY - o.top - @map_hexes.hex_ray )
+
+    #    console.log( nx, ny )
+    hex = @map_hexes.pixel_to_hex_flat_topped( nx, ny )
+
+    if hex
+      color = hex.color
+      hex_info = [ "color = #{color}", "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}", "q = #{hex.q}, r = #{hex.r}" ]
+    else
+      hex_info = [ "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}" ]
+
+    [ hex, hex_info ]

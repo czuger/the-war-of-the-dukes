@@ -57,6 +57,8 @@ class @AxialGrid
       this.cset( je['q'], je['r'], je['c'], je['b'] )
 
 #    console.log( @hexes )
+    null
+#    console.log( @hexes )
 #    console.log( @hexes[[0,0]] )
 
   pixel_to_hex_flat_topped: (x, y) ->

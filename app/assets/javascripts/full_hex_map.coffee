@@ -6,8 +6,8 @@ load = () ->
   console.log( 'ful_hex_map loaded' )
   map = new Map()
 
-  for q in [1..20]
-    for r in [1..20]
+  for q in [0..20]
+    for r in [0..20]
       map.position_pawn( $('#orf_infantery_1'), q, r, 1, true )
 
 $ ->
