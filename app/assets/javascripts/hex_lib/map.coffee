@@ -11,7 +11,7 @@ class @Map
   #
   # @param hex_ray [Integer] the size of an hexagon. Please read : http://www.redblobgames.com/grids/hexagons/#basics for information about the size of an hexagon
   constructor: () ->
-    @map_hexes = new AxialGrid( 25.7 )
+    @map_hexes = new AxialGrid( 26.1 )
 
     map_json = $('#map')
     if map_json.length != 0
@@ -34,18 +34,23 @@ class @Map
 
     [ x, y ] = @map_hexes.hex_to_pixel_flat_topped( pos )
 
-    $('#svg_overmap').append( "<rect x='#{x}' y='#{y}' width='1' height='1' stroke='black' stroke-width='1' />" )
+#    $('#svg_overmap').append( "<rect x='#{x}' y='#{y}' width='1' height='1' stroke='black' stroke-width='1' />" )
 
     #  console.log( "x = ", x, "y = ", y )
     #  console.log( new_object )
 
-#    new_object.css('top', y + 15 )
-#    new_object.css('left', x + 15 )
-#    new_object.css( 'opacity', opacity )
-##    new_object.show()
-#    new_object.removeClass( 'pawn-template' )
-#    new_object.addClass( 'pawn' )
+    new_object.css('top', y + 15 )
+    new_object.css('left', x + @map_x_correction( q, r ) )
+    new_object.css( 'opacity', opacity )
+#    new_object.show()
+    new_object.removeClass( 'pawn-template' )
+    new_object.addClass( 'pawn' )
 
+
+  map_x_correction: (q, r) ->
+    correction = 15
+    correction -= Math.max( 0, -11+q/1.1 ) if q >= 13
+    correction
 
   clone_pawn: ( pawn_object, q, r ) ->
     item = pawn_object.clone()
