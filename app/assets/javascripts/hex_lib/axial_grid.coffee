@@ -72,7 +72,7 @@ class @AxialGrid
   hex_to_pixel_flat_topped: ( hex ) ->
     # Caution, q
     x = @hex_ray * 3.0/2.0 * hex.q
-    y = @hex_ray * Math.sqrt(3) * (hex.r + hex.q/2.0)
+    y = @hex_ray * Math.sqrt(3) * (hex.r + (hex.q/2.0))
     [ Math.round( x ), Math.round( y ) ]
 
   h_surrounding_hexes: ( hex ) ->

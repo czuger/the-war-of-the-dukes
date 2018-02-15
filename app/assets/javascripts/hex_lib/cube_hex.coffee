@@ -26,3 +26,21 @@ class @CubeHex extends BaseHex
   #
   to_axial: ->
     new AxialHex(@x, @z, @color)
+
+  cube_round: () ->
+    rx = Math.round(@x)
+    ry = Math.round(@y)
+    rz = Math.round(@z)
+
+    x_diff = abs(rx - @x)
+    y_diff = abs(ry - @y)
+    z_diff = abs(rz - @z)
+
+    if x_diff > y_diff and x_diff > z_diff
+      rx = -ry-rz
+    else if y_diff > z_diff
+      ry = -rx-rz
+    else
+      rz = -rx-ry
+
+    return new CubeHex(rx, ry, rz)

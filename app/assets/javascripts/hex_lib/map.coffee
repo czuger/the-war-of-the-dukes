@@ -34,12 +34,18 @@ class @Map
 
     [ x, y ] = @map_hexes.hex_to_pixel_flat_topped( pos )
 
+    $('#svg_overmap').append( "<rect x='#{x}' y='#{y}' width='1' height='1' stroke='black' stroke-width='1' />" )
+
     #  console.log( "x = ", x, "y = ", y )
     #  console.log( new_object )
 
-    new_object.css('top', y + 22 )
-    new_object.css('left', x + 20 )
-    new_object.css( 'opacity', opacity )
+#    new_object.css('top', y + 15 )
+#    new_object.css('left', x + 15 )
+#    new_object.css( 'opacity', opacity )
+##    new_object.show()
+#    new_object.removeClass( 'pawn-template' )
+#    new_object.addClass( 'pawn' )
+
 
   clone_pawn: ( pawn_object, q, r ) ->
     item = pawn_object.clone()
