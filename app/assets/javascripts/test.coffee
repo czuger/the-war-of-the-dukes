@@ -5,31 +5,6 @@
 ag = null
 movement_graph = null
 
-position_pawn = ( pawn_object, q, r, opacity=1, clone=false ) ->
-
-  if clone
-    new_object = clone_pawn( pawn_object, q, r )
-  else
-    new_object = pawn_object
-
-  pos = new AxialHex( q, r )
-
-  [ x, y ] = ag.hex_to_pixel_flat_topped( pos )
-
-#  console.log( "x = ", x, "y = ", y )
-#  console.log( new_object )
-
-  new_object.css('top', y + 15 )
-  new_object.css('left', x + 15 )
-  new_object.css( 'opacity', opacity )
-
-clone_pawn = ( pawn_object, q, r ) ->
-  item = pawn_object.clone()
-  item.attr( 'id', 'tmp_inf_' + q + '_' + r )
-  item.attr( 'q', q )
-  item.attr( 'r', r )
-  item.appendTo( 'body' )
-  item
 
 print_mouse_info = () ->
   $('#board').mousemove (event) ->
@@ -48,15 +23,7 @@ print_mouse_info = () ->
 load = () ->
   print_mouse_info()
 
-  ag = new AxialGrid( 26 )
 
-  map = $('#map')
-  if map.length != 0
-    ag.from_json( map.val() )
-
-  movement_graph = $('#movement_hash')
-  if movement_graph.length != 0
-    movement_graph = JSON.parse( movement_graph.val() )
 #  console.log( movement_graph )
 
 

@@ -8,4 +8,8 @@ class TestController < ApplicationController
     set_map
   end
 
+  def full_hex_map
+    set_map
+  end
+
 end
