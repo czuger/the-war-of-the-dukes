@@ -17,12 +17,12 @@ class @CubeHex extends BaseHex
   # @param y [Integer] y coordinate
   # @param z [Integer] z coordinate
   #
-  constructor: ( @x, @y, @z, color, border ) ->
-    super( color, border )
+  constructor: ( @x, @y, @z, color ) ->
+    super( color )
 
   # Transform a cube represented hexagon to an Hexagon::Axial represented hexagon
   #
   # @return [AxialHex] a new AxialHex object
   #
   to_axial: ->
-    new AxialHex(@x, @z, @color, @border)
+    new AxialHex(@x, @z, @color)

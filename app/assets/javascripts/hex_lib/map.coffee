@@ -62,8 +62,24 @@ class @Map
 
     if hex
       color = hex.color
-      hex_info = [ "color = #{color}", "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}", "q = #{hex.q}, r = #{hex.r}" ]
+      [ col, row ] = hex.to_oddq_coords()
+      hex_info = [ "color = #{color}", "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}", "q = #{hex.q}, r = #{hex.r}", "col = #{col}, row = #{row}" ]
     else
       hex_info = [ "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}" ]
 
     [ hex, hex_info ]
+
+  in_border: (hex) ->
+    [ col, row ] = hex.to_oddq_coords()
+
+    return false if col < 0
+    return false if row < 0
+    return false if row > 22
+    return false if row > 21 && col%2 != 0
+    return false if col > 22 && ( row >= 2 && row < 6 )
+    return false if col > 22 && col%2 == 0 && row ==6
+    return false if col == 31 && row == 6
+
+#    console.log( col, row )
+
+    true

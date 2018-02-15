@@ -13,10 +13,23 @@ class @AxialHex extends BaseHex
   # - +border+ is a boolean and mean that the hex is at the border of the map.
   #
   # *Returns* : a new Hex::Axial object.
-  constructor: ( @q, @r, @color, @border ) ->
-    super(@color, @border)
+  constructor: ( @q, @r, @color ) ->
+    super(@color)
     if isNaN(@q) || typeof (@q) == 'string'
       throw "q is not a number!"
 
     if isNaN(@r) || typeof (@r) == 'string'
       throw "q is not a number!"
+
+  to_oddq_coords: () ->
+    cube = @to_cube()
+
+    col = cube.x
+    row = cube.z + (cube.x - (cube.x&1)) / 2
+    [ col, row ]
+
+  to_cube: () ->
+    x = @q
+    z = @r
+    y = -x-z
+    return new CubeHex(x, y, z, @color)

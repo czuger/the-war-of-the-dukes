@@ -6,9 +6,10 @@ load = () ->
   console.log( 'ful_hex_map loaded' )
   map = new Map()
 
-  for q in [0..20]
-    for r in [0..20]
-      map.position_pawn( $('#orf_infantery_1'), q, r, 1, true )
+  for q in [0..31]
+    for r in [-9..22]
+      if map.in_border( new AxialHex( q, r ) )
+        map.position_pawn( $('#orf_infantery_1'), q, r, 1, true )
 
 $ ->
   if $('#full_test_map').val() == 'true'
