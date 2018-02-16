@@ -136,6 +136,16 @@ class @Map
       if col > decal[0]
         x -= decal[1]
 
+    if row > 12
+      y -= 2
+      if col > 14
+        x -=3
+
+    if row > 15
+      y -= 5
+
+    if row > 19
+      y -= 2
 
 
     [ x, y ]
