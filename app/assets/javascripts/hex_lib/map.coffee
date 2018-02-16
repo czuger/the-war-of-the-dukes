@@ -23,6 +23,15 @@ class @Map
 
 #    console.log( @map_hexes )
 
+  # Position a pawn on the map
+  #
+  # @param pawn_object [Object] the pawn to position
+  # @param q [Int] the q position where we want to place the pawn
+  # @param r [Int] the r position where we want to place the pawn
+  # @param opacity [Float] the opacity of the pawn (0 -> 1)
+  # @param clone [Boolean] true if the pawn will be cloned, false if will be moved
+  #
+  # @return The cloned item
   position_pawn: ( pawn_object, q, r, opacity=1, clone=false ) ->
 
     if clone
@@ -30,28 +39,37 @@ class @Map
     else
       new_object = pawn_object
 
-    pos = new AxialHex( q, r )
+    [ x, y ] = @get_xy_hex_position( new AxialHex( q, r ) )
 
-    [ x, y ] = @map_hexes.hex_to_pixel_flat_topped( pos )
-
-#    $('#svg_overmap').append( "<rect x='#{x}' y='#{y}' width='1' height='1' stroke='black' stroke-width='1' />" )
-
-    #  console.log( "x = ", x, "y = ", y )
-    #  console.log( new_object )
-
-    new_object.css('top', y + 15 )
-    new_object.css('left', x + @map_x_correction( q, r ) )
+    new_object.css('top', y )
+    new_object.css('left', x )
     new_object.css( 'opacity', opacity )
-#    new_object.show()
     new_object.removeClass( 'pawn-template' )
     new_object.addClass( 'pawn' )
 
+    null
 
-  map_x_correction: (q, r) ->
-    correction = 15
-    correction -= Math.max( 0, -11+q/1.1 ) if q >= 13
-    correction
+# Position a pawn on the map
+#
+# @param pawn_object [Object] the pawn to position
+# @param q [Int] the q position where we want to place the pawn
+# @param r [Int] the r position where we want to place the pawn
+# @param opacity [Float] the opacity of the pawn (0 -> 1)
+# @param clone [Boolean] true if the pawn will be cloned, false if will be moved
+#
+# @return The cloned item
+  show_hex_center: ( q, r ) ->
+    [ x, y ] = @get_xy_hex_position( new AxialHex( q, r ) )
+    $('#svg_overmap').append( "<rect x='#{x}' y='#{y}' width='1' height='1' stroke='black' stroke-width='1' />" )
+    null
 
+  # This method clone a pawn from the pawn library
+  #
+  # @param pawn_object [Object] the pawn to clone
+  # @param q [Int] the q position where we want to clone the pawn
+  # @param r [Int] the r position where we want to clone the pawn
+  #
+  # @return The cloned item
   clone_pawn: ( pawn_object, q, r ) ->
     item = pawn_object.clone()
     item.attr( 'id', 'tmp_inf_' + q + '_' + r )
@@ -60,6 +78,7 @@ class @Map
     item.appendTo( 'body' )
     item
 
+  # This method get the current hex from the pointer on the map
   get_current_hex: (event) ->
 
 #    console.log( @map_hexes )
@@ -80,6 +99,11 @@ class @Map
 
     [ hex, hex_info ]
 
+  # This tells if an hex is within the borders of the map
+  #
+  # @param hex [AxialHex] the hex to test
+  #
+  # @return True or false (if the hex is within the borders or not
   in_border: (hex) ->
     [ col, row ] = hex.to_oddq_coords()
 
@@ -91,6 +115,30 @@ class @Map
     return false if col > 22 && col%2 == 0 && row ==6
     return false if col == 31 && row == 6
 
-#    console.log( col, row )
-
     true
+
+
+  # Get the xy position of an hexagon on the grid. Make corrections according to the deformation of the map.
+  #
+  # @param hex [AxialHex] the hex we want the coords
+  #
+  # @return an [x, y] array containing the x, y positions
+  get_xy_hex_position: (hex) ->
+
+    [ col, row ] = hex.to_oddq_coords()
+    [ x, y ] = @map_hexes.hex_to_pixel_flat_topped(hex)
+#
+#    x += 15
+#    y += 15
+
+    xdecal = [[ 18, 5 ], [ 23, 3 ], [ 25, 2 ], [ 27, 3 ], [ 29, 2 ], [ 30, 2 ] ]
+    for decal in xdecal
+      if col > decal[0]
+        x -= decal[1]
+
+
+
+    [ x, y ]
+
+
+

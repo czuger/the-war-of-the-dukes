@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title CoffhexDev
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+  %body
+
+    #menu-area
+      = link_to 'Game', '/'
+      = link_to 'Full Map', test_full_hex_map_url
+      = link_to 'Hex Centers', test_full_hex_map_url( show_centers: true )
+
+    #board-area
+      = yield
