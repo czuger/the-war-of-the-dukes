@@ -31,7 +31,7 @@ class @Map
   # @param opacity [Float] the opacity of the pawn (0 -> 1)
   # @param clone [Boolean] true if the pawn will be cloned, false if will be moved
   #
-  # @return The cloned item
+  # @return The pawn
   position_pawn: ( pawn_object, q, r, opacity=1, clone=false ) ->
 
     if clone
@@ -40,24 +40,22 @@ class @Map
       new_object = pawn_object
 
     [ x, y ] = @get_xy_hex_position( new AxialHex( q, r ) )
+    x -= 15
+    y -= 16
 
     new_object.css('top', y )
     new_object.css('left', x )
     new_object.css( 'opacity', opacity )
-    new_object.removeClass( 'pawn-template' )
+    new_object.removeClass( 'pawn_template' )
     new_object.addClass( 'pawn' )
+    new_object.appendTo( '#board' )
 
-    null
+    new_object
 
-# Position a pawn on the map
-#
-# @param pawn_object [Object] the pawn to position
-# @param q [Int] the q position where we want to place the pawn
-# @param r [Int] the r position where we want to place the pawn
-# @param opacity [Float] the opacity of the pawn (0 -> 1)
-# @param clone [Boolean] true if the pawn will be cloned, false if will be moved
-#
-# @return The cloned item
+  # Draw a point on the centre of an hex
+  #
+  # @param q [Int] the q position of the hex
+  # @param r [Int] the r position of the hex
   show_hex_center: ( q, r ) ->
     [ x, y ] = @get_xy_hex_position( new AxialHex( q, r ) )
     $('#svg_overmap').append( "<rect x='#{x}' y='#{y}' width='1' height='1' stroke='red' stroke-width='1' />" )
@@ -93,7 +91,9 @@ class @Map
     if hex
       color = hex.color
       [ col, row ] = hex.to_oddq_coords()
-      hex_info = [ "color = #{color}", "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}", "q = #{hex.q}, r = #{hex.r}", "col = #{col}, row = #{row}" ]
+      cube = hex.to_cube()
+      hex_info = [ "color = #{color}", "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}",
+        "q = #{hex.q}, r = #{hex.r}", "col = #{col}, row = #{row}", "z = #{cube.z}, x = #{cube.x}, y = #{cube.y}" ]
     else
       hex_info = [ "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}" ]
 
@@ -136,6 +136,9 @@ class @Map
       if col > decal[0]
         x -= decal[1]
 
+    if col < 4
+      x += 4
+
     if row > 12
       y -= 2
       if col > 14
@@ -147,6 +150,17 @@ class @Map
     if row > 19
       y -= 2
 
+    if col >= 4 && col <= 8 && row >= 9
+      x += 5
+
+    if row >= 17 && col <= 3
+      x += 7
+
+    if row >= 19
+      if col >= 21
+        x -= 5
+      if col >= 26
+        y -= 5
 
     [ x, y ]
 

@@ -5,12 +5,7 @@
 load = () ->
   console.log( 'ful_hex_map loaded' )
 
-  show_center = ($('#full_test_map').val() == 'true')
-
-#  if show_center
-#    o = $('#board').offset()
-#    $('#svg_overmap').css('top', o.top )
-#    $('#svg_overmap').css('left', o.left )
+  show_center = ($('#show_centers').val() == 'true')
 
   map = new Map()
 
