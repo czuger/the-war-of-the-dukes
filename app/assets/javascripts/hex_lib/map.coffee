@@ -60,7 +60,7 @@ class @Map
 # @return The cloned item
   show_hex_center: ( q, r ) ->
     [ x, y ] = @get_xy_hex_position( new AxialHex( q, r ) )
-    $('#svg_overmap').append( "<rect x='#{x}' y='#{y}' width='1' height='1' stroke='black' stroke-width='1' />" )
+    $('#svg_overmap').append( "<rect x='#{x}' y='#{y}' width='1' height='1' stroke='red' stroke-width='1' />" )
     null
 
   # This method clone a pawn from the pawn library
