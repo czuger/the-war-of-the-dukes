@@ -1,0 +1,2 @@
+module EditMapHelper
+end

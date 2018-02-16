@@ -9,6 +9,8 @@ load = () ->
 
   map = new Map()
 
+  console.log( map )
+
   for q in [0..31]
     for r in [-9..22]
       if map.in_border( new AxialHex( q, r ) )
