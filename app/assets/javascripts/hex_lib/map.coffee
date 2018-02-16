@@ -10,18 +10,12 @@ class @Map
   # Create a map
   #
   # @param hex_ray [Integer] the size of an hexagon. Please read : http://www.redblobgames.com/grids/hexagons/#basics for information about the size of an hexagon
-  constructor: () ->
+  constructor: ( map_json_string, movement_graph_json_string ) ->
+
     @map_hexes = new AxialGrid( 26.1 )
+    @map_hexes.from_json( map_json_string )
 
-    map_json = $('#map')
-    if map_json.length != 0
-      @map_hexes.from_json( map_json.val() )
-
-    movement_graph_json = $('#movement_hash')
-    if movement_graph_json.length != 0
-      @movement_graph = JSON.parse( movement_graph_json.val() )
-
-#    console.log( @map_hexes )
+    @movement_graph = JSON.parse( movement_graph_json_string )
 
   # Position a pawn on the map
   #

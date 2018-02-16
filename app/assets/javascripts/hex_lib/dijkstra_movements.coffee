@@ -22,7 +22,7 @@ class @DijkstraMovements
 #      console.log( "frontier.pop() =", current )
       frontier_history.push( @hex_key( current ) ) unless @hex_key( current ) in frontier_history
 
-#      console.log( "map.h_surrounding_hexes( current ) = ", map.h_surrounding_hexes( current ) )
+#      console.log( "map.h_surrounding_hexes( current ) = ", map.map_hexes.h_surrounding_hexes( current ) )
       for n in map.map_hexes.h_surrounding_hexes( current )
 #        console.log( n )
         new_cost = cost_so_far[ @hex_key(current) ] + map.movement_graph[ @movement_key( current, n ) ]
@@ -34,6 +34,6 @@ class @DijkstraMovements
             frontier.push( n, priority )
             came_from[ @hex_key( n ) ] = current
 
-    console.log( frontier_history.sort() )
+#    console.log( frontier_history.sort() )
 
     frontier_history

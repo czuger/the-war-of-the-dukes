@@ -3,14 +3,13 @@
 describe 'DijkstraMovements', ->
 
   beforeEach ->
-    @ag = new AxialGrid( 25.7 )
-    @ag.from_json( map_json_string );
     @hex = new AxialHex( 13, 4 )
+    @map = new Map( map_json_string, movement_graph_json_string )
 
   describe '#calc()', ->
 
     it 'should reach target', ->
-      result = DijkstraMovements.calc( @ag, movement_graph, @hex, 6 )
+      result = DijkstraMovements.calc( @map, @hex, 6 )
 
       result.should.include('12_4')
       result.should.include('13_5')
