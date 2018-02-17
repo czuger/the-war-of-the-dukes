@@ -19,6 +19,9 @@ root.set_letter = ( hex ) ->
   div.css( 'color', 'red' ) if hex.color == 'r' || hex.color == 'R'
   $('#board').append( div )
 
+root.clear_letter = ( hex ) ->
+  $("#edit_letter_#{hex.q}_#{hex.r}").remove()
+
 root.load_map = () ->
   root.current_map = new Map()
 

@@ -21,4 +21,8 @@ class AxialGrid
     end
   end
 
+  def cclear( q, r )
+    @hexes.delete( [q, r ] )
+  end
+
 end

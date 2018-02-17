@@ -36,7 +36,13 @@ class EditMapController < ApplicationController
     map = AxialGrid.new
     map.from_json_file( 'data/roads.json' )
     # puts params[:q].inspect
-    map.cset( params[:q].to_i, params[:r].to_i, color: 'R' )
+
+    if params[:color] == ''
+      map.cclear( params[:q].to_i, params[:r].to_i )
+    else
+      map.cset( params[:q].to_i, params[:r].to_i, color: 'R' )
+    end
+
     map.to_json_file( 'data/roads.json' )
     head :ok
   end

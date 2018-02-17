@@ -21,11 +21,14 @@ manage_changes = () ->
 
     [ hex, _ ] = root.current_map.get_current_hex(event)
 
-    hex.color = 'R'
-
-    root.set_letter( hex )
-
-    root.current_map.map_hexes.hset( hex )
+    if hex.color == 'R'
+      hex.color = null
+      root.clear_letter( hex )
+      root.current_map.map_hexes.hclear( hex )
+    else
+      hex.color = 'R'
+      root.set_letter( hex )
+      root.current_map.map_hexes.hset( hex )
 
     $.post '/edit_map/update_roads',
       q: hex.q

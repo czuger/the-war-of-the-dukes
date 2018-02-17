@@ -47,6 +47,15 @@ class @AxialGrid
   hset: ( hex ) ->
     @hexes[ [ hex.q, hex.r ] ] = hex
 
+  # Remove an hexagon from a grid
+  #
+  # @param hex [AxialHex] the hexagon you want to add into the grid
+  #
+  # @return [AxialHex] the hexagon you inserted
+  #
+  hclear: ( hex ) ->
+    delete @hexes[ [ hex.q, hex.r ] ]
+
   # Return the grid as a json_array object
   #
   # @return [Array] the grid as a hash object
