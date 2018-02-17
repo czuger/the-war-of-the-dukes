@@ -19,9 +19,9 @@ f f p p P p p p p p f f P p p P
 f f p p p P p p f p F f P P P p
  f P p P p P p f F P f P p P p p
 f P p p p p P f f p f c p P p p
- P p p P f p P f P P c p p p p p
-f P p p f p p p p p H P p P p p
- P p p P f p b p P p p p p p p f
+ P p p P f F P f P P c p p p p p
+f P p p f p F p p p H P p P p p
+ P p p P f F b p P p p p p p p f
 p p f p f F F P p p h P p P p f
  P f f P f F p P P p p p p p f f
 p p f p p p F P P p h P p F f f
@@ -29,7 +29,7 @@ p p f p p p F P P p h P p F f f
 p c f P p p P p p P h P p F f f
  P c P c p P p p p H p p p p p p
 f F P p P P p p p h P F p P p W
- P F P p P p F p h p p p p P p W
+ P F P p P p F p h p F p p P p W
 f F p P p p F p h p P F p P P b
  P p p p p F c p p p P p p p W W
 f p p P p p c F h p p P p P W W

@@ -2,10 +2,12 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-map = null
+root = exports ? this
 
-set_letter = ( hex ) ->
-  [ x, y ] = map.get_xy_hex_position( hex )
+root.current_map = null
+
+root.set_letter = ( hex ) ->
+  [ x, y ] = root.current_map.get_xy_hex_position( hex )
 
   $("#edit_letter_#{hex.q}_#{hex.r}").remove()
 
@@ -17,23 +19,26 @@ set_letter = ( hex ) ->
   div.css( 'color', 'red' ) if hex.color == 'r' || hex.color == 'R'
   $('#board').append( div )
 
-manage_changes = () ->
+root.load_map = () ->
+  root.current_map = new Map()
 
-  map = new Map()
-
-  console.log( map )
+#  console.log( root.current_map )
 
   searchParams = new URLSearchParams(window.location.search)
-  color = searchParams.get('color').toUpperCase()
+  color = searchParams.get('color')
+  color = color.toUpperCase() if color
 
-  for _, hex of map.map_hexes.hexes
+  for _, hex of root.current_map.map_hexes.hexes
 
     if color == hex.color.toUpperCase()
       set_letter( hex )
 
+manage_changes = () ->
+
+
   $('#board').mousedown (event) ->
 
-    [ hex, _ ] = map.get_current_hex(event)
+    [ hex, _ ] = root.current_map.get_current_hex(event)
 
     searchParams = new URLSearchParams(window.location.search)
     color = searchParams.get('color').toUpperCase()
@@ -45,9 +50,9 @@ manage_changes = () ->
 
     console.log( hex )
 
-    map.map_hexes.hset( hex )
+    root.current_map.map_hexes.hset( hex )
 
-    $.post '/edit_map/update',
+    $.post '/edit_map/update_hexes',
       q: hex.q
       r: hex.r
       color: hex.color
@@ -55,5 +60,5 @@ manage_changes = () ->
 
 $(window).load ->
 #  console.log( window.location.pathname )
-  if window.location.pathname == '/edit_map/show'
+  if window.location.pathname == '/edit_map/edit_hexes'
     manage_changes()

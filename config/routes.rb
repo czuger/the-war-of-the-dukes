@@ -2,8 +2,11 @@ Rails.application.routes.draw do
 
   mount MochaRails::Engine => 'mocha' unless Rails.env.production?
 
-  get 'edit_map/show'
-  post 'edit_map/update'
+  get 'edit_map/edit_hexes'
+  post 'edit_map/update_hexes'
+
+  get 'edit_map/edit_roads'
+  post 'edit_map/update_roads'
 
   get 'test/show'
   get 'test/full_hex_map'
