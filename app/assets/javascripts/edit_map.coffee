@@ -22,7 +22,7 @@ root.set_letter = ( hex ) ->
 root.clear_letter = ( hex ) ->
   $("#edit_letter_#{hex.q}_#{hex.r}").remove()
 
-root.load_map = () ->
+load_map = () ->
   root.current_map = new Map()
 
 #  console.log( root.current_map )
@@ -38,6 +38,7 @@ root.load_map = () ->
 
 manage_changes = () ->
 
+  load_map()
 
   $('#board').mousedown (event) ->
 
