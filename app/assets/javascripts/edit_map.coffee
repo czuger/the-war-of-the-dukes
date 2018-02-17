@@ -22,7 +22,7 @@ root.set_letter = ( hex ) ->
 root.clear_letter = ( hex ) ->
   $("#edit_letter_#{hex.q}_#{hex.r}").remove()
 
-load_map = () ->
+root.load_map = () ->
   root.current_map = new Map()
 
 #  console.log( root.current_map )

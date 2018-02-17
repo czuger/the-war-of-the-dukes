@@ -4,18 +4,18 @@
 
 root = exports ? this
 
-roads = null
+top_layer = null
 
-load_roads = () ->
+load_top_layer = () ->
 
-  for hex in JSON.parse( $('#json_roads').val() )
+  for hex in JSON.parse( $('#json_top_layer').val() )
     hex = new AxialHex( parseInt(hex['q']), parseInt(hex['r']), hex['c'] )
     root.set_letter( hex )
 
-manage_changes = () ->
+manage_changes = ( layer ) ->
 
-  load_map()
-  load_roads()
+  root.load_map()
+  load_top_layer()
 
   $('#board').mousedown (event) ->
 
@@ -30,13 +30,16 @@ manage_changes = () ->
       root.set_letter( hex )
       root.current_map.map_hexes.hset( hex )
 
-    $.post '/edit_map/update_roads',
+    $.post '/edit_map/update_top_layer',
       q: hex.q
       r: hex.r
       color: hex.color
+      layer: layer
 
 
 $(window).load ->
 #  console.log( window.location.pathname )
-  if window.location.pathname == '/edit_map/edit_roads'
-    manage_changes()
+  if window.location.pathname == '/edit_map/edit_top_layer'
+    searchParams = new URLSearchParams(window.location.search)
+    layer = searchParams.get('layer')
+    manage_changes( layer )

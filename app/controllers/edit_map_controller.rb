@@ -2,6 +2,9 @@ class EditMapController < ApplicationController
 
   include MapHandler
 
+  ROADS_FILE = 'data/roads.json'
+  RIVERS_FILE = 'data/rivers.json'
+
   def edit_hexes
     set_map
   end
@@ -13,18 +16,20 @@ class EditMapController < ApplicationController
     head :ok
   end
 
-  def edit_roads
+  def edit_top_layer
     set_map
 
-    @json_roads = [].to_json
+    top_layer_file = params[:layer] == 'roads' ? ROADS_FILE : RIVERS_FILE
 
-    if File.exist?( 'data/roads.json' )
-      File.open( 'data/roads.json', 'r' ) do |f|
-        @json_roads = f.read
+    @json_top_layer = [].to_json
+
+    if File.exist?( top_layer_file )
+      File.open( top_layer_file, 'r' ) do |f|
+        @json_top_layer = f.read
       end
     end
 
-    @map.from_json_file( 'data/roads.json' )
+    @map.from_json_file( top_layer_file )
 
     @json_map = @map.to_json
     @json_movement_graph = {}.to_json
@@ -32,9 +37,12 @@ class EditMapController < ApplicationController
     render :edit_hexes
   end
 
-  def update_roads
+  def update_top_layer
+
+    top_layer_file = params[:layer] == 'roads' ? ROADS_FILE : RIVERS_FILE
+
     map = AxialGrid.new
-    map.from_json_file( 'data/roads.json' )
+    map.from_json_file( top_layer_file )
     # puts params[:q].inspect
 
     if params[:color] == ''
@@ -43,7 +51,7 @@ class EditMapController < ApplicationController
       map.cset( params[:q].to_i, params[:r].to_i, color: 'R' )
     end
 
-    map.to_json_file( 'data/roads.json' )
+    map.to_json_file( top_layer_file )
     head :ok
   end
 

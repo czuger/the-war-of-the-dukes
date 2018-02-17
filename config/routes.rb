@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   get 'edit_map/edit_hexes'
   post 'edit_map/update_hexes'
 
-  get 'edit_map/edit_roads'
-  post 'edit_map/update_roads'
+  get 'edit_map/edit_top_layer'
+  post 'edit_map/update_top_layer'
 
   get 'test/show'
   get 'test/full_hex_map'
