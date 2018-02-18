@@ -89,6 +89,10 @@ class @Map
     nx = Math.round( event.pageX - o.left - @map_hexes.hex_ray )
     ny = Math.round( event.pageY - o.top - @map_hexes.hex_ray )
 
+    [ x_decal, y_decal ] = MapDecal.hex_to_xy_decal( nx, ny )
+    nx -= x_decal
+    ny -= y_decal
+
     #    console.log( nx, ny )
     hex = @map_hexes.pixel_to_hex_flat_topped( nx, ny )
 
@@ -129,42 +133,10 @@ class @Map
   # @return an [x, y] array containing the x, y positions
   get_xy_hex_position: (hex) ->
 
-    [ col, row ] = hex.to_oddq_coords()
     [ x, y ] = @map_hexes.hex_to_pixel_flat_topped(hex)
-#
-#    x += 15
-#    y += 15
-
-    xdecal = [[ 18, 5 ], [ 23, 3 ], [ 25, 2 ], [ 27, 3 ], [ 29, 2 ], [ 30, 2 ] ]
-    for decal in xdecal
-      if col > decal[0]
-        x -= decal[1]
-
-    if col < 4
-      x += 4
-
-    if row > 12
-      y -= 2
-      if col > 14
-        x -=3
-
-    if row > 15
-      y -= 5
-
-    if row > 19
-      y -= 2
-
-    if col >= 4 && col <= 8 && row >= 9
-      x += 5
-
-    if row >= 17 && col <= 3
-      x += 7
-
-    if row >= 19
-      if col >= 21
-        x -= 5
-      if col >= 26
-        y -= 5
+    [ x_decal, y_decal ] = MapDecal.hex_to_xy_decal( x, y )
+    x += x_decal
+    y += y_decal
 
     [ x, y ]
 
