@@ -17,44 +17,18 @@ class @Map
       if map_json.length != 0
         map_json_string = map_json.val()
 
-    unless map_json_string?
+    unless movement_graph_json_string?
       movement_graph_json = $('#movement_hash')
       if movement_graph_json.length != 0
-        map_json_string = movement_graph_json.val()
+        movement_graph_json_string = movement_graph_json.val()
 
     @map_hexes = new AxialGrid( 26.1 )
     @map_hexes.from_json( map_json_string )
 
     @movement_graph = JSON.parse( movement_graph_json_string )
 
-  # Position a pawn on the map
-  #
-  # @param pawn_object [Object] the pawn to position
-  # @param q [Int] the q position where we want to place the pawn
-  # @param r [Int] the r position where we want to place the pawn
-  # @param opacity [Float] the opacity of the pawn (0 -> 1)
-  # @param clone [Boolean] true if the pawn will be cloned, false if will be moved
-  #
-  # @return The pawn
-  position_pawn: ( pawn_object, q, r, opacity=1, clone=false ) ->
+    @pawn_module = new PawnModule( this )
 
-    if clone
-      new_object = @clone_pawn( pawn_object, q, r )
-    else
-      new_object = pawn_object
-
-    [ x, y ] = @get_xy_hex_position( new AxialHex( q, r ) )
-    x -= 15
-    y -= 16
-
-    new_object.css('top', y )
-    new_object.css('left', x )
-    new_object.css( 'opacity', opacity )
-    new_object.removeClass( 'pawn_template' )
-    new_object.addClass( 'pawn' )
-    new_object.appendTo( '#board' )
-
-    new_object
 
   # Draw a point on the centre of an hex
   #
@@ -65,20 +39,6 @@ class @Map
     $('#svg_overmap').append( "<rect x='#{x}' y='#{y}' width='1' height='1' stroke='red' stroke-width='1' />" )
     null
 
-  # This method clone a pawn from the pawn library
-  #
-  # @param pawn_object [Object] the pawn to clone
-  # @param q [Int] the q position where we want to clone the pawn
-  # @param r [Int] the r position where we want to clone the pawn
-  #
-  # @return The cloned item
-  clone_pawn: ( pawn_object, q, r ) ->
-    item = pawn_object.clone()
-    item.attr( 'id', 'tmp_inf_' + q + '_' + r )
-    item.attr( 'q', q )
-    item.attr( 'r', r )
-    item.appendTo( 'body' )
-    item
 
   # This method get the current hex from the pointer on the map
   get_current_hex: (event) ->
@@ -106,6 +66,7 @@ class @Map
       hex_info = [ "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}" ]
 
     [ hex, hex_info ]
+
 
   # This tells if an hex is within the borders of the map
   #

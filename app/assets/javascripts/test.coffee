@@ -2,13 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-ag = null
+map = null
 movement_graph = null
+last_selected_pawn = null
 
 print_mouse_info = () ->
   $('#board').mousemove (event) ->
 
-    [ hex, hex_info ] = ag.get_current_hex(event)
+    [ hex, hex_info ] = map.get_current_hex(event)
 
     html = ''
     for info in hex_info
@@ -16,30 +17,46 @@ print_mouse_info = () ->
 
     $('#hex_info').html(html)
 
+
+on_pawn_click = (event, pawn) ->
+  [ hex, _ ] = map.get_current_hex(event)
+
+  result = DijkstraMovements.calc( map, hex, 6 )
+  last_selected_pawn = pawn
+
+  for key in result
+    [q, r] = key.split( '_' )
+
+    map.pawn_module.create_phantom( pawn, parseInt(q), parseInt(r) )
+
+  manage_movement()
+  null
+
+
+manage_movement = () ->
+  $('.pawn_phantom').click ->
+    $(this).removeClass('pawn_phantom')
+    $(this).addClass('pawn')
+
+    last_selected_pawn.remove()
+
+    $('.pawn_phantom').remove()
+
+    $(this).click (event) ->
+      on_pawn_click(event, $(this))
+
+
 load = () ->
   print_mouse_info()
 
-  map_json = $('#map')
-  movement_graph_json = $('#movement_hash')
+  map = new Map()
 
-  ag = null
-  if map_json.length != 0 && movement_graph_json.length != 0
-    ag = new Map( map_json.val(), movement_graph_json.val() )
+  pawn = map.pawn_module.put_on_map( $('#orf_infantery_1'), 14, 4 )
 
-  pawn = ag.position_pawn( $('#orf_infantery_1'), 14, 4, 1, true )
+  pawn.click (event) ->
+    on_pawn_click(event, $(this))
 
-  pawn.mousedown (event) ->
 
-    [ hex, _ ] = ag.get_current_hex(event)
-
-    result = DijkstraMovements.calc( ag, hex, 6 )
-
-    for key in result
-      [q, r] = key.split( '_' )
-
-      ag.position_pawn( $('#orf_infantery_1'), parseInt(q), parseInt(r), 0.5, true )
-
-    null
-
-$(window).load ->
-  load()
+$ ->
+  if window.location.pathname == '/' || window.location.pathname == '/test/show'
+    load()

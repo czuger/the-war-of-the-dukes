@@ -12,6 +12,7 @@ load_top_layer = () ->
     hex = new AxialHex( parseInt(hex['q']), parseInt(hex['r']), hex['c'] )
     root.set_letter( hex )
 
+
 manage_changes = ( layer ) ->
 
   root.load_map()
@@ -37,7 +38,7 @@ manage_changes = ( layer ) ->
       layer: layer
 
 
-$(window).load ->
+$ ->
 #  console.log( window.location.pathname )
   if window.location.pathname == '/edit_map/edit_top_layer'
     searchParams = new URLSearchParams(window.location.search)

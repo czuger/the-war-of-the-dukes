@@ -3,13 +3,9 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 load = () ->
-  console.log( 'ful_hex_map loaded' )
-
   show_center = ($('#show_centers').val() == 'true')
 
   map = new Map()
-
-  console.log( map )
 
   for q in [0..31]
     for r in [-9..22]
@@ -17,11 +13,12 @@ load = () ->
         if show_center
           map.show_hex_center( q, r )
         else
-          map.position_pawn( $('#orf_infantery_1'), q, r, 1, true )
+          map.pawn_module.put_on_map( $('#orf_infantery_1'), q, r )
 
   # Required to show svg elements
   $("body").html($("body").html()) if show_center
 
+
 $ ->
-  if $('#full_test_map').val() == 'true'
+  if window.location.pathname == '/test/full_hex_map'
     load()
