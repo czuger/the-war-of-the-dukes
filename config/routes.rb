@@ -1,20 +1,26 @@
 Rails.application.routes.draw do
 
+  get 'welcome/show'
+
    mount MochaRails::Engine => 'mocha' unless Rails.env.production?
 
   resources :players, only: [ :index, :new, :create ] do
-    get 'edit_map/edit_hexes'
-    post 'edit_map/update_hexes'
+    resources :boards, only: [ :index, :new, :create ] do
 
-    get 'edit_map/edit_top_layer'
-    post 'edit_map/update_top_layer'
+      get 'edit_map/edit_hexes'
+      post 'edit_map/update_hexes'
 
-    get 'test/show'
-    get 'test/full_hex_map'
+      get 'edit_map/edit_top_layer'
+      post 'edit_map/update_top_layer'
+
+      get 'test/show'
+      get 'test/full_hex_map'
+
+    end
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root 'test#show' # shortcut for the above
+  root 'welcome#show' # shortcut for the above
 
 end

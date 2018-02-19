@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :player do
-    name "MyString"
+    sequence :name do |n|
+      "person#{n}@example.com"
+    end
   end
 end

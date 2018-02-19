@@ -1,0 +1,16 @@
+= form_for [ @player, @board ] do |f|
+  - if @board.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@board.errors.count, "error")} prohibited this board from being saved:"
+      %ul
+        - @board.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :owner
+    = text_field_tag :owner, @player.name, disabled: true
+  .field
+    = f.label :opponent
+    = f.select :opponent_id, @opponents.map{ |o| [ o.name, o.id ] }
+  .actions
+    = f.submit 'Save'
