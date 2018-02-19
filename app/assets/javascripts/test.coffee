@@ -21,7 +21,7 @@ print_mouse_info = () ->
 on_pawn_click = (event, pawn) ->
   [ hex, _ ] = map.get_current_hex(event)
 
-  result = DijkstraMovements.calc( map, hex, 6 )
+  result = DijkstraMovements.calc( map, hex, parseInt( pawn.attr( 'mov' ) ) )
   last_selected_pawn = pawn
 
   for key in result
@@ -46,15 +46,22 @@ manage_movement = () ->
       on_pawn_click(event, $(this))
 
 
+put_pawn_on_map = ( pawn, q, r ) ->
+
+  new_object = map.pawn_module.put_on_map( pawn, q, r )
+
+  new_object.click (event) ->
+    on_pawn_click(event, $(this))
+
+
 load = () ->
   print_mouse_info()
 
   map = new Map()
 
-  pawn = map.pawn_module.put_on_map( $('#orf_infantery_1'), 14, 4 )
-
-  pawn.click (event) ->
-    on_pawn_click(event, $(this))
+  put_pawn_on_map( $('#orf_infantery_1'), 27, 8 )
+  put_pawn_on_map( $('#orf_artillery_1'), 30, 1 )
+  put_pawn_on_map( $('#orf_cavalry_1'), 28, 5 )
 
 
 $ ->

@@ -27,7 +27,7 @@ class @DijkstraMovements
 #        console.log( n )
         new_cost = cost_so_far[ @hex_key(current) ] + map.movement_graph[ @movement_key( current, n ) ]
 
-        unless new_cost > max_distance
+        unless new_cost >= max_distance
           if ( not cost_so_far[ @hex_key( n ) ] ) or new_cost < cost_so_far[ @hex_key( n ) ]
             cost_so_far[ @hex_key( n ) ] = new_cost
             priority = new_cost
