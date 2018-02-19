@@ -1,0 +1,18 @@
+%h1 Listing players
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+
+  %tbody
+    - @players.each do |player|
+      %tr
+        %td= player.name
+
+%br
+
+= link_to 'New Player', new_player_path

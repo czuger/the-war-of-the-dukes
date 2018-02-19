@@ -1,15 +1,17 @@
 Rails.application.routes.draw do
 
-  mount MochaRails::Engine => 'mocha' unless Rails.env.production?
+   mount MochaRails::Engine => 'mocha' unless Rails.env.production?
 
-  get 'edit_map/edit_hexes'
-  post 'edit_map/update_hexes'
+  resources :players, only: [ :index, :new, :create ] do
+    get 'edit_map/edit_hexes'
+    post 'edit_map/update_hexes'
 
-  get 'edit_map/edit_top_layer'
-  post 'edit_map/update_top_layer'
+    get 'edit_map/edit_top_layer'
+    post 'edit_map/update_top_layer'
 
-  get 'test/show'
-  get 'test/full_hex_map'
+    get 'test/show'
+    get 'test/full_hex_map'
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
