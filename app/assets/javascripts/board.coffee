@@ -27,7 +27,7 @@ manage_movement = () ->
     $(this).removeClass('pawn_phantom')
     $(this).addClass('pawn')
 
-    pawn_unicity_list.move_hex( last_selected_pawn, $(this) )
+    map.pawn_module.pawn_unicity_list.move_hex( last_selected_pawn, $(this) )
 
     last_selected_pawn.remove()
 
@@ -50,14 +50,11 @@ put_pawn_on_map = ( pawn, q, r, pawn_id ) ->
 
 load = () ->
   map = new Map()
-  pawn_unicity_list = new PawnsUnicity()
 
   pawns = JSON.parse( $('#pawns').val() )
   for pawn in pawns
     pawn_template_id = "##{pawn[3]}_#{PawnModule.PAWNS_TYPES[pawn[2]]}_1"
     put_pawn_on_map( $(pawn_template_id), pawn[0], pawn[1], pawn[4] )
-    pawn_unicity_list.add_hex( pawn[0], pawn[1] )
-
 
 $ ->
   if window.location.pathname.match( /players\/\d+\/boards\/\d+\/play/ )

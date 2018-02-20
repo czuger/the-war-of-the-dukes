@@ -11,7 +11,7 @@ class @PawnModule
   #
   # @param map [Map] a reference to the map
   constructor: ( @map ) ->
-
+    @pawn_unicity_list = new PawnsUnicity()
 
   create_pawn_in_db: (pawn, pawn_type, side) ->
     request = $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
@@ -42,6 +42,7 @@ class @PawnModule
     new_object.removeClass( 'pawn_template' )
     new_object.addClass('pawn')
     new_object.appendTo( '#board' )
+    @pawn_unicity_list.add_hex( q, r )
     new_object
 
 

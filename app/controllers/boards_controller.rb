@@ -1,12 +1,21 @@
 class BoardsController < ApplicationController
-  before_action :set_board, only: [ :play ]
-  before_action :set_player, only: [:index, :new, :create, :play ]
+  before_action :set_board, only: [ :play, :setup ]
+  before_action :set_player
 
   include MapHandler
 
+  def setup
+    set_map
+    @pawns = @board.pawns
+
+    @pawns_count = { inf: 0, cav: 0 , art: 0 }
+    @pawns_count = @pawns.map{ |e| e.pawn_type }.each_with_object(@pawns_count) { |word, counts| counts[word.to_sym] += 1 }
+  end
+
   def play
     set_map
-    @pawns = @board.pawns.pluck( :q, :r, :pawn_type, :side, :id ).to_json
+    @pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side )
+    @pawns = @pawns.to_json
   end
 
   # GET /boards

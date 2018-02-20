@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :players, only: [ :index, :new, :create ] do
     resources :boards, only: [ :index, :new, :create ] do
       resources :pawns, only: [ :create, :update, :delete ]
+      get 'setup'
       get 'play'
       post 'store_pawn_position'
     end

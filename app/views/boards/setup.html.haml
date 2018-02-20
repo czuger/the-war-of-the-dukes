@@ -1,0 +1,49 @@
+#board
+  = image_tag 'board_cut_small.jpg'
+
+#pawn_type_selection
+  %table
+    %tr
+      %td
+        = radio_button_tag 'unit_type', 'inf', :checked => true
+      %td
+        = label 'unit_type_inf', 'Infantry'
+      %td
+        #nb_inf
+          = @pawns_count[:inf]
+          = '/ 10'
+    %tr
+      %td
+        = radio_button_tag 'unit_type', 'cav', :checked => true
+      %td
+        = label 'unit_type_cav', 'Cavalry'
+      %td
+        #nb_cav
+          = @pawns_count[:cav]
+          = '/ 10'
+    %tr
+      %td
+        = radio_button_tag 'unit_type', 'art', :checked => true
+      %td
+        = label 'unit_type_art', 'Artillery'
+      %td
+        #nb_art
+          = @pawns_count[:art]
+          = '/ 10'
+
+#orf_infantery_1.pawn_template{ mov: 3 }
+  = image_tag 'orf_infantery'
+
+#orf_cavalry_1.pawn_template{ mov: 6 }
+  = image_tag 'orf_cavalry'
+
+#orf_artillery_1.pawn_template{ mov: 3 }
+  = image_tag 'orf_artillery'
+
+= hidden_field_tag :player_id, @player.id
+= hidden_field_tag :board_id, @board.id
+
+= hidden_field_tag :pawns, @pawns.to_json
+= hidden_field_tag 'pawns_count', @pawns_count.to_json
+
+= hidden_field_tag 'map', @json_map
