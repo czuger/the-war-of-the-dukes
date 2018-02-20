@@ -59,9 +59,12 @@ load = () ->
 
   map = new Map()
 
-  put_pawn_on_map( $('#orf_infantery_1'), 27, 8 )
-  put_pawn_on_map( $('#orf_artillery_1'), 30, 1 )
-  put_pawn_on_map( $('#orf_cavalry_1'), 28, 5 )
+  pawn_type = { 'inf' : 'infantery', 'art' : 'artillery', 'cav' : 'cavalry' }
+
+  pawns = JSON.parse( $('#pawns').val() )
+  for pawn in pawns
+    pawn_template_id = "##{pawn[3]}_#{pawn_type[pawn[2]]}_1"
+    put_pawn_on_map( $(pawn_template_id), pawn[0], pawn[1] )
 
 
 $ ->

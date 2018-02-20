@@ -1,11 +1,12 @@
 class BoardsController < ApplicationController
-  before_action :set_board, only: []
-  before_action :set_player, only: [:index, :new, :create]
+  before_action :set_board, only: [ :play ]
+  before_action :set_player, only: [:index, :new, :create, :play ]
 
   include MapHandler
 
   def play
     set_map
+    @pawns = @board.pawns.pluck( :q, :r, :pawn_type, :side ).to_json
   end
 
   # GET /boards
@@ -27,6 +28,7 @@ class BoardsController < ApplicationController
 
     respond_to do |format|
       if @board.save
+        place_pawns_on_board
         format.html { redirect_to player_boards_path( @player.id ), notice: 'Board was successfully created.' }
         format.json { render :show, status: :created, location: @board }
       else
@@ -40,7 +42,7 @@ class BoardsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_board
-      @board = Board.find(params[:id])
+      @board = Board.find(params[:board_id])
     end
 
     def set_player
@@ -54,5 +56,11 @@ class BoardsController < ApplicationController
             owner_id: @player.id
         }
       )
+    end
+
+    def place_pawns_on_board
+      @board.pawns.create!( q: 27, r: 8, pawn_type: 'inf', side: 'orf' )
+      @board.pawns.create!( q: 30, r: 1, pawn_type: 'art', side: 'orf' )
+      @board.pawns.create!( q: 28, r: 5, pawn_type: 'cav', side: 'orf' )
     end
 end
