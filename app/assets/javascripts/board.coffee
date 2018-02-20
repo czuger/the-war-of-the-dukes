@@ -7,7 +7,6 @@ movement_graph = null
 last_selected_pawn = null
 pawn_unicity_list = null
 
-
 on_pawn_click = (event, pawn) ->
   [ hex, _ ] = map.get_current_hex(event)
 
@@ -34,10 +33,7 @@ manage_movement = () ->
 
     $('.pawn_phantom').remove()
 
-    $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/store_pawn_position",
-      q: $(this).attr( 'q' )
-      r: $(this).attr( 'r' )
-      pawn_id: $(this).attr( 'pawn_id' )
+    map.pawn_module.send_pawn_new_position($(this))
 
     $(this).click (event) ->
       on_pawn_click(event, $(this))
@@ -56,11 +52,9 @@ load = () ->
   map = new Map()
   pawn_unicity_list = new PawnsUnicity()
 
-  pawn_type = { 'inf' : 'infantery', 'art' : 'artillery', 'cav' : 'cavalry' }
-
   pawns = JSON.parse( $('#pawns').val() )
   for pawn in pawns
-    pawn_template_id = "##{pawn[3]}_#{pawn_type[pawn[2]]}_1"
+    pawn_template_id = "##{pawn[3]}_#{PawnModule.PAWNS_TYPES[pawn[2]]}_1"
     put_pawn_on_map( $(pawn_template_id), pawn[0], pawn[1], pawn[4] )
     pawn_unicity_list.add_hex( pawn[0], pawn[1] )
 

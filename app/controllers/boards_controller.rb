@@ -9,12 +9,6 @@ class BoardsController < ApplicationController
     @pawns = @board.pawns.pluck( :q, :r, :pawn_type, :side, :id ).to_json
   end
 
-  def store_pawn_position
-    p = Pawn.find( params[:pawn_id])
-    p.update!( q: params[:q], r: params[:r] )
-    head :ok
-  end
-
   # GET /boards
   # GET /boards.json
   def index

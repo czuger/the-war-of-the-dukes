@@ -5,10 +5,31 @@
 
 class @PawnModule
 
+  @PAWNS_TYPES = { 'inf' : 'infantery', 'art' : 'artillery', 'cav' : 'cavalry' }
+
   # Create a PawnModule object
   #
   # @param map [Map] a reference to the map
   constructor: ( @map ) ->
+
+
+  create_pawn_in_db: (pawn) ->
+    $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
+      q: pawn.attr( 'q' )
+      r: pawn.attr( 'r' )
+      error: (jqXHR, textStatus, errorThrown) ->
+        # $('body').append "AJAX Error: #{textStatus}" do something
+      success: (data, textStatus, jqXHR) ->
+        pawn.attr( 'pawn_id', data['pawn_id'] )
+        pawn.show()
+
+
+  update_pawn_position_in_db: (pawn) ->
+    $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{pawn.attr('pawn_id')}",
+      type: 'PATCH'
+      dataType: 'html'
+      error: (jqXHR, textStatus, errorThrown) ->
+        # $('body').append "AJAX Error: #{textStatus}" do something
 
 
   put_on_map: (template_pawn_object, q, r, position_on_svg=false) ->
