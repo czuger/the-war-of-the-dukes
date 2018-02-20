@@ -65,5 +65,5 @@ load = () ->
 
 
 $ ->
-  if window.location.pathname == '/' || window.location.pathname == '/test/show'
+  if window.location.pathname.match( /players\/\d+\/boards\/\d+\/play/ )
     load()

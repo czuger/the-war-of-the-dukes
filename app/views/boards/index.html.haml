@@ -7,8 +7,6 @@
       %th Opponent
       %th Turn
       %th
-      %th
-      %th
 
   %tbody
     - @boards.each do |board|
@@ -16,6 +14,8 @@
         %td= board.owner.name
         %td= board.opponent.name
         %td= board.turn
+        %td= link_to 'play', player_board_play_path( @player, board )
+
 
 %br
 

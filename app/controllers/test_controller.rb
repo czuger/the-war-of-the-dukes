@@ -2,11 +2,9 @@
 
 class TestController < ApplicationController
 
-  include MapHandler
 
-  def show
-    set_map
-  end
+
+
 
   def full_hex_map
     set_map

@@ -2,6 +2,12 @@ class BoardsController < ApplicationController
   before_action :set_board, only: []
   before_action :set_player, only: [:index, :new, :create]
 
+  include MapHandler
+
+  def play
+    set_map
+  end
+
   # GET /boards
   # GET /boards.json
   def index
