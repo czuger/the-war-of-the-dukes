@@ -7,7 +7,8 @@ map = null
 print_mouse_info = () ->
   $('#board').mousemove (event) ->
 
-    [ hex, hex_info ] = map.get_current_hex(event)
+    hex_info = map.get_current_hex_info(event)
+    console.log( hex_info )
 
     html = ''
     for info in hex_info
@@ -34,5 +35,5 @@ load = () ->
 
 
 $ ->
-  if window.location.pathname == '/edit_map/full_hex_map'
+  if window.location.pathname.match( /edit_map\/.+/ )
     load()

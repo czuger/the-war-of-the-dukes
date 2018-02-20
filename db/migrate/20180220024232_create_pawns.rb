@@ -9,6 +9,6 @@ class CreatePawns < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_index :pawns, [ :q, :r ], unique: true
+    add_index :pawns, [ :board_id, :q, :r ], unique: true
   end
 end

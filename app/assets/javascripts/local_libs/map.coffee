@@ -46,29 +46,28 @@ class @Map
 #    console.log( @map_hexes )
 
     o = $('#board').offset()
-    nx = Math.round( event.pageX - o.left - @map_hexes.hex_ray )
-    ny = Math.round( event.pageY - o.top - @map_hexes.hex_ray )
+    @nx = Math.round( event.pageX - o.left - @map_hexes.hex_ray )
+    @ny = Math.round( event.pageY - o.top - @map_hexes.hex_ray )
 
-    [ x_decal, y_decal ] = MapDecal.hex_to_xy_decal( nx, ny )
-    nx -= x_decal
-    ny -= y_decal
+    [ x_decal, y_decal ] = MapDecal.hex_to_xy_decal( @nx, @ny )
+    @nx -= x_decal
+    @ny -= y_decal
 
     #    console.log( nx, ny )
-    hex = @map_hexes.pixel_to_hex_flat_topped( nx, ny )
-    hex
+    @map_hexes.pixel_to_hex_flat_topped( @nx, @ny )
 
 
   get_current_hex_info: (event) ->
-    hex = get_current_hex(event)
+    hex = @get_current_hex(event)
 
     if hex
       color = hex.color
       [ col, row ] = hex.to_oddq_coords()
       cube = hex.to_cube()
-      hex_info = [ "color = #{color}", "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}",
+      hex_info = [ "color = #{color}", "x = #{event.pageX}, y = #{event.pageY}", "nx = #{@nx}, ny = #{@ny}",
         "q = #{hex.q}, r = #{hex.r}", "col = #{col}, row = #{row}", "z = #{cube.z}, x = #{cube.x}, y = #{cube.y}" ]
     else
-      hex_info = [ "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}" ]
+      hex_info = [ "x = #{event.pageX}, y = #{event.pageY}", "nx = #{@nx}, ny = #{@ny}" ]
 
     hex_info
 
