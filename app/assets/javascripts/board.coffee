@@ -21,7 +21,7 @@ print_mouse_info = () ->
 on_pawn_click = (event, pawn) ->
   [ hex, _ ] = map.get_current_hex(event)
 
-  result = DijkstraMovements.calc( map, hex, parseInt( pawn.attr( 'mov' ) ) )
+  result = DijkstraMovements.compute_movements( map, hex, parseInt( pawn.attr( 'mov' ) ) )
   last_selected_pawn = pawn
 
   for key in result
@@ -42,13 +42,19 @@ manage_movement = () ->
 
     $('.pawn_phantom').remove()
 
+    $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/store_pawn_position",
+      q: $(this).attr( 'q' )
+      r: $(this).attr( 'r' )
+      pawn_id: $(this).attr( 'pawn_id' )
+
     $(this).click (event) ->
       on_pawn_click(event, $(this))
 
 
-put_pawn_on_map = ( pawn, q, r ) ->
+put_pawn_on_map = ( pawn, q, r, pawn_id ) ->
 
   new_object = map.pawn_module.put_on_map( pawn, q, r )
+  new_object.attr( 'pawn_id', pawn_id )
 
   new_object.click (event) ->
     on_pawn_click(event, $(this))
@@ -64,7 +70,7 @@ load = () ->
   pawns = JSON.parse( $('#pawns').val() )
   for pawn in pawns
     pawn_template_id = "##{pawn[3]}_#{pawn_type[pawn[2]]}_1"
-    put_pawn_on_map( $(pawn_template_id), pawn[0], pawn[1] )
+    put_pawn_on_map( $(pawn_template_id), pawn[0], pawn[1], pawn[4] )
 
 
 $ ->

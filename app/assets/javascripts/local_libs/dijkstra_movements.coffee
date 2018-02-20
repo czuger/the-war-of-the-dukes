@@ -6,7 +6,7 @@ class @DijkstraMovements
   @movement_key: ( from, to ) ->
     [ @hex_key( from ), @hex_key( to ) ].join( '_' )
 
-  @calc: ( map, current_hex, max_distance ) ->
+  @compute_movements: ( map, current_hex, max_distance ) ->
     frontier = new PriorityQueue()
     frontier.push(current_hex, 0)
     frontier_history = []
@@ -36,4 +36,5 @@ class @DijkstraMovements
 
 #    console.log( frontier_history.sort() )
 
+    frontier_history.shift()
     frontier_history

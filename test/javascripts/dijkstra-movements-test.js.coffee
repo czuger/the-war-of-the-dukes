@@ -6,10 +6,10 @@ describe 'DijkstraMovements', ->
     @hex = new AxialHex( 13, 4 )
     @map = new Map( map_json_string, movement_graph_json_string )
 
-  describe '#calc()', ->
+  describe '#compute_movements()', ->
 
     it 'should reach target', ->
-      result = DijkstraMovements.calc( @map, @hex, 6 )
+      result = DijkstraMovements.compute_movements( @map, @hex, 6 )
 
       result.should.include('12_4')
       result.should.include('13_5')
