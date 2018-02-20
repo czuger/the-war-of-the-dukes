@@ -37,5 +37,5 @@ class @AxialHex extends BaseHex
   hex_key: () ->
     [ @q, @r ].join( '_' )
 
-#  @parse_hex_key: ( hex_key ) ->
-#    [ q, r ].join( '_' )
+  @parse_hex_key: ( hex_key ) ->
+    hex_key.split( '_' )

@@ -25,7 +25,7 @@ on_pawn_click = (event, pawn) ->
   last_selected_pawn = pawn
 
   for key in result
-    [q, r] = key.split( '_' )
+    [q, r] = AxialHex.parse_hex_key( key )
 
     map.pawn_module.create_phantom( pawn, parseInt(q), parseInt(r) )
 
