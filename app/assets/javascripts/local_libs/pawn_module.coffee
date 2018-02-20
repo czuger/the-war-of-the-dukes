@@ -13,15 +13,19 @@ class @PawnModule
   constructor: ( @map ) ->
 
 
-  create_pawn_in_db: (pawn) ->
-    $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
+  create_pawn_in_db: (pawn, pawn_type, side) ->
+    request = $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
       q: pawn.attr( 'q' )
       r: pawn.attr( 'r' )
-      error: (jqXHR, textStatus, errorThrown) ->
-        # $('body').append "AJAX Error: #{textStatus}" do something
-      success: (data, textStatus, jqXHR) ->
-        pawn.attr( 'pawn_id', data['pawn_id'] )
-        pawn.show()
+      pawn_type: pawn_type
+      side: side
+
+    request.success (data) ->
+      pawn.attr( 'pawn_id', data['pawn_id'] )
+      pawn.show()
+
+    request.error (jqXHR, textStatus, errorThrown) ->
+      # do something
 
 
   update_pawn_position_in_db: (pawn) ->

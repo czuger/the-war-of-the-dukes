@@ -15,11 +15,12 @@ class @AxialHex extends BaseHex
   # *Returns* : a new Hex::Axial object.
   constructor: ( @q, @r, @color ) ->
     super(@color)
-    if isNaN(@q) || typeof (@q) == 'string'
-      throw "q is not a number!"
 
-    if isNaN(@r) || typeof (@r) == 'string'
-      throw "q is not a number!"
+    throw 'q or r is not a number!' if isNaN(@q) || isNaN(@r)
+
+    @q = parseInt(@q) if typeof (@q) == 'string'
+    @r = parseInt(@r) if typeof (@r) == 'string'
+
 
   to_oddq_coords: () ->
     cube = @to_cube()

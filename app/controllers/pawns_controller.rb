@@ -1,7 +1,9 @@
 class PawnsController < ApplicationController
 
+  before_action :set_board
+
   def create
-    @pawn = p.create!( q: params[:q], r: params[:r] )
+    @pawn = @board.pawns.create!( pawn_params )
     head :ok
   end
 
@@ -14,4 +16,16 @@ class PawnsController < ApplicationController
   def delete
     raise 'Not implemented'
   end
+
+  private
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pawn_params
+    params.permit(:q, :r, :pawn_type, :side)
+  end
+
+  def set_board
+    @board = Board.find(params[:board_id])
+  end
+
 end

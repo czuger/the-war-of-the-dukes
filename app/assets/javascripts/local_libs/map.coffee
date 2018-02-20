@@ -55,6 +55,11 @@ class @Map
 
     #    console.log( nx, ny )
     hex = @map_hexes.pixel_to_hex_flat_topped( nx, ny )
+    hex
+
+
+  get_current_hex_info: (event) ->
+    hex = get_current_hex(event)
 
     if hex
       color = hex.color
@@ -65,7 +70,7 @@ class @Map
     else
       hex_info = [ "x = #{event.pageX}, y = #{event.pageY}", "nx = #{nx}, ny = #{ny}" ]
 
-    [ hex, hex_info ]
+    hex_info
 
 
   # This tells if an hex is within the borders of the map
