@@ -11,13 +11,16 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'edit_map/edit_hexes'
-  post 'edit_map/update_hexes'
+  namespace :edit_map do
+    get 'edit_hexes'
+    post 'update_hexes'
 
-  get 'edit_map/edit_top_layer'
-  post 'edit_map/update_top_layer'
+    get 'edit_top_layer'
+    post 'update_top_layer'
 
-  get 'test/full_hex_map'
+    get 'full_hex_map'
+    get '/', action: 'full_hex_map'
+  end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

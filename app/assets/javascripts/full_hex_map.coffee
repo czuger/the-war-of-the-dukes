@@ -13,12 +13,12 @@ load = () ->
         if show_center
           map.show_hex_center( q, r )
         else
-          map.pawn_module.put_on_map( $('#orf_infantery_1'), q, r )
+          map.pawn_module.put_on_map( $('#orf_infantery_1'), q, r, true )
 
   # Required to show svg elements
   $("body").html($("body").html()) if show_center
 
 
 $ ->
-  if window.location.pathname == '/test/full_hex_map'
+  if window.location.pathname == '/edit_map/full_hex_map'
     load()

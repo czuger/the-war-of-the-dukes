@@ -11,8 +11,8 @@ class @PawnModule
   constructor: ( @map ) ->
 
 
-  put_on_map: (template_pawn_object, q, r) ->
-    new_object = @position( template_pawn_object, q, r, true )
+  put_on_map: (template_pawn_object, q, r, position_on_svg=false) ->
+    new_object = @position( template_pawn_object, q, r, true, position_on_svg )
     new_object.attr( 'id', "pawn_#{q}_#{r}")
     new_object.removeClass( 'pawn_template' )
     new_object.addClass('pawn')
@@ -38,21 +38,21 @@ class @PawnModule
   # @param clone [Boolean] true if the pawn will be cloned, false if will be moved
   #
   # @return The pawn
-  position: ( pawn_object, q, r, clone=false ) ->
+  position: ( pawn_object, q, r, clone=false, position_on_svg=false ) ->
 
     if clone
       new_object = @clone( pawn_object, q, r )
     else
       new_object = pawn_object
 
-    offset = $('#board').offset()
-
     [ x, y ] = @map.get_xy_hex_position( new AxialHex( q, r ) )
     x -= 15
     y -= 16
 
-    x += offset.left
-    y += offset.top
+    unless position_on_svg
+      offset = $('#board').offset()
+      x += offset.left
+      y += offset.top
 
     new_object.css('top', y )
     new_object.css('left', x )

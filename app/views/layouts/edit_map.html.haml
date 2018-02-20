@@ -9,9 +9,9 @@
   %body
 
     #menu-area
-      = link_to 'Game', '/'
-      = link_to 'Full Map', test_full_hex_map_path
-      = link_to 'Hex Centers', test_full_hex_map_path( show_centers: true )
+      -#= link_to 'Game', '/'
+      = link_to 'Full Map', edit_map_full_hex_map_path
+      = link_to 'Hex Centers', edit_map_full_hex_map_path( show_centers: true )
       = link_to 'Edit Map', edit_map_edit_hexes_path( color: 'p' )
       = link_to 'Edit Roads', edit_map_edit_top_layer_path( layer: 'roads' )
       = link_to 'Edit Rivers', edit_map_edit_top_layer_path( layer: 'rivers' )
