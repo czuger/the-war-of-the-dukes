@@ -7,17 +7,6 @@ movement_graph = null
 last_selected_pawn = null
 pawn_unicity_list = null
 
-print_mouse_info = () ->
-  $('#board').mousemove (event) ->
-
-    [ hex, hex_info ] = map.get_current_hex(event)
-
-    html = ''
-    for info in hex_info
-      html += "<div>#{info}</div>"
-
-    $('#hex_info').html(html)
-
 
 on_pawn_click = (event, pawn) ->
   [ hex, _ ] = map.get_current_hex(event)
@@ -64,8 +53,6 @@ put_pawn_on_map = ( pawn, q, r, pawn_id ) ->
 
 
 load = () ->
-  print_mouse_info()
-
   map = new Map()
   pawn_unicity_list = new PawnsUnicity()
 

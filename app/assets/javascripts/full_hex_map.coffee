@@ -2,10 +2,24 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+map = null
+
+print_mouse_info = () ->
+  $('#board').mousemove (event) ->
+
+    [ hex, hex_info ] = map.get_current_hex(event)
+
+    html = ''
+    for info in hex_info
+      html += "<div>#{info}</div>"
+
+    $('#hex_info').html(html)
+
 load = () ->
   show_center = ($('#show_centers').val() == 'true')
 
   map = new Map()
+  print_mouse_info()
 
   for q in [0..31]
     for r in [-9..22]
