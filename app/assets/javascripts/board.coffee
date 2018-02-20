@@ -5,6 +5,7 @@
 map = null
 movement_graph = null
 last_selected_pawn = null
+pawn_unicity_list = null
 
 print_mouse_info = () ->
   $('#board').mousemove (event) ->
@@ -21,7 +22,7 @@ print_mouse_info = () ->
 on_pawn_click = (event, pawn) ->
   [ hex, _ ] = map.get_current_hex(event)
 
-  result = DijkstraMovements.compute_movements( map, hex, parseInt( pawn.attr( 'mov' ) ) )
+  result = DijkstraMovements.compute_movements( map, hex, parseInt( pawn.attr( 'mov' ) ), pawn_unicity_list.build_hex_key_exclusion_list() )
   last_selected_pawn = pawn
 
   for key in result
@@ -37,6 +38,8 @@ manage_movement = () ->
   $('.pawn_phantom').click ->
     $(this).removeClass('pawn_phantom')
     $(this).addClass('pawn')
+
+    pawn_unicity_list.move_hex( last_selected_pawn, $(this) )
 
     last_selected_pawn.remove()
 
@@ -64,6 +67,7 @@ load = () ->
   print_mouse_info()
 
   map = new Map()
+  pawn_unicity_list = new PawnsUnicity()
 
   pawn_type = { 'inf' : 'infantery', 'art' : 'artillery', 'cav' : 'cavalry' }
 
@@ -71,6 +75,7 @@ load = () ->
   for pawn in pawns
     pawn_template_id = "##{pawn[3]}_#{pawn_type[pawn[2]]}_1"
     put_pawn_on_map( $(pawn_template_id), pawn[0], pawn[1], pawn[4] )
+    pawn_unicity_list.add_hex( pawn[0], pawn[1] )
 
 
 $ ->
