@@ -1,10 +1,7 @@
 class @DijkstraMovements
 
-  @hex_key: ( hex ) ->
-    [ hex.q, hex.r ].join( '_' )
-
   @movement_key: ( from, to ) ->
-    [ @hex_key( from ), @hex_key( to ) ].join( '_' )
+    [ from.hex_key(), to.hex_key() ].join( '_' )
 
   @compute_movements: ( map, current_hex, max_distance ) ->
     frontier = new PriorityQueue()
@@ -12,27 +9,27 @@ class @DijkstraMovements
     frontier_history = []
     came_from = {}
     cost_so_far = {}
-    came_from[ @hex_key(current_hex) ] = null
-    cost_so_far[ @hex_key(current_hex) ] = 0
+    came_from[ current_hex.hex_key() ] = null
+    cost_so_far[ current_hex.hex_key() ] = 0
 
 #    console.log( "frontier =", frontier )
 
     while not frontier.empty()
       current = frontier.pop()
 #      console.log( "frontier.pop() =", current )
-      frontier_history.push( @hex_key( current ) ) unless @hex_key( current ) in frontier_history
+      frontier_history.push( current.hex_key() ) unless current.hex_key() in frontier_history
 
 #      console.log( "map.h_surrounding_hexes( current ) = ", map.map_hexes.h_surrounding_hexes( current ) )
       for n in map.map_hexes.h_surrounding_hexes( current )
 #        console.log( n )
-        new_cost = cost_so_far[ @hex_key(current) ] + map.movement_graph[ @movement_key( current, n ) ]
+        new_cost = cost_so_far[ current.hex_key() ] + map.movement_graph[ @movement_key( current, n ) ]
 
         unless new_cost > max_distance
-          if ( not cost_so_far[ @hex_key( n ) ] ) or new_cost < cost_so_far[ @hex_key( n ) ]
-            cost_so_far[ @hex_key( n ) ] = new_cost
+          if ( not cost_so_far[ n.hex_key() ] ) or new_cost < cost_so_far[ n.hex_key() ]
+            cost_so_far[ n.hex_key() ] = new_cost
             priority = new_cost
             frontier.push( n, priority )
-            came_from[ @hex_key( n ) ] = current
+            came_from[ n.hex_key() ] = current
 
 #    console.log( frontier_history.sort() )
 

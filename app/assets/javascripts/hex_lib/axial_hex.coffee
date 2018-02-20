@@ -33,3 +33,9 @@ class @AxialHex extends BaseHex
     z = @r
     y = -x-z
     return new CubeHex(x, y, z, @color)
+
+  hex_key: () ->
+    [ @q, @r ].join( '_' )
+
+#  @parse_hex_key: ( hex_key ) ->
+#    [ q, r ].join( '_' )
