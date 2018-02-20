@@ -1,4 +1,13 @@
-= render partial: 'show_map'
+#board
+  = image_tag 'board_cut_small.jpg'
+
+#pawn_type_selection
+  = radio_button_tag 'unit_type', 'inf', :checked => true
+  = label 'unit_type_inf', 'Infantry'
+  = radio_button_tag 'unit_type', 'cav'
+  = label 'unit_type_inf', 'Cavalry'
+  = radio_button_tag 'unit_type', 'art'
+  = label 'unit_type_inf', 'Artillery'
 
 #orf_infantery_1.pawn_template{ mov: 3 }
   = image_tag 'orf_infantery'
@@ -12,6 +21,8 @@
 #orf_artillery_1.pawn_template{ mov: 3 }
   = image_tag 'orf_artillery'
 
-= hidden_field_tag :pawns, @pawns
 = hidden_field_tag :player_id, @player.id
 = hidden_field_tag :board_id, @board.id
+= hidden_field_tag :pawns, @pawns
+= hidden_field_tag 'map', @json_map
+= hidden_field_tag 'movement_hash', @json_movement_graph
