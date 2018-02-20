@@ -45,9 +45,14 @@ class @PawnModule
     else
       new_object = pawn_object
 
+    offset = $('#board').offset()
+
     [ x, y ] = @map.get_xy_hex_position( new AxialHex( q, r ) )
     x -= 15
     y -= 16
+
+    x += offset.left
+    y += offset.top
 
     new_object.css('top', y )
     new_object.css('left', x )
