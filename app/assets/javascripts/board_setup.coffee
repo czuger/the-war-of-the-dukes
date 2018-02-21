@@ -6,22 +6,31 @@ map = null
 pawns_count = null
 side = null
 
+on_successfull_put_pawn_on_map = (data) ->
+  pawns_count[pawn_type] += 1
+  $( "#nb_#{pawn_type}" ).html( "#{pawns_count[pawn_type]} / 10" )
+  pawn.attr( 'pawn_id', data['pawn_id'] )
+  pawn.show()
+
+
+on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
+  $('#error_area').html(errorThrown)
+  $('#error_area').show().delay(3000).fadeOut(3000);
+
 put_pawn_on_map = ( pawn_template, hex_pos, pawn_type ) ->
 
   if pawns_count[pawn_type] < 10
     new_object = map.pawn_module.put_on_map( pawn_template, hex_pos.q, hex_pos.r )
     new_object.hide()
-    map.pawn_module.create_pawn_in_db( new_object, pawn_type, side )
-    pawns_count[pawn_type] += 1
-    $( "#nb_#{pawn_type}" ).html( "#{pawns_count[pawn_type]} / 10" )
+    map.pawn_module.create_pawn_in_db( new_object, pawn_type, side, on_successfull_put_pawn_on_map, on_error_put_pawn_on_map )
 
 
 load_pawns = () ->
 
   pawns = JSON.parse( $('#pawns').val() )
   for pawn in pawns
-    pawn_template_id = "##{side}_#{PawnModule.PAWNS_TYPES[pawn.pawn_type]}_1"
-    new_object = map.pawn_module.put_on_map( $(pawn_template_id), pawn.q, pawn.r )
+    pawn_class = "#{side}_#{PawnModule.PAWNS_TYPES[pawn.pawn_type]}_1"
+    new_object = map.pawn_module.put_on_map( pawn_class, pawn.q, pawn.r )
     new_object.attr( 'pawn_id', pawn.id )
 
 
