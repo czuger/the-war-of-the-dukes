@@ -25,8 +25,8 @@ class @AxialGrid
   #
   # @return [AxialHex] an hexagon
   #
-  cset: ( q, r, color, border ) ->
-    @hexes[ [ q, r ] ] = new AxialHex( q, r, color, border )
+  cset: ( q, r, data ) ->
+    @hexes[ [ q, r ] ] = new AxialHex( q, r, data )
 
   # Get the hexagon at a given position (q, r)
   #
@@ -63,7 +63,8 @@ class @AxialGrid
     js = JSON.parse( json_str )
 #    console.log( js )
     for je in js
-      this.cset( je['q'], je['r'], { color: je['c'].toLowerCase() }  )
+      je.data.color = je.data.color.toLowerCase()
+      this.cset( je['q'], je['r'], je.data )
 
 #    console.log( @hexes )
     null

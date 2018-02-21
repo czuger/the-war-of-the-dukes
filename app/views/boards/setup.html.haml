@@ -5,27 +5,27 @@
   %table
     %tr
       %td
-        = radio_button_tag 'unit_type', 'inf', :checked => true
+        = radio_button_tag 'pawn_type', 'inf', :checked => true
       %td
-        = label 'unit_type_inf', 'Infantry'
+        = label 'pawn_type_inf', 'Infantry'
       %td
         #nb_inf
           = @pawns_count[:inf]
           = '/ 10'
     %tr
       %td
-        = radio_button_tag 'unit_type', 'cav', :checked => true
+        = radio_button_tag 'pawn_type', 'cav', :checked => true
       %td
-        = label 'unit_type_cav', 'Cavalry'
+        = label 'pawn_type_cav', 'Cavalry'
       %td
         #nb_cav
           = @pawns_count[:cav]
           = '/ 10'
     %tr
       %td
-        = radio_button_tag 'unit_type', 'art', :checked => true
+        = radio_button_tag 'pawn_type', 'art', :checked => true
       %td
-        = label 'unit_type_art', 'Artillery'
+        = label 'pawn_type_art', 'Artillery'
       %td
         #nb_art
           = @pawns_count[:art]

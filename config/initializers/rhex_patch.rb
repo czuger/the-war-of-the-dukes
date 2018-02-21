@@ -8,7 +8,7 @@ class AxialGrid
       end
       if json_string && !json_string.empty?
         JSON.parse( json_string ).each do |hd|
-          cset( hd['q'], hd['r'], color: hd['c'] )
+          cset( hd['q'], hd['r'], data: hd['data'] )
         end
       end
     end
