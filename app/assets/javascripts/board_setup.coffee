@@ -7,10 +7,12 @@ pawns_count = null
 side = null
 pawns_on_map = null
 
+# On server communication error method
 on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
   $('#error_area').html(errorThrown)
   $('#error_area').show().delay(3000).fadeOut(3000);
 
+# Call the server to create à pawn (on the server side)
 create_pawn_in_db = ( hex, pawn_html_object, error_callback_function) ->
   request = $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
     q: hex.q
@@ -18,6 +20,7 @@ create_pawn_in_db = ( hex, pawn_html_object, error_callback_function) ->
     pawn_type: hex.data.pawn_type
     side: hex.data.side
 
+  # On server side pawn creation success
   request.success (data) ->
     pawns_count[hex.data.pawn_type] += 1
     $( "#nb_#{hex.data.pawn_type}" ).html( "#{pawns_count[hex.data.pawn_type]} / 10" )
@@ -27,10 +30,12 @@ create_pawn_in_db = ( hex, pawn_html_object, error_callback_function) ->
 
   request.error (jqXHR, textStatus, errorThrown) -> on_error_put_pawn_on_map(jqXHR, textStatus, errorThrown)
 
+# Call the server to delete a pawn
 delete_paw_from_db = ( hex, pawn_html_object, error_callback_function) ->
   request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{pawn_html_object.attr('pawn_id')}",
     type: 'DELETE'
 
+  # On server side deletion success
   request.success (data) ->
     pawns_count[hex.data.pawn_type] -= 1
     $( "#nb_#{hex.data.pawn_type}" ).html( "#{pawns_count[hex.data.pawn_type]} / 10" )
@@ -39,6 +44,7 @@ delete_paw_from_db = ( hex, pawn_html_object, error_callback_function) ->
 
   request.error (jqXHR, textStatus, errorThrown) -> on_error_put_pawn_on_map(jqXHR, textStatus, errorThrown)
 
+# Place a pawn on the map
 put_pawn_on_map = ( hex ) ->
   hex.data.pawn_type = $('input[name=pawn_type]:checked', '#pawn_type_selection').val()
   if pawns_count[hex.data.pawn_type] < 10
@@ -47,11 +53,12 @@ put_pawn_on_map = ( hex ) ->
     new_object.hide()
     create_pawn_in_db( hex, new_object, on_error_put_pawn_on_map )
 
+# Remove a pawn from the map
 remove_pawn_from_map = ( hex ) ->
   pawn_html_object = $("#pawn_#{hex.q}_#{hex.r}")
   delete_paw_from_db( hex, pawn_html_object, on_error_put_pawn_on_map )
 
-
+# Load the pawns on screen load
 load_pawns = () ->
 
   pawns = JSON.parse( $('#pawns').val() )
