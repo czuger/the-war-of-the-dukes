@@ -47,6 +47,15 @@ class @AxialGrid
   hset: ( hex ) ->
     @hexes[ [ hex.q, hex.r ] ] = hex
 
+  # Get the hexagon
+  #
+  # @param hex [AxialHex] the hexagon you want to get from the grid
+  #
+  # @return [AxialHex] the hexagon at the requested position. nil if nothing
+  #
+  hget: ( hex ) ->
+    @hexes[ [ hex.q, hex.r ] ]
+
   # Remove an hexagon from a grid
   #
   # @param hex [AxialHex] the hexagon you want to add into the grid

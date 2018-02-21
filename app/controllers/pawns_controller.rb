@@ -13,8 +13,8 @@ class PawnsController < ApplicationController
     render json: { pawn_id: p.id }
   end
 
-  def delete
-    raise 'Not implemented'
+  def destroy
+    Pawn.destroy( params[:id] )
   end
 
   private

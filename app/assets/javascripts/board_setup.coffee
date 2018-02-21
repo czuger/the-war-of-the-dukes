@@ -25,12 +25,28 @@ create_pawn_in_db = ( hex, pawn_html_object, error_callback_function) ->
 
   request.error (jqXHR, textStatus, errorThrown) -> on_error_put_pawn_on_map(jqXHR, textStatus, errorThrown)
 
-put_pawn_on_map = ( hex ) ->
+delete_paw_from_db = ( hex, pawn_html_object, error_callback_function) ->
+  request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{pawn_html_object.attr('pawn_id')}",
+    type: 'DELETE'
 
+  request.success (data) ->
+    pawns_count[hex.data.pawn_type] -= 1
+    $( "#nb_#{hex.data.pawn_type}" ).html( "#{pawns_count[hex.data.pawn_type]} / 10" )
+    pawn_html_object.remove()
+
+  request.error (jqXHR, textStatus, errorThrown) -> on_error_put_pawn_on_map(jqXHR, textStatus, errorThrown)
+
+put_pawn_on_map = ( hex ) ->
   if pawns_count[hex.data.pawn_type] < 10
+    hex.data.pawn_type = $('input[name=pawn_type]:checked', '#pawn_type_selection').val()
+    hex.data.side = side
     new_object = map.pawn_module.put_on_map( hex )
     new_object.hide()
     create_pawn_in_db( hex, new_object, on_error_put_pawn_on_map )
+
+remove_pawn_from_map = ( hex ) ->
+  pawn_html_object = $("#pawn_#{hex.q}_#{hex.r}")
+  delete_paw_from_db( hex, pawn_html_object, on_error_put_pawn_on_map )
 
 
 load_pawns = () ->
@@ -53,9 +69,10 @@ load = () ->
 
       hex = map.get_current_hex(event)
       if hex.data.color != 'w' && hex.data.side == side
-        hex.data.pawn_type = $('input[name=pawn_type]:checked', '#pawn_type_selection').val()
-        hex.data.side = side
-        put_pawn_on_map( hex )
+        if map.map_hexes.hget( hex )
+          remove_pawn_from_map( hex )
+        else
+          put_pawn_on_map( hex )
 
 
 $ ->

@@ -11,7 +11,6 @@ class @PawnModule
   #
   # @param map [Map] a reference to the map
   constructor: ( @map ) ->
-    @pawn_unicity_list = new PawnsUnicity()
 
 
   update_pawn_position_in_db: (pawn) ->
@@ -28,7 +27,7 @@ class @PawnModule
     new_object.addClass( @pawn_class( hex ) )
     new_object = @position( new_object, hex.q, hex.r, position_on_svg )
     new_object.appendTo( '#board' )
-    @pawn_unicity_list.add_hex( hex.q, hex.r )
+    @map.map_hexes.hset( hex )
     new_object
 
 
