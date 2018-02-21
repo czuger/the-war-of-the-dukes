@@ -52,9 +52,10 @@ load = () ->
     $('#board').click (event) ->
 
       hex = map.get_current_hex(event)
-      hex.data = { unit_type: $('input[name=unit_type]:checked', '#pawn_type_selection').val(), side: side }
-
-      put_pawn_on_map( hex )
+      unless hex.data.color == 'w'
+        hex.data.unit_type = $('input[name=unit_type]:checked', '#pawn_type_selection').val()
+        hex.data.side = side
+        put_pawn_on_map( hex )
 
 
 $ ->

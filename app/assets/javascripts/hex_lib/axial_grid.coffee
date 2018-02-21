@@ -63,7 +63,7 @@ class @AxialGrid
     js = JSON.parse( json_str )
 #    console.log( js )
     for je in js
-      this.cset( je['q'], je['r'], je['c'], je['b'] )
+      this.cset( je['q'], je['r'], { color: je['c'].toLowerCase() }  )
 
 #    console.log( @hexes )
     null
