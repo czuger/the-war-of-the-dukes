@@ -41,7 +41,7 @@ manage_movement = () ->
 
 put_pawn_on_map = ( pawn, q, r, pawn_id ) ->
 
-  new_object = map.pawn_module.put_on_map( pawn, q, r )
+  new_object = map.pawn_module.place_on_screen_map( pawn, q, r )
   new_object.attr( 'pawn_id', pawn_id )
 
   new_object.click (event) ->

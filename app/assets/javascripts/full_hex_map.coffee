@@ -27,7 +27,7 @@ load = () ->
         if show_center
           map.show_hex_center( q, r )
         else
-          map.pawn_module.put_on_map( new AxialHex( q, r, { side: 'orf', pawn_type: 'inf' } ), true )
+          map.pawn_module.place_on_screen_map( new AxialHex( q, r, { side: 'orf', pawn_type: 'inf' } ), true )
 
   # Required to show svg elements
   $("body").html($("body").html()) if show_center

@@ -4,7 +4,7 @@ class PawnsController < ApplicationController
 
   def create
     @pawn = @board.pawns.create!( pawn_params )
-    head :ok
+    render json: { pawn_id: @pawn.id }
   end
 
   def update

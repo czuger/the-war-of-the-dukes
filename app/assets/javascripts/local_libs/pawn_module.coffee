@@ -21,13 +21,12 @@ class @PawnModule
         # $('body').append "AJAX Error: #{textStatus}" do something
 
 
-  put_on_map: ( hex, position_on_svg=false) ->
+  place_on_screen_map: ( hex, position_on_svg=false) ->
     new_object = $('<div>')
     new_object.attr( 'id', "pawn_#{hex.q}_#{hex.r}")
     new_object.addClass( @pawn_class( hex ) )
     new_object = @position( new_object, hex.q, hex.r, position_on_svg )
     new_object.appendTo( '#board' )
-    @map.map_hexes.hset( hex )
     new_object
 
 
