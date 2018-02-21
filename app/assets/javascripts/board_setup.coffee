@@ -2,10 +2,12 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+# This map contain the terrain informations
 map = null
+# This map contains the pawns informations
+pawns_on_map = null
 pawns_count = null
 side = null
-pawns_on_map = null
 
 # On server communication error method
 on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
