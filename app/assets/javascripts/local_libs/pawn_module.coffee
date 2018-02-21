@@ -42,7 +42,7 @@ class @PawnModule
 
 
   pawn_class: (hex ) ->
-    "#{hex.data.side}_#{PAWNS_TYPES[hex.data.unit_type]}_1"
+    "#{hex.data.side}_#{PAWNS_TYPES[hex.data.pawn_type]}_1"
 
 
   # Position a pawn on the map

@@ -8,7 +8,6 @@ print_mouse_info = () ->
   $('#board').mousemove (event) ->
 
     hex_info = map.get_current_hex_info(event)
-    console.log( hex_info )
 
     html = ''
     for info in hex_info
@@ -28,7 +27,7 @@ load = () ->
         if show_center
           map.show_hex_center( q, r )
         else
-          map.pawn_module.put_on_map( $('#orf_infantery_1'), q, r, true )
+          map.pawn_module.put_on_map( new AxialHex( q, r, { side: 'orf', pawn_type: 'inf' } ), true )
 
   # Required to show svg elements
   $("body").html($("body").html()) if show_center

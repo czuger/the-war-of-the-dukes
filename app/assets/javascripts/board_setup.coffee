@@ -14,12 +14,12 @@ create_pawn_in_db = ( hex, pawn_html_object, error_callback_function) ->
   request = $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
     q: hex.q
     r: hex.r
-    pawn_type: hex.data.unit_type
+    pawn_type: hex.data.pawn_type
     side: hex.data.side
 
   request.success (data) ->
-    pawns_count[hex.data.unit_type] += 1
-    $( "#nb_#{hex.data.unit_type}" ).html( "#{pawns_count[hex.data.unit_type]} / 10" )
+    pawns_count[hex.data.pawn_type] += 1
+    $( "#nb_#{hex.data.pawn_type}" ).html( "#{pawns_count[hex.data.pawn_type]} / 10" )
     pawn_html_object.attr( 'pawn_id', data['pawn_id'] )
     pawn_html_object.show()
 
@@ -27,7 +27,7 @@ create_pawn_in_db = ( hex, pawn_html_object, error_callback_function) ->
 
 put_pawn_on_map = ( hex ) ->
 
-  if pawns_count[hex.data.unit_type] < 10
+  if pawns_count[hex.data.pawn_type] < 10
     new_object = map.pawn_module.put_on_map( hex )
     new_object.hide()
     create_pawn_in_db( hex, new_object, on_error_put_pawn_on_map )
@@ -37,7 +37,7 @@ load_pawns = () ->
 
   pawns = JSON.parse( $('#pawns').val() )
   for pawn in pawns
-    new_object = map.pawn_module.put_on_map( new AxialHex( pawn.q, pawn.r, { side: side, unit_type: pawn.pawn_type } ) )
+    new_object = map.pawn_module.put_on_map( new AxialHex( pawn.q, pawn.r, { side: side, pawn_type: pawn.pawn_type } ) )
     new_object.attr( 'pawn_id', pawn.id )
 
 
@@ -53,7 +53,7 @@ load = () ->
 
       hex = map.get_current_hex(event)
       unless hex.data.color == 'w'
-        hex.data.unit_type = $('input[name=unit_type]:checked', '#pawn_type_selection').val()
+        hex.data.pawn_type = $('input[name=pawn_type]:checked', '#pawn_type_selection').val()
         hex.data.side = side
         put_pawn_on_map( hex )
 
