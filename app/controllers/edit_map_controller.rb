@@ -2,8 +2,9 @@ class EditMapController < ApplicationController
 
   include MapHandler
 
-  ROADS_FILE = 'data/roads.json'
-  RIVERS_FILE = 'data/rivers.json'
+  FILES = {
+      'road' => 'data/roads.json', 'rivers' => 'data/rivers.json', 'orf_border' => 'data/orf_border.json'
+  }
 
   def full_hex_map
     set_map
@@ -25,7 +26,7 @@ class EditMapController < ApplicationController
   def edit_top_layer
     set_map
 
-    top_layer_file = params[:layer] == 'roads' ? ROADS_FILE : RIVERS_FILE
+    top_layer_file = FILES[params[:layer]]
 
     @json_top_layer = [].to_json
 
@@ -45,7 +46,7 @@ class EditMapController < ApplicationController
 
   def update_top_layer
 
-    top_layer_file = params[:layer] == 'roads' ? ROADS_FILE : RIVERS_FILE
+    top_layer_file = FILES[params[:layer]]
 
     map = AxialGrid.new
     map.from_json_file( top_layer_file )
@@ -54,7 +55,7 @@ class EditMapController < ApplicationController
     if params[:color] == ''
       map.cclear( params[:q].to_i, params[:r].to_i )
     else
-      map.cset( params[:q].to_i, params[:r].to_i, color: 'R' )
+      map.cset( params[:q].to_i, params[:r].to_i, color: params[:color] )
     end
 
     map.to_json_file( top_layer_file )

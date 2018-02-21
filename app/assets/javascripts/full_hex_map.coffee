@@ -34,5 +34,5 @@ load = () ->
 
 
 $ ->
-  if window.location.pathname.match( /edit_map\/.+/ )
+  if window.location.pathname == '/edit_map/full_hex_map'
     load()

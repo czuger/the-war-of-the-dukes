@@ -4,12 +4,12 @@
 
 root = exports ? this
 
-top_layer = null
+layer = null
 
 load_top_layer = () ->
 
   for hex in JSON.parse( $('#json_top_layer').val() )
-    hex = new AxialHex( parseInt(hex['q']), parseInt(hex['r']), hex['c'] )
+    hex = new AxialHex( parseInt(hex['q']), parseInt(hex['r']), { color: hex['c'] } )
     root.set_letter( hex )
 
 
@@ -20,21 +20,21 @@ manage_changes = ( layer ) ->
 
   $('#board').mousedown (event) ->
 
-    [ hex, _ ] = root.current_map.get_current_hex(event)
+    hex = root.current_map.get_current_hex(event)
 
-    if hex.color == 'R'
-      hex.color = null
+    if hex.data.color == 'R' || hex.data.color == 'B'
+      hex.data.color = null
       root.clear_letter( hex )
       root.current_map.map_hexes.hclear( hex )
     else
-      hex.color = 'R'
+      hex.data.color = ( if layer == 'orf_border' then 'B' else 'R' )
       root.set_letter( hex )
       root.current_map.map_hexes.hset( hex )
 
     $.post '/edit_map/update_top_layer',
       q: hex.q
       r: hex.r
-      color: hex.color
+      color: hex.data.color
       layer: layer
 
 

@@ -11,7 +11,7 @@ root.set_letter = ( hex ) ->
 
   $("#edit_letter_#{hex.q}_#{hex.r}").remove()
 
-  div = $("<div>#{hex.color.toUpperCase()}</div>")
+  div = $("<div>#{hex.data.color.toUpperCase()}</div>")
   div.css( 'top', y-12 )
   div.css( 'left', x-5 )
   div.addClass( 'edit_terrain_type' )
@@ -33,7 +33,7 @@ root.load_map = () ->
 
   for _, hex of root.current_map.map_hexes.hexes
 
-    if color == hex.color.toUpperCase()
+    if color == hex.data.color.toUpperCase()
       set_letter( hex )
 
 manage_changes = () ->
@@ -59,7 +59,7 @@ manage_changes = () ->
     $.post '/edit_map/update_hexes',
       q: hex.q
       r: hex.r
-      color: hex.color
+      color: hex.data.color
 
 
 $(window).load ->
