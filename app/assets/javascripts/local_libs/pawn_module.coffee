@@ -5,27 +5,13 @@
 
 class @PawnModule
 
-  @PAWNS_TYPES = { 'inf' : 'infantry', 'art' : 'artillery', 'cav' : 'cavalry' }
+  PAWNS_TYPES = { 'inf' : 'infantry', 'art' : 'artillery', 'cav' : 'cavalry' }
 
   # Create a PawnModule object
   #
   # @param map [Map] a reference to the map
   constructor: ( @map ) ->
     @pawn_unicity_list = new PawnsUnicity()
-
-
-  create_pawn_in_db: (pawn, pawn_type, side, success_callback_function, error_callback_function) ->
-    request = $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
-      q: pawn.attr( 'q' )
-      r: pawn.attr( 'r' )
-      pawn_type: pawn_type
-      side: side
-
-    request.success (data) ->
-      success_callback_function(data)
-
-    request.error (jqXHR, textStatus, errorThrown) ->
-      error_callback_function(jqXHR, textStatus, errorThrown)
 
 
   update_pawn_position_in_db: (pawn) ->
@@ -36,14 +22,13 @@ class @PawnModule
         # $('body').append "AJAX Error: #{textStatus}" do something
 
 
-  put_on_map: (pawn_class, q, r, position_on_svg=false) ->
+  put_on_map: ( hex, position_on_svg=false) ->
     new_object = $('<div>')
-    new_object.attr( 'id', "pawn_#{q}_#{r}")
-    new_object.removeClass( 'pawn_template' )
-    new_object.addClass(pawn_class)
-    new_object = @position( new_object, q, r, position_on_svg )
+    new_object.attr( 'id', "pawn_#{hex.q}_#{hex.r}")
+    new_object.addClass( @pawn_class( hex ) )
+    new_object = @position( new_object, hex.q, hex.r, position_on_svg )
     new_object.appendTo( '#board' )
-    @pawn_unicity_list.add_hex( q, r )
+    @pawn_unicity_list.add_hex( hex.q, hex.r )
     new_object
 
 
@@ -54,6 +39,10 @@ class @PawnModule
     new_object.addClass('pawn_phantom')
     new_object.appendTo( '#board' )
     new_object
+
+
+  pawn_class: (hex ) ->
+    "#{hex.data.side}_#{PAWNS_TYPES[hex.data.unit_type]}_1"
 
 
   # Position a pawn on the map

@@ -13,8 +13,11 @@ class @AxialHex extends BaseHex
   # - +border+ is a boolean and mean that the hex is at the border of the map.
   #
   # *Returns* : a new Hex::Axial object.
-  constructor: ( @q, @r, @color ) ->
-    super(@color)
+  #
+  # Color is included in data
+  #
+  constructor: ( @q, @r, @data ) ->
+    super(@data)
 
     throw 'q or r is not a number!' if isNaN(@q) || isNaN(@r)
 

@@ -6,31 +6,38 @@ map = null
 pawns_count = null
 side = null
 
-on_successfull_put_pawn_on_map = (data) ->
-  pawns_count[pawn_type] += 1
-  $( "#nb_#{pawn_type}" ).html( "#{pawns_count[pawn_type]} / 10" )
-  pawn.attr( 'pawn_id', data['pawn_id'] )
-  pawn.show()
-
-
 on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
   $('#error_area').html(errorThrown)
   $('#error_area').show().delay(3000).fadeOut(3000);
 
-put_pawn_on_map = ( pawn_template, hex_pos, pawn_type ) ->
+create_pawn_in_db = ( hex, pawn_html_object, error_callback_function) ->
+  request = $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
+    q: hex.q
+    r: hex.r
+    pawn_type: hex.data.unit_type
+    side: hex.data.side
 
-  if pawns_count[pawn_type] < 10
-    new_object = map.pawn_module.put_on_map( pawn_template, hex_pos.q, hex_pos.r )
+  request.success (data) ->
+    pawns_count[hex.data.unit_type] += 1
+    $( "#nb_#{hex.data.unit_type}" ).html( "#{pawns_count[hex.data.unit_type]} / 10" )
+    pawn_html_object.attr( 'pawn_id', data['pawn_id'] )
+    pawn_html_object.show()
+
+  request.error (jqXHR, textStatus, errorThrown) -> on_error_put_pawn_on_map(jqXHR, textStatus, errorThrown)
+
+put_pawn_on_map = ( hex ) ->
+
+  if pawns_count[hex.data.unit_type] < 10
+    new_object = map.pawn_module.put_on_map( hex )
     new_object.hide()
-    map.pawn_module.create_pawn_in_db( new_object, pawn_type, side, on_successfull_put_pawn_on_map, on_error_put_pawn_on_map )
+    create_pawn_in_db( hex, new_object, on_error_put_pawn_on_map )
 
 
 load_pawns = () ->
 
   pawns = JSON.parse( $('#pawns').val() )
   for pawn in pawns
-    pawn_class = "#{side}_#{PawnModule.PAWNS_TYPES[pawn.pawn_type]}_1"
-    new_object = map.pawn_module.put_on_map( pawn_class, pawn.q, pawn.r )
+    new_object = map.pawn_module.put_on_map( new AxialHex( pawn.q, pawn.r, { side: side, unit_type: pawn.pawn_type } ) )
     new_object.attr( 'pawn_id', pawn.id )
 
 
@@ -43,11 +50,11 @@ load = () ->
 
   if side
     $('#board').click (event) ->
-      selected_radio = $('input[name=unit_type]:checked', '#pawn_type_selection').val()
 
       hex = map.get_current_hex(event)
-      pawn_template = $("##{side}_#{PawnModule.PAWNS_TYPES[selected_radio]}_1")
-      put_pawn_on_map(pawn_template, hex, selected_radio )
+      hex.data = { unit_type: $('input[name=unit_type]:checked', '#pawn_type_selection').val(), side: side }
+
+      put_pawn_on_map( hex )
 
 
 $ ->
