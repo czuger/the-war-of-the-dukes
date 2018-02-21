@@ -1,6 +1,7 @@
 class AxialGrid
 
-  def from_json_file( file_path )
+  def self.from_json_file( file_path )
+    map = AxialGrid.new
     if File.exist?( file_path )
       json_string = nil
       File.open( file_path, 'r' ) do |f|
@@ -8,10 +9,11 @@ class AxialGrid
       end
       if json_string && !json_string.empty?
         JSON.parse( json_string ).each do |hd|
-          cset( hd['q'], hd['r'], data: hd['data'] )
+          map.cset( hd['q'], hd['r'], data: hd['data'] )
         end
       end
     end
+    map
   end
 
   def to_json_file( file_path )

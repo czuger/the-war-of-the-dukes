@@ -1,9 +1,7 @@
 class EditMapController < ApplicationController
 
-  include MapHandler
-
   FILES = {
-      'road' => 'data/roads.json', 'rivers' => 'data/rivers.json', 'orf_border' => 'data/orf_border.json'
+      'roads' => 'data/roads.json', 'rivers' => 'data/rivers.json', 'orf_border' => 'data/orf_border.json'
   }
 
   def full_hex_map
@@ -36,7 +34,7 @@ class EditMapController < ApplicationController
       end
     end
 
-    @map.from_json_file( top_layer_file )
+    # @map = AxialGrid.from_json_file( top_layer_file )
 
     @json_map = @map.to_json
     @json_movement_graph = {}.to_json
@@ -48,8 +46,7 @@ class EditMapController < ApplicationController
 
     top_layer_file = FILES[params[:layer]]
 
-    map = AxialGrid.new
-    map.from_json_file( top_layer_file )
+    map = AxialGrid.from_json_file( top_layer_file )
     # puts params[:q].inspect
 
     if params[:color] == ''
@@ -61,5 +58,14 @@ class EditMapController < ApplicationController
     map.to_json_file( top_layer_file )
     head :ok
   end
+
+  private
+
+  def set_map
+    @json_movement_graph = File.open( 'data/movement_graph.json' ).read
+    @map = AxialGrid.from_json_file( 'data/map.json' )
+    @json_map = @map.to_json
+  end
+
 
 end
