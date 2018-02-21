@@ -5,7 +5,7 @@
 
 class @PawnModule
 
-  @PAWNS_TYPES = { 'inf' : 'infantery', 'art' : 'artillery', 'cav' : 'cavalry' }
+  @PAWNS_TYPES = { 'inf' : 'infantry', 'art' : 'artillery', 'cav' : 'cavalry' }
 
   # Create a PawnModule object
   #

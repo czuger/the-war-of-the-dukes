@@ -31,8 +31,8 @@
           = @pawns_count[:art]
           = '/ 10'
 
-#orf_infantery_1.pawn_template{ mov: 3 }
-  = image_tag 'orf_infantery'
+#orf_infantry_1.pawn_template{ mov: 3 }
+  = image_tag 'orf_infantry'
 
 #orf_cavalry_1.pawn_template{ mov: 6 }
   = image_tag 'orf_cavalry'
@@ -40,8 +40,18 @@
 #orf_artillery_1.pawn_template{ mov: 3 }
   = image_tag 'orf_artillery'
 
+#wulf_infantry_1.pawn_template{ mov: 3 }
+  = image_tag 'wulf_infantry'
+
+#wulf_cavalry_1.pawn_template{ mov: 6 }
+  = image_tag 'wulf_cavalry'
+
+#wulf_artillery_1.pawn_template{ mov: 3 }
+  = image_tag 'wulf_artillery'  
+
 = hidden_field_tag :player_id, @player.id
 = hidden_field_tag :board_id, @board.id
+= hidden_field_tag :side, @side
 
 = hidden_field_tag :pawns, @pawns.to_json
 = hidden_field_tag 'pawns_count', @pawns_count.to_json

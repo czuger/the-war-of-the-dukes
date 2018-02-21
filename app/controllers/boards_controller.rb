@@ -1,12 +1,13 @@
 class BoardsController < ApplicationController
-  before_action :set_board, only: [ :play, :setup ]
   before_action :set_player
+  before_action :set_board, only: [ :play, :setup ]
+  before_action :set_side, only: [ :play, :setup ]
 
   include MapHandler
 
   def setup
     set_map
-    @pawns = @board.pawns
+    @pawns = @board.pawns.where( side: @side )
 
     @pawns_count = { inf: 0, cav: 0 , art: 0 }
     @pawns_count = @pawns.map{ |e| e.pawn_type }.each_with_object(@pawns_count) { |word, counts| counts[word.to_sym] += 1 }
@@ -37,7 +38,7 @@ class BoardsController < ApplicationController
 
     respond_to do |format|
       if @board.save
-        place_pawns_on_board
+        # place_pawns_on_board
         format.html { redirect_to player_boards_path( @player.id ), notice: 'Board was successfully created.' }
         format.json { render :show, status: :created, location: @board }
       else
@@ -58,6 +59,12 @@ class BoardsController < ApplicationController
       @player = Player.find(params[:player_id])
     end
 
+    def set_side
+      @side = nil
+      @side = 'orf' if @player.id == @board.owner_id
+      @side = 'wulf' if @player.id == @board.opponent_id
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def board_params
       params.require(:board).permit(:opponent_id, :turn).merge(
@@ -67,9 +74,9 @@ class BoardsController < ApplicationController
       )
     end
 
-    def place_pawns_on_board
-      @board.pawns.create!( q: 27, r: 8, pawn_type: 'inf', side: 'orf' )
-      @board.pawns.create!( q: 30, r: 1, pawn_type: 'art', side: 'orf' )
-      @board.pawns.create!( q: 28, r: 5, pawn_type: 'cav', side: 'orf' )
-    end
+    # def place_pawns_on_board
+    #   @board.pawns.create!( q: 27, r: 8, pawn_type: 'inf', side: 'orf' )
+    #   @board.pawns.create!( q: 30, r: 1, pawn_type: 'art', side: 'orf' )
+    #   @board.pawns.create!( q: 28, r: 5, pawn_type: 'cav', side: 'orf' )
+    # end
 end
