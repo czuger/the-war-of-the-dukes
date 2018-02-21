@@ -52,7 +52,7 @@ load = () ->
     $('#board').click (event) ->
 
       hex = map.get_current_hex(event)
-      unless hex.data.color == 'w'
+      if hex.data.color != 'w' && hex.data.side == side
         hex.data.pawn_type = $('input[name=pawn_type]:checked', '#pawn_type_selection').val()
         hex.data.side = side
         put_pawn_on_map( hex )
