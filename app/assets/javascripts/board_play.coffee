@@ -5,20 +5,31 @@
 map = null
 movement_graph = null
 last_selected_pawn = null
-pawn_unicity_list = null
+pawns_on_map = null
+side = null
+
+movements = { 'art': 3, 'cav': 6, 'inf': 3 }
 
 on_pawn_click = (event, pawn) ->
-  [ hex, _ ] = map.get_current_hex(event)
 
-  result = DijkstraMovements.compute_movements( map, hex, parseInt( pawn.attr( 'mov' ) ), pawn_unicity_list.build_hex_key_exclusion_list() )
+  $('.pawn_phantom').remove()
+
+  terrain_hex = map.get_current_hex(event)
+  pawn_hex = pawns_on_map.hget(terrain_hex)
+
+  result = DijkstraMovements.compute_movements( map, pawn_hex, movements[pawn_hex.data.pawn_type] , pawns_on_map.build_hex_keys_hash() )
   last_selected_pawn = pawn
 
   for key in result
     [q, r] = AxialHex.parse_hex_key( key )
 
-    map.pawn_module.create_phantom( pawn, parseInt(q), parseInt(r) )
+    tmp_hex = JSON.parse(JSON.stringify(pawn_hex));
+    tmp_hex.q = parseInt(q)
+    tmp_hex.r = parseInt(r)
 
-  manage_movement()
+    map.pawn_module.create_phantom( tmp_hex )
+
+#  manage_movement()
   null
 
 
@@ -39,22 +50,16 @@ manage_movement = () ->
       on_pawn_click(event, $(this))
 
 
-put_pawn_on_map = ( pawn, q, r, pawn_id ) ->
-
-  new_object = map.pawn_module.place_on_screen_map( pawn, q, r )
-  new_object.attr( 'pawn_id', pawn_id )
-
-  new_object.click (event) ->
-    on_pawn_click(event, $(this))
-
-
 load = () ->
   map = new Map()
+  pawns_on_map = new PawnsOnMap()
+  side = $('#side').val()
 
-  pawns = JSON.parse( $('#pawns').val() )
-  for pawn in pawns
-    pawn_template_id = "##{pawn[3]}_#{PawnModule.PAWNS_TYPES[pawn[2]]}_1"
-    put_pawn_on_map( $(pawn_template_id), pawn[0], pawn[1], pawn[4] )
+  map.pawn_module.load_pawns( pawns_on_map )
+
+  $(".#{side}").click (event) ->
+    on_pawn_click(event, $(this))
+
 
 $ ->
   if window.location.pathname.match( /players\/\d+\/boards\/\d+\/play/ )

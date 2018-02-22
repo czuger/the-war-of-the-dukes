@@ -13,6 +13,19 @@ class @PawnModule
   constructor: ( @map ) ->
 
 
+  # Load the pawns on screen load
+  load_pawns: ( pawns_grid ) ->
+    pawns = JSON.parse( $('#pawns').val() )
+    for pawn in pawns
+      hex = new AxialHex( pawn.q, pawn.r, { side: pawn.side, pawn_type: pawn.pawn_type } )
+      new_object = @place_on_screen_map( hex )
+      new_object.attr( 'pawn_id', pawn.id )
+      new_object.addClass('pawn')
+      new_object.addClass(pawn.side)
+      pawns_grid.hset( hex )
+    null
+
+
   update_pawn_position_in_db: (pawn) ->
     $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{pawn.attr('pawn_id')}",
       type: 'PATCH'
@@ -30,11 +43,12 @@ class @PawnModule
     new_object
 
 
-  create_phantom: (pawn, q, r) ->
-    new_object = @position( pawn, q, r, true )
-    new_object.attr( 'id', "pawn_phantom_#{q}_#{r}")
-    new_object.removeClass( 'pawn' )
+  create_phantom: (hex) ->
+    new_object = $('<div>')
+    new_object.attr( 'id', "pawn_phantom_#{hex.q}_#{hex.r}")
     new_object.addClass('pawn_phantom')
+    new_object.addClass( @pawn_class( hex ) )
+    new_object = @position( new_object, hex.q, hex.r )
     new_object.appendTo( '#board' )
     new_object
 

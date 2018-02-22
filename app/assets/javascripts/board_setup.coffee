@@ -60,16 +60,6 @@ remove_pawn_from_map = ( hex ) ->
   pawn_html_object = $("#pawn_#{hex.q}_#{hex.r}")
   delete_paw_from_db( hex, pawn_html_object, on_error_put_pawn_on_map )
 
-# Load the pawns on screen load
-load_pawns = () ->
-
-  pawns = JSON.parse( $('#pawns').val() )
-  for pawn in pawns
-    hex = new AxialHex( pawn.q, pawn.r, { side: pawn.side, pawn_type: pawn.pawn_type } )
-    new_object = map.pawn_module.place_on_screen_map( hex )
-    new_object.attr( 'pawn_id', pawn.id )
-    pawns_on_map.hset( hex )
-
 
 load = () ->
   map = new Map()
@@ -77,7 +67,7 @@ load = () ->
   pawns_count = JSON.parse( $('#pawns_count').val() )
   side = $('#side').val()
 
-  load_pawns()
+  map.pawn_module.load_pawns( pawns_on_map )
 
   if side
     $('#board').click (event) ->
