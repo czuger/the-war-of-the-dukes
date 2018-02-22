@@ -7,10 +7,11 @@ class BoardsController < ApplicationController
 
   def setup
     set_map
-    @pawns = @board.pawns.where( side: @side )
+    @pawns = @board.pawns
 
+    side_pawns = @board.pawns.where( side: @side )
     @pawns_count = { inf: 0, cav: 0 , art: 0 }
-    @pawns_count = @pawns.map{ |e| e.pawn_type }.each_with_object(@pawns_count) { |word, counts| counts[word.to_sym] += 1 }
+    @pawns_count = side_pawns.map{ |e| e.pawn_type }.each_with_object(@pawns_count) { |word, counts| counts[word.to_sym] += 1 }
   end
 
   def play

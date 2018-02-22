@@ -65,7 +65,7 @@ load_pawns = () ->
 
   pawns = JSON.parse( $('#pawns').val() )
   for pawn in pawns
-    hex = new AxialHex( pawn.q, pawn.r, { side: side, pawn_type: pawn.pawn_type } )
+    hex = new AxialHex( pawn.q, pawn.r, { side: pawn.side, pawn_type: pawn.pawn_type } )
     new_object = map.pawn_module.place_on_screen_map( hex )
     new_object.attr( 'pawn_id', pawn.id )
     pawns_on_map.hset( hex )
