@@ -38,6 +38,13 @@ class @AxialGrid
   cget: ( q, r ) ->
     @hexes[ [ q, r ] ]
 
+  # Remove an hexagon from a grid
+  #
+  # @param q [Integer] the q coordinate of the hexagon
+  # @param r [Integer] the r coordinate of the hexagon
+  cclear: ( q, r ) ->
+    delete @hexes[ [ q, r ] ]
+
   # Insert an hexagon into the grid
   #
   # @param hex [AxialHex] the hexagon you want to add into the grid

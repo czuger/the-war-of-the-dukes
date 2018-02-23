@@ -2,23 +2,24 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-map = null
+# A map for the terrain
+terrain_map = null
+# A map for the pawns
+pawns_on_map = null
+
 movement_graph = null
 last_selected_pawn = null
-pawns_on_map = null
+
 side = null
 
-movements = { 'art': 3, 'cav': 6, 'inf': 3 }
-
-on_pawn_click = (event, pawn) ->
+on_pawn_click = (event, jquery_pawn) ->
 
   $('.pawn_phantom').remove()
 
-  terrain_hex = map.get_current_hex(event)
-  pawn_hex = pawns_on_map.hget(terrain_hex)
+  pawn_hex = pawns_on_map.cget(terrain_hex)
 
-  result = DijkstraMovements.compute_movements( map, pawn_hex, movements[pawn_hex.data.pawn_type] , pawns_on_map.build_hex_keys_hash() )
-  last_selected_pawn = pawn
+  result = DijkstraMovements.compute_movements( terrain_map, pawn_hex, movements[pawn_hex.data.pawn_type] , pawns_on_map.build_hex_keys_hash() )
+  last_selected_pawn = pawn_hex
 
   for key in result
     [q, r] = AxialHex.parse_hex_key( key )
@@ -35,27 +36,32 @@ on_pawn_click = (event, pawn) ->
 
 manage_movement = () ->
   $('.pawn_phantom').click ->
-    $(this).removeClass('pawn_phantom')
-    $(this).addClass('pawn')
 
-    map.pawn_module.pawn_unicity_list.move_hex( last_selected_pawn, $(this) )
+    q = parseInt((this).attr( 'q' ))
+    r = parseInt((this).attr( 'r' ))
+
+    pawns_on_map.cclear( q, r )
+    pawns_on_map.cset( q, r, last_selected_pawn.data  )
+
+    terrain_map.pawn_module.pawn_unicity_list.move_hex( last_selected_pawn, $(this) )
+    pawns_on_map( )
 
     last_selected_pawn.remove()
 
     $('.pawn_phantom').remove()
 
-    map.pawn_module.send_pawn_new_position($(this))
+    terrain_map.pawn_module.send_pawn_new_position($(this))
 
     $(this).click (event) ->
       on_pawn_click(event, $(this))
 
 
 load = () ->
-  map = new Map()
-  pawns_on_map = new PawnsOnMap()
+  terrain_map = new Map()
+  pawns_on_map = new PawnsOnMap( terrain_map )
   side = $('#side').val()
 
-  map.pawn_module.load_pawns( pawns_on_map )
+  pawns_on_map.load_pawns()
 
   $(".#{side}").click (event) ->
     on_pawn_click(event, $(this))
