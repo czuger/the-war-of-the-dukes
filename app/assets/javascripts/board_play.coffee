@@ -12,48 +12,47 @@ last_selected_pawn = null
 
 side = null
 
-on_pawn_click = (event, jquery_pawn) ->
+on_pawn_click = (event, jquery_object) ->
 
   $('.pawn_phantom').remove()
 
-  pawn_hex = pawns_on_map.cget(terrain_hex)
+  pawn = pawns_on_map.get(jquery_object.attr('id'))
 
-  result = DijkstraMovements.compute_movements( terrain_map, pawn_hex, movements[pawn_hex.data.pawn_type] , pawns_on_map.build_hex_keys_hash() )
-  last_selected_pawn = pawn_hex
+  results = DijkstraMovements.compute_movements( terrain_map, pawn, pawns_on_map.build_hex_keys_hash() )
+  console.log( results )
+  last_selected_pawn = pawn
 
-  for key in result
+  for key in results
     [q, r] = AxialHex.parse_hex_key( key )
 
-    tmp_hex = JSON.parse(JSON.stringify(pawn_hex));
-    tmp_hex.q = parseInt(q)
-    tmp_hex.r = parseInt(r)
-
-    map.pawn_module.create_phantom( tmp_hex )
+    tmp_pawn = pawn.shallow_clone()
+    tmp_pawn.reposition( parseInt(q), parseInt(r) )
+    pawns_on_map.create_phantom( tmp_pawn )
 
 #  manage_movement()
   null
 
 
-manage_movement = () ->
-  $('.pawn_phantom').click ->
-
-    q = parseInt((this).attr( 'q' ))
-    r = parseInt((this).attr( 'r' ))
-
-    pawns_on_map.cclear( q, r )
-    pawns_on_map.cset( q, r, last_selected_pawn.data  )
-
-    terrain_map.pawn_module.pawn_unicity_list.move_hex( last_selected_pawn, $(this) )
-    pawns_on_map( )
-
-    last_selected_pawn.remove()
-
-    $('.pawn_phantom').remove()
-
-    terrain_map.pawn_module.send_pawn_new_position($(this))
-
-    $(this).click (event) ->
-      on_pawn_click(event, $(this))
+#manage_movement = () ->
+#  $('.pawn_phantom').click ->
+#
+#    q = parseInt((this).attr( 'q' ))
+#    r = parseInt((this).attr( 'r' ))
+#
+#    pawns_on_map.cclear( q, r )
+#    pawns_on_map.cset( q, r, last_selected_pawn.data  )
+#
+#    terrain_map.pawn_module.pawn_unicity_list.move_hex( last_selected_pawn, $(this) )
+#    pawns_on_map( )
+#
+#    last_selected_pawn.remove()
+#
+#    $('.pawn_phantom').remove()
+#
+#    terrain_map.pawn_module.send_pawn_new_position($(this))
+#
+#    $(this).click (event) ->
+#      on_pawn_click(event, $(this))
 
 
 load = () ->

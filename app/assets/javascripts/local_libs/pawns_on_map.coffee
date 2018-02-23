@@ -5,6 +5,9 @@ class @PawnsOnMap
   constructor: ( @map ) ->
     @pawns = {}
 
+  # Return a pawn from it's css id
+  get: ( css_id ) ->
+    @pawns[ css_id ]
 
   # Load the pawns on screen load
   load_pawns: ( pawns_grid ) ->
@@ -21,12 +24,24 @@ class @PawnsOnMap
 
   place_on_screen_map: ( pawn, position_on_svg=false) ->
     new_object = $('<div>')
+    pawn.set_jquery_object(new_object)
     new_object.attr( 'id', pawn.css_id() )
     new_object.addClass( pawn.css_class() )
-    pawn.set_jquery_object(new_object)
     @position( pawn, position_on_svg )
     new_object.appendTo( '#board' )
     new_object
+
+
+  create_phantom: (pawn) ->
+    new_object = $('<div>')
+    pawn.set_jquery_object(new_object)
+    new_object.attr( 'id', pawn.css_phantom_id() )
+    new_object.addClass('pawn_phantom')
+    new_object.addClass( pawn.css_class() )
+    @position( pawn )
+    new_object.appendTo( '#board' )
+    new_object
+
 
 
 # Position a pawn on the map
@@ -38,7 +53,7 @@ class @PawnsOnMap
 # @param clone [Boolean] true if the pawn will be cloned, false if will be moved
   position: ( pawn, position_on_svg=false ) ->
 
-    [ x, y ] = @map.get_xy_hex_position( pawn.hex )
+    [ x, y ] = @map.get_xy_hex_position( pawn.get_hex() )
     x -= 15
     y -= 16
 
@@ -55,6 +70,6 @@ class @PawnsOnMap
 
   build_hex_keys_hash: () ->
     h = {}
-    for key, hex of @hexes
-      h[ hex.hex_key() ] = true
+    for key, hex of @pawns
+      h[ hex.get_hex().hex_key() ] = true
     h
