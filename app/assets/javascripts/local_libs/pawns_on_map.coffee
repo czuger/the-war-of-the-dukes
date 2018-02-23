@@ -22,7 +22,7 @@ class @PawnsOnMap
   load_pawns: ( pawns_grid ) ->
     pawns = JSON.parse( $('#pawns').val() )
     for pawn in pawns
-      pawn = new Pawn( pawn.q, pawn.r, pawn.pawn_type, pawn.side )
+      pawn = new Pawn( pawn.q, pawn.r, pawn.pawn_type, pawn.side, pawn.id )
       new_object = @place_on_screen_map( pawn )
       @pawns[pawn.css_id()] = pawn
     null

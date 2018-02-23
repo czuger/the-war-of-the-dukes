@@ -5,7 +5,7 @@ class @Pawn
   PAWNS_TYPES = { 'inf' : 'infantry', 'art' : 'artillery', 'cav' : 'cavalry' }
   PAWNS_MOVEMENTS = { 'art': 3, 'cav': 6, 'inf': 3 }
 
-  constructor: ( @q, @r, @pawn_type, @side ) ->
+  constructor: ( @q, @r, @pawn_type, @side, @database_id ) ->
 
   # Return an axial hex for the pawn
   get_hex: () ->
@@ -30,7 +30,7 @@ class @Pawn
 
   # Clone a pawn
   shallow_clone: () ->
-    p = new Pawn( @q, @r, @pawn_type, @side )
+    p = new Pawn( @q, @r, @pawn_type, @side, @database_id )
     p.set_jquery_object( @jquery_object )
     p
 
@@ -38,3 +38,11 @@ class @Pawn
   movement: () ->
     PAWNS_MOVEMENTS[@pawn_type]
 
+  # Call the server to update a pawn position
+  db_update: ( error_callback_function, success_callback_function ) ->
+    request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{@database_id}",
+      type: 'PATCH'
+      data: "q=#{@q}&r=#{@r}"
+    request.success (data) -> success_callback_function(data)
+    request.error (jqXHR, textStatus, errorThrown) -> error_callback_function(jqXHR, textStatus, errorThrown)
+    request

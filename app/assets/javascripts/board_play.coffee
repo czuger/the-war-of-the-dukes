@@ -8,8 +8,12 @@ terrain_map = null
 pawns_on_map = null
 
 movement_graph = null
-
 side = null
+
+# On server communication error method
+on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
+  $('#error_area').html(errorThrown)
+  $('#error_area').show().delay(3000).fadeOut(3000);
 
 on_pawn_click = (event, jquery_object) ->
 
@@ -39,19 +43,21 @@ manage_movement = () ->
     new_r = $(this).attr('r')
 
     old_pawn = pawns_on_map.get(last_selected_pawn_id)
+    new_pawn = old_pawn.shallow_clone()
+    new_pawn.reposition( new_q, new_r )
 
-    pawns_on_map.clear( old_pawn )
-    old_pawn.reposition( new_q, new_r )
-    pawns_on_map.set( old_pawn )
+    new_pawn.db_update( on_error_put_pawn_on_map,
+      (data) ->
+        pawns_on_map.clear( old_pawn )
+        $('#'+last_selected_pawn_id).remove()
 
-    $('#'+last_selected_pawn_id).remove()
-    pawns_on_map.place_on_screen_map(old_pawn)
+        pawns_on_map.set( new_pawn )
+        pawns_on_map.place_on_screen_map(new_pawn)
 
-#    terrain_map.pawn_module.send_pawn_new_position($(this))
+        $('.pawn_phantom').remove()
+    )
 
-    $('.pawn_phantom').remove()
-
-    old_pawn.jquery_object.click (event) ->
+    new_pawn.jquery_object.click (event) ->
       on_pawn_click(event, $(this))
 
 
