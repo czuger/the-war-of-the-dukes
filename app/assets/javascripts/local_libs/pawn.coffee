@@ -24,7 +24,9 @@ class @Pawn
   set_jquery_object: ( @jquery_object ) ->
 
   # Reposition the pawn to another place
-  reposition: ( @q, @r ) ->
+  reposition: ( q, r ) ->
+    @q = parseInt(q)
+    @r = parseInt(r)
 
   # Clone a pawn
   shallow_clone: () ->

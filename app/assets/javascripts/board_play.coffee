@@ -8,7 +8,6 @@ terrain_map = null
 pawns_on_map = null
 
 movement_graph = null
-last_selected_pawn = null
 
 side = null
 
@@ -27,32 +26,33 @@ on_pawn_click = (event, jquery_object) ->
 
     tmp_pawn = pawn.shallow_clone()
     tmp_pawn.reposition( parseInt(q), parseInt(r) )
-    pawns_on_map.create_phantom( tmp_pawn )
+    pawns_on_map.create_phantom( tmp_pawn, pawn.css_id() )
 
-#  manage_movement()
+  manage_movement()
   null
 
+manage_movement = () ->
+  $('.pawn_phantom').click ->
 
-#manage_movement = () ->
-#  $('.pawn_phantom').click ->
-#
-#    q = parseInt((this).attr( 'q' ))
-#    r = parseInt((this).attr( 'r' ))
-#
-#    pawns_on_map.cclear( q, r )
-#    pawns_on_map.cset( q, r, last_selected_pawn.data  )
-#
-#    terrain_map.pawn_module.pawn_unicity_list.move_hex( last_selected_pawn, $(this) )
-#    pawns_on_map( )
-#
-#    last_selected_pawn.remove()
-#
-#    $('.pawn_phantom').remove()
-#
+    last_selected_pawn_id = $(this).attr('old_pawn_id')
+    new_q = $(this).attr('q')
+    new_r = $(this).attr('r')
+
+    old_pawn = pawns_on_map.get(last_selected_pawn_id)
+
+    pawns_on_map.clear( old_pawn )
+    old_pawn.reposition( new_q, new_r )
+    pawns_on_map.set( old_pawn )
+
+    $('#'+last_selected_pawn_id).remove()
+    pawns_on_map.place_on_screen_map(old_pawn)
+
 #    terrain_map.pawn_module.send_pawn_new_position($(this))
-#
-#    $(this).click (event) ->
-#      on_pawn_click(event, $(this))
+
+    $('.pawn_phantom').remove()
+
+    old_pawn.jquery_object.click (event) ->
+      on_pawn_click(event, $(this))
 
 
 load = () ->

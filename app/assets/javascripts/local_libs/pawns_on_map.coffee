@@ -9,15 +9,21 @@ class @PawnsOnMap
   get: ( css_id ) ->
     @pawns[ css_id ]
 
-  # Load the pawns on screen load
+  # Set a pawn
+  set: ( pawn ) ->
+    @pawns[ pawn.css_id() ] = pawn
+
+  # Delete a pawn
+  clear: ( pawn ) ->
+    delete @pawns[ pawn.css_id() ]
+
+
+# Load the pawns on screen load
   load_pawns: ( pawns_grid ) ->
     pawns = JSON.parse( $('#pawns').val() )
     for pawn in pawns
       pawn = new Pawn( pawn.q, pawn.r, pawn.pawn_type, pawn.side )
       new_object = @place_on_screen_map( pawn )
-      new_object.attr( 'pawn_id', pawn.css_id() )
-      new_object.addClass('pawn')
-      new_object.addClass(pawn.side)
       @pawns[pawn.css_id()] = pawn
     null
 
@@ -27,15 +33,20 @@ class @PawnsOnMap
     pawn.set_jquery_object(new_object)
     new_object.attr( 'id', pawn.css_id() )
     new_object.addClass( pawn.css_class() )
+    new_object.addClass( 'pawn' )
+    new_object.addClass( pawn.side )
     @position( pawn, position_on_svg )
     new_object.appendTo( '#board' )
     new_object
 
 
-  create_phantom: (pawn) ->
+  create_phantom: (pawn, old_pawn_id ) ->
     new_object = $('<div>')
     pawn.set_jquery_object(new_object)
     new_object.attr( 'id', pawn.css_phantom_id() )
+    new_object.attr( 'old_pawn_id', old_pawn_id )
+    new_object.attr( 'q', pawn.q )
+    new_object.attr( 'r', pawn.r )
     new_object.addClass('pawn_phantom')
     new_object.addClass( pawn.css_class() )
     @position( pawn )
