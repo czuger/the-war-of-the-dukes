@@ -1,7 +1,7 @@
 class BoardsController < ApplicationController
   before_action :set_player
-  before_action :set_board, only: [ :play, :setup ]
-  before_action :set_side, only: [ :play, :setup ]
+  before_action :set_board, only: [:movement, :setup, :fight ]
+  before_action :set_side, only: [:movement, :setup, :fight ]
 
   include MapHandler
 
@@ -14,7 +14,13 @@ class BoardsController < ApplicationController
     @pawns_count = side_pawns.map{ |e| e.pawn_type }.each_with_object(@pawns_count) { |word, counts| counts[word.to_sym] += 1 }
   end
 
-  def play
+  def movement
+    set_map
+    @pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side )
+    @pawns = @pawns.to_json
+  end
+
+  def fight
     set_map
     @pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side )
     @pawns = @pawns.to_json

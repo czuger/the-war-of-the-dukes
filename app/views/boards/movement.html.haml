@@ -1,0 +1,11 @@
+#board
+  = image_tag 'board_cut_small.jpg'
+
+= hidden_field_tag :player_id, @player.id
+= hidden_field_tag :board_id, @board.id
+= hidden_field_tag :side, @side
+
+= hidden_field_tag :pawns, @pawns
+
+= hidden_field_tag 'map', @json_map
+= hidden_field_tag 'movement_hash', @json_movement_graph

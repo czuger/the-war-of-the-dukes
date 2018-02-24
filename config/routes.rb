@@ -8,7 +8,8 @@ Rails.application.routes.draw do
     resources :boards, only: [ :index, :new, :create ] do
       resources :pawns, only: [ :create, :update, :destroy ]
       get 'setup'
-      get 'play'
+      get 'movement'
+      get 'fight'
       post 'store_pawn_position'
     end
   end

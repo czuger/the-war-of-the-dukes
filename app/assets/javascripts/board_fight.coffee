@@ -22,7 +22,7 @@ on_pawn_click = (event, jquery_object) ->
   pawn = pawns_on_map.get(jquery_object.attr('id'))
 
   results = DijkstraMovements.compute_movements( terrain_map, pawn, pawns_on_map.build_hex_keys_hash() )
-  console.log( results )
+#  console.log( results )
   last_selected_pawn = pawn
 
   for key in results
@@ -55,11 +55,10 @@ manage_movement = () ->
         pawns_on_map.place_on_screen_map(new_pawn)
 
         $('.pawn_phantom').remove()
+
+        new_pawn.jquery_object.click (event) ->
+          on_pawn_click(event, $(this))
     )
-
-    new_pawn.jquery_object.click (event) ->
-      on_pawn_click(event, $(this))
-
 
 load = () ->
   terrain_map = new Map()
@@ -68,10 +67,10 @@ load = () ->
 
   pawns_on_map.load_pawns()
 
-  $(".#{side}").click (event) ->
-    on_pawn_click(event, $(this))
+#  $(".#{side}").click (event) ->
+#    on_pawn_click(event, $(this))
 
 
 $ ->
-  if window.location.pathname.match( /players\/\d+\/boards\/\d+\/play/ )
+  if window.location.pathname.match( /players\/\d+\/boards\/\d+\/fight/ )
     load()
