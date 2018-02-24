@@ -15,6 +15,7 @@ class PawnsController < ApplicationController
 
   def destroy
     Pawn.destroy( params[:id] )
+    head :ok
   end
 
   private
