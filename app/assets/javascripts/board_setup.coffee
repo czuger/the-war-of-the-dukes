@@ -14,20 +14,6 @@ on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
   $('#error_area').html(errorThrown)
   $('#error_area').show().delay(3000).fadeOut(3000);
 
-# Call the server to delete a pawn
-delete_paw_from_db = ( hex, pawn_html_object, error_callback_function) ->
-  request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{pawn_html_object.attr('pawn_id')}",
-    type: 'DELETE'
-
-  # On server side deletion success
-  request.success (data) ->
-    pawns_count[hex.data.pawn_type] -= 1
-    $( "#nb_#{hex.data.pawn_type}" ).html( "#{pawns_count[hex.data.pawn_type]} / 10" )
-    pawns_on_map.hclear( hex )
-    pawn_html_object.remove()
-
-  request.error (jqXHR, textStatus, errorThrown) -> on_error_put_pawn_on_map(jqXHR, textStatus, errorThrown)
-
 # Place a pawn on the map
 put_pawn_on_map = ( new_pawn ) ->
   new_pawn.pawn_type = $('input[name=pawn_type]:checked', '#pawn_type_selection').val()
@@ -53,7 +39,6 @@ remove_pawn_from_map = ( pawn_hex ) ->
       pawn_hex.jquery_object.remove()
       pawns_on_map.clear( pawn_hex )
   )
-
 
 load = () ->
   map = new Map()
