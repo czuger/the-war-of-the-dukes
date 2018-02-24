@@ -11,7 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //= require application
 
-//= require priority-queue-test.js.coffee
-//= require test_data.js
-//= require dijkstra-movements-test.js.coffee
-//= require axial_grid_test.js.coffee
+//= require priority-queue-test
+//= require test_data
+//= require dijkstra-movements-test
+//= require axial_grid_test

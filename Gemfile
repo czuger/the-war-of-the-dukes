@@ -39,7 +39,9 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
-  gem 'mocha_rails'
+  # gem 'mocha_rails'
+  gem 'teaspoon-mocha' # or "teaspoon-jasmine" or "teaspoon-qunit"
+  gem 'phantomjs'
   gem 'factory_bot_rails'
 end
 

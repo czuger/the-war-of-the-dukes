@@ -1,5 +1,7 @@
 #assert = require('assert')
 
+##=require 'local_libs/priority_queue.coffee'
+
 describe 'PriorityQueue', ->
 
   beforeEach ->
@@ -8,6 +10,7 @@ describe 'PriorityQueue', ->
   describe '#pop()', ->
 
     it 'should return the right value', ->
+
       @pq.push("bob", 1)
       @pq.push("rob", 16)
       @pq.push("martin", 5)

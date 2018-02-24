@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get 'welcome/show'
 
-   mount MochaRails::Engine => 'mocha' unless Rails.env.production?
+   # mount MochaRails::Engine => 'mocha' unless Rails.env.production?
 
   resources :players, only: [ :index, :new, :create ] do
     resources :boards, only: [ :index, :new, :create ] do

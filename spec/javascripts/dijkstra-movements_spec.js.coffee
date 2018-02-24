@@ -1,4 +1,4 @@
-#assert = require('assert')
+#=require test_data.js
 
 describe 'DijkstraMovements', ->
 
