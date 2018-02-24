@@ -14,24 +14,6 @@ on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
   $('#error_area').html(errorThrown)
   $('#error_area').show().delay(3000).fadeOut(3000);
 
-# Call the server to create à pawn (on the server side)
-create_pawn_in_db = ( hex, pawn_html_object, error_callback_function) ->
-  request = $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
-    q: hex.q
-    r: hex.r
-    pawn_type: hex.data.pawn_type
-    side: hex.data.side
-
-  # On server side pawn creation success
-  request.success (data) ->
-    pawns_count[hex.data.pawn_type] += 1
-    $( "#nb_#{hex.data.pawn_type}" ).html( "#{pawns_count[hex.data.pawn_type]} / 10" )
-    pawn_html_object.attr( 'pawn_id', data['pawn_id'] )
-    pawns_on_map.hset( hex )
-    pawn_html_object.show()
-
-  request.error (jqXHR, textStatus, errorThrown) -> on_error_put_pawn_on_map(jqXHR, textStatus, errorThrown)
-
 # Call the server to delete a pawn
 delete_paw_from_db = ( hex, pawn_html_object, error_callback_function) ->
   request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{pawn_html_object.attr('pawn_id')}",
@@ -47,13 +29,19 @@ delete_paw_from_db = ( hex, pawn_html_object, error_callback_function) ->
   request.error (jqXHR, textStatus, errorThrown) -> on_error_put_pawn_on_map(jqXHR, textStatus, errorThrown)
 
 # Place a pawn on the map
-put_pawn_on_map = ( hex ) ->
-  hex.data.pawn_type = $('input[name=pawn_type]:checked', '#pawn_type_selection').val()
-  if pawns_count[hex.data.pawn_type] < 10
-    hex.data.side = side
-    new_object = map.pawn_module.place_on_screen_map( hex )
-    new_object.hide()
-    create_pawn_in_db( hex, new_object, on_error_put_pawn_on_map )
+put_pawn_on_map = ( new_pawn ) ->
+  new_pawn.pawn_type = $('input[name=pawn_type]:checked', '#pawn_type_selection').val()
+  if pawns_count[new_pawn.pawn_type] < 10
+    pawns_on_map.place_on_screen_map( new_pawn )
+    new_pawn.jquery_object.hide()
+    new_pawn.db_create(  on_error_put_pawn_on_map,
+      (data) ->
+        pawns_count[new_pawn.pawn_type] += 1
+        $( "#nb_#{new_pawn.pawn_type}" ).html( "#{pawns_count[new_pawn.pawn_type]} / 10" )
+        new_pawn.database_id = parseInt(data['pawn_id'])
+        pawns_on_map.set( new_pawn )
+        new_pawn.jquery_object.show()
+    )
 
 # Remove a pawn from the map
 remove_pawn_from_map = ( hex ) ->
@@ -75,11 +63,12 @@ load = () ->
 #      console.log( pawns_count )
       terrain_hex = map.get_current_hex(event)
       if terrain_hex.data.color != 'w' && terrain_hex.data.side == side
-        pawn_hex = pawns_on_map.hget( terrain_hex )
+        new_pawn = new Pawn( terrain_hex.q, terrain_hex.r, null, side)
+        pawn_hex = pawns_on_map.get( new_pawn.css_id() )
         if pawn_hex
           remove_pawn_from_map( pawn_hex )
         else
-          put_pawn_on_map( terrain_hex )
+          put_pawn_on_map( new_pawn )
 
 
 $ ->
