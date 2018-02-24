@@ -63,11 +63,11 @@ remove_pawn_from_map = ( hex ) ->
 
 load = () ->
   map = new Map()
-  pawns_on_map = new AxialGrid( 1 )
+  pawns_on_map = new PawnsOnMap( map )
   pawns_count = JSON.parse( $('#pawns_count').val() )
   side = $('#side').val()
 
-  map.pawn_module.load_pawns( pawns_on_map )
+  pawns_on_map.load_pawns( pawns_on_map )
 
   if side
     $('#board').click (event) ->

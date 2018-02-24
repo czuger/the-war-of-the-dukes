@@ -1,5 +1,8 @@
 {
   "name": "coffhex-dev",
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "coffeescript": "~2.2.2"
+  }
 }

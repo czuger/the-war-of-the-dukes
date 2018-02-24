@@ -27,8 +27,6 @@ class @Map
 
     @movement_graph = JSON.parse( movement_graph_json_string )
 
-    @pawn_module = new PawnModule( this )
-
 
   # Draw a point on the centre of an hex
   #
