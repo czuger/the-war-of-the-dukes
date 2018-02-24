@@ -44,9 +44,15 @@ put_pawn_on_map = ( new_pawn ) ->
     )
 
 # Remove a pawn from the map
-remove_pawn_from_map = ( hex ) ->
-  pawn_html_object = $("#pawn_#{hex.q}_#{hex.r}")
-  delete_paw_from_db( hex, pawn_html_object, on_error_put_pawn_on_map )
+remove_pawn_from_map = ( pawn_hex ) ->
+  pawn_html_object = '#' + pawn_hex.css_id()
+  pawn_hex.db_delete( on_error_put_pawn_on_map,
+    (data) ->
+      pawns_count[pawn_hex.pawn_type] -= 1
+      $( "#nb_#{pawn_hex.pawn_type}" ).html( "#{pawns_count[pawn_hex.pawn_type]} / 10" )
+      pawn_hex.jquery_object.remove()
+      pawns_on_map.clear( pawn_hex )
+  )
 
 
 load = () ->
