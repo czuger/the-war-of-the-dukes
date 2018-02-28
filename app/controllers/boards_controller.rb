@@ -14,6 +14,10 @@ class BoardsController < ApplicationController
     side_pawns = @board.pawns.where( side: @side )
     @pawns_count = { inf: 0, cav: 0 , art: 0 }
     @pawns_count = side_pawns.map{ |e| e.pawn_type }.each_with_object(@pawns_count) { |word, counts| counts[word.to_sym] += 1 }
+
+    @requested_places_count = {
+        orf: { cities: 22, bastions: 3 }, wulf: { cities: 21, bastions: 4 },
+    }
   end
 
   def movement

@@ -67,4 +67,44 @@ class AxialGrid
     end
   end
 
+  # Write an ascii file representing an axial hex grid as an flat topped (odd-q) hex representation.
+  #
+  # @param file_path [String] the name of the ascii file to read. For how to create this file, please see : https://github.com/czuger/rhex#reading-a-grid-from-an-ascii-file
+  def write_ascii_file_flat_topped_odd( file_path )
+    File.open( file_path, 'w' ) do |file|
+
+      base_r = 0
+      base_q = 0
+      line_q = 0
+      line = []
+
+
+      loop do
+        r = base_r
+        q = base_q
+        odd = ( base_q == 0 ? '' : ' ' )
+
+        while( ( hex = cget( q, r ) ) ) do
+          line << hex.data[:color]
+          q += 2
+          r -= 1
+        end
+
+        break if line.empty?
+
+        file.puts( odd + line.join( ' ' ) )
+
+        base_q = ( base_q == 0 ? 1 : 0 )
+
+        line_q += 1
+        if line_q >= 2
+          line_q = 0
+          base_r += 1
+        end
+        line = []
+      end
+
+    end
+  end
+
 end

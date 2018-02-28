@@ -12,8 +12,9 @@ task generate_json_map: :environment do
   end
 
   orf_border.each do |b|
+    # p b
     hex = @map.cget( b['q'], b['r'] )
-    data = hex.data[:side] = 'orf'
+    hex.data[:side] = 'orf' if hex
   end
 
   File.open( 'data/map.json', 'w' ) do |f|

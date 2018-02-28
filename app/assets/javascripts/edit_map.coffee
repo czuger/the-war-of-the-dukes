@@ -42,13 +42,13 @@ manage_changes = () ->
 
   $('#board').mousedown (event) ->
 
-    [ hex, _ ] = root.current_map.get_current_hex(event)
+    hex = root.current_map.get_current_hex(event)
 
     searchParams = new URLSearchParams(window.location.search)
     color = searchParams.get('color').toUpperCase()
 
     console.log( color )
-    hex.color = color
+    hex.data.color = color
 
     set_letter( hex )
 

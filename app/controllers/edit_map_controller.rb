@@ -16,8 +16,8 @@ class EditMapController < ApplicationController
 
   def update_hexes
     set_map
-    @map.cset( params[:q].to_i, params[:r].to_i, color: params[:color] )
-    @map.write_ascii_file_flat_topped_odd( 'data/map.txt' )
+    @map.cset( params[:q].to_i, params[:r].to_i, data: { color: params[:color] } )
+    @map.to_json_file( 'data/map.json' )
     head :ok
   end
 
