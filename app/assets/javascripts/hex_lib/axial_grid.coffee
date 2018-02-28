@@ -110,3 +110,13 @@ class @AxialGrid
         hexes_array.push( s_hex )
 
     hexes_array
+
+  hexes_at_range: ( hex, range ) ->
+    results = []
+    center = hex.to_cube()
+    for dx in [-range .. range]
+      for dy in [ Math.max( -range, -dx-range ) .. Math.min( range, -dx+range ) ]
+        dz = -dx-dy
+        results.push( center.add( new CubeHex(dx, dy, dz)).to_axial() )
+
+    results

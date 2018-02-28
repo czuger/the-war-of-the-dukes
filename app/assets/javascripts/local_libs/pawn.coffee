@@ -4,6 +4,7 @@ class @Pawn
 
   PAWNS_TYPES = { 'inf' : 'infantry', 'art' : 'artillery', 'cav' : 'cavalry' }
   PAWNS_MOVEMENTS = { 'art': 3, 'cav': 6, 'inf': 3 }
+  PAWNS_ATTACK = { 'art': 3, 'cav': 2, 'inf': 5 }
 
   constructor: ( @q, @r, @pawn_type, @side, @database_id ) ->
 
@@ -21,7 +22,8 @@ class @Pawn
     "phantom_pawn_#{@q}_#{@r}"
 
   # Set the jquery object associated to the pawn
-  set_jquery_object: ( @jquery_object ) ->
+  get_jquery_object: () ->
+    $( '#' + @css_id() )
 
   # Reposition the pawn to another place
   reposition: ( q, r ) ->
@@ -37,6 +39,25 @@ class @Pawn
   # Return the movement amount of a pawn
   movement: () ->
     PAWNS_MOVEMENTS[@pawn_type]
+
+  # Check if two pawns can attack themselves and return the attack_amount
+  check_attack_value: ( attacker, movement_hash ) ->
+    self_hex = @get_hex()
+    attacker_hex = attacker.get_hex()
+    dist = self_hex.distance( attacker_hex )
+
+    if ( attacker.pawn_type == 'cav' || attacker.pawn_type == 'inf' ) && dist == 1
+      if movement_hash[ [ self_hex.hex_key(), attacker_hex.hex_key() ].join( '_' ) ] <= 2
+        return PAWNS_ATTACK[attacker.pawn_type]
+
+    if ( attacker.pawn_type == 'art' ) && dist <= 2
+      return PAWNS_ATTACK[attacker.pawn_type]
+
+    return 0
+
+  # Return the defence value of the unit
+  defence_value: () ->
+    PAWNS_ATTACK[@pawn_type]
 
   # Call the server to update a pawn position
   db_update: ( error_callback_function, success_callback_function ) ->

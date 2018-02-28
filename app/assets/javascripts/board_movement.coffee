@@ -7,7 +7,6 @@ terrain_map = null
 # A map for the pawns
 pawns_on_map = null
 
-movement_graph = null
 side = null
 
 # On server communication error method

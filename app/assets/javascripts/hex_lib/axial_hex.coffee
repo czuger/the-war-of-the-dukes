@@ -43,3 +43,11 @@ class @AxialHex extends BaseHex
 
   @parse_hex_key: ( hex_key ) ->
     hex_key.split( '_' )
+
+  # Compute the distance (in hex) between two hexagons
+  #
+  # @param h [AxialHex] a AxialHex object
+  #
+  # @return [Integer] the distance between the two hexes (in hexes)
+  distance: ( h ) ->
+    @to_cube().distance(h.to_cube())

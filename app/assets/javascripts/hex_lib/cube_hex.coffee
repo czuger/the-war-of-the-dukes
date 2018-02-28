@@ -44,3 +44,14 @@ class @CubeHex extends BaseHex
       rz = -rx-ry
 
     return new CubeHex(rx, ry, rz)
+
+  # Add two hexes
+  add: ( cube_hex ) ->
+    new CubeHex( @x + cube_hex.x, @y + cube_hex.y, @z + cube_hex.z )
+
+  # Compute the distance between two hexagons (in hexagons)
+  #
+  # @return [Ingteger] the distance between hex in hexagons
+  #
+  distance: (h) ->
+    Math.max(Math.abs(@x - h.x), Math.abs(@y - h.y), Math.abs(@z - h.z))
