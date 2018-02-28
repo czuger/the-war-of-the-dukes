@@ -36,6 +36,8 @@ root.load_map = () ->
     if color == hex.data.color.toUpperCase()
       set_letter( hex )
 
+  return null
+
 manage_changes = () ->
 
   load_map()

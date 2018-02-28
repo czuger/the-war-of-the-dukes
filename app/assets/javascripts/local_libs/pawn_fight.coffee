@@ -4,12 +4,7 @@ class @PawnFight
 
   PAWNS_ATTACK = { 'art': 3, 'cav': 2, 'inf': 5 }
   DEFENCE_TERRAIN_MODIFIER = { 'c': 2, 'b': 3 }
-  ATTAK_DEFENCE_RATIO_STRINGS = [
-    { max_val: 1/5, string: '1-5' }, { max_val: 1/4, string: '1-4' }, { max_val: 1/3, string: '1-3' },
-    { max_val: 1/2, string: '1-2' }, { max_val: 1, string: '1-1' }, { max_val: 2, string: '2-1' },
-    { max_val: 3, string: '3-1' }, { max_val: 4, string: '4-1' }, { max_val: 5, string: '5-1' }, { max_val: 6, string: '6-1' }
-  ]
-#  ATTACK_TERAIN_MODIFIER = { 'f': 2, 'h': 1 }
+  DEFENCE_TERRAIN_DICE_MODIFIER = { 'f': 2, 'h': 1 }
 
   # Check if two pawns can attack themselves and return the attack_amount
   @check_attack_value: ( defender, attacker, terrain_map ) ->

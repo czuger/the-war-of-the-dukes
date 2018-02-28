@@ -64,6 +64,7 @@ load = () ->
   requested_places_count = JSON.parse( $('#requested_places_count').val() )
 
   pawns_on_map.load_pawns( pawns_on_map )
+  check_map_validity()
 
   if side
     $('#board').click (event) ->

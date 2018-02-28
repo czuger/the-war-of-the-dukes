@@ -9,7 +9,7 @@ layer = null
 load_top_layer = () ->
 
   for hex in JSON.parse( $('#json_top_layer').val() )
-    hex = new AxialHex( parseInt(hex['q']), parseInt(hex['r']), { color: hex['c'] } )
+    hex = new AxialHex( parseInt(hex['q']), parseInt(hex['r']), { color: hex.data.color } )
     root.set_letter( hex )
 
 
