@@ -16,7 +16,7 @@ class BoardsController < ApplicationController
     @pawns_count = side_pawns.map{ |e| e.pawn_type }.each_with_object(@pawns_count) { |word, counts| counts[word.to_sym] += 1 }
 
     @requested_places_count = {
-        orf: { cities: 22, bastions: 3 }, wulf: { cities: 21, bastions: 4 },
+        orf: { cities: 22, bastions: 3 }, wulf: { cities: 19, bastions: 4 },
     }
   end
 
