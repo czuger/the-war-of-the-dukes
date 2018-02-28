@@ -31,6 +31,15 @@
           = @pawns_count[:art]
           = '/ 10'
 
+  #cities_count
+    Cities count :
+    %span{ id: 'cities_count_value' }
+    = "/#{@requested_places_count[@side.to_sym][:cities]}"
+  #bastions_count
+    Bastions count :
+    %span{ id: 'bastions_count_value' }
+    = "/#{@requested_places_count[@side.to_sym][:bastions]}"
+
 = hidden_field_tag :player_id, @player.id
 = hidden_field_tag :board_id, @board.id
 = hidden_field_tag :side, @side

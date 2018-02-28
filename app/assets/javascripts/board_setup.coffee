@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 # This map contain the terrain informations
-map = null
+terrain_map = null
 # This map contains the pawns informations
 pawns_on_map = null
 pawns_count = null
@@ -15,6 +15,18 @@ requested_places_count = null
 on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
   $('#error_area').html(errorThrown)
   $('#error_area').show().delay(3000).fadeOut(3000);
+
+check_map_validity = () ->
+  cities_count = 0
+  bastions_count = 0
+  $('.'+side).each (_, jquery_pawn) ->
+    pawn = pawns_on_map.get($(jquery_pawn).attr('id'))
+    terrain_color = terrain_map.hget(pawn.get_hex()).data.color
+    cities_count += 1 if terrain_color == 'c'
+    bastions_count += 1 if terrain_color == 'b'
+
+  $('#cities_count_value').html(cities_count)
+  $('#bastions_count_value').html(bastions_count)
 
 # Place a pawn on the map
 put_pawn_on_map = ( new_pawn ) ->
@@ -29,6 +41,7 @@ put_pawn_on_map = ( new_pawn ) ->
         new_pawn.database_id = parseInt(data['pawn_id'])
         pawns_on_map.set( new_pawn )
         new_pawn.get_jquery_object().show()
+        check_map_validity()
     )
 
 # Remove a pawn from the map
@@ -40,11 +53,12 @@ remove_pawn_from_map = ( pawn_hex ) ->
       $( "#nb_#{pawn_hex.pawn_type}" ).html( "#{pawns_count[pawn_hex.pawn_type]} / 10" )
       pawn_hex.get_jquery_object().remove()
       pawns_on_map.clear( pawn_hex )
+      check_map_validity()
   )
 
 load = () ->
-  map = new Map()
-  pawns_on_map = new PawnsOnMap( map )
+  terrain_map = new Map()
+  pawns_on_map = new PawnsOnMap( terrain_map )
   pawns_count = JSON.parse( $('#pawns_count').val() )
   side = $('#side').val()
   requested_places_count = JSON.parse( $('#requested_places_count').val() )
@@ -55,7 +69,7 @@ load = () ->
     $('#board').click (event) ->
 
 #      console.log( pawns_count )
-      terrain_hex = map.get_current_hex(event)
+      terrain_hex = terrain_map.get_current_hex(event)
       if terrain_hex.data.color != 'w' && terrain_hex.data.side == side
         new_pawn = new Pawn( terrain_hex.q, terrain_hex.r, null, side)
         pawn_hex = pawns_on_map.get( new_pawn.css_id() )

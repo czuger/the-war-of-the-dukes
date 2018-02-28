@@ -27,7 +27,6 @@ class @Map
 
     @movement_graph = JSON.parse( movement_graph_json_string )
 
-
   # Draw a point on the centre of an hex
   #
   # @param q [Int] the q position of the hex
@@ -102,6 +101,10 @@ class @Map
     y += y_decal
 
     [ x, y ]
+
+  # shortcuts
+  hget: ( hex ) ->
+    @map_hexes.hget( hex )
 
 
 
