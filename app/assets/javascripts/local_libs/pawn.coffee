@@ -32,9 +32,7 @@ class @Pawn
 
   # Clone a pawn
   shallow_clone: () ->
-    p = new Pawn( @q, @r, @pawn_type, @side, @database_id )
-    p.set_jquery_object( @jquery_object )
-    p
+    new Pawn( @q, @r, @pawn_type, @side, @database_id )
 
   # Return the movement amount of a pawn
   movement: () ->
