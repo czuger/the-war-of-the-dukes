@@ -5,6 +5,8 @@ class BoardsController < ApplicationController
 
   include MapHandler
 
+  SIDES = %w( orf wulf )
+
   def setup
     set_map
     @pawns = @board.pawns
@@ -67,9 +69,11 @@ class BoardsController < ApplicationController
     end
 
     def set_side
-      @side = nil
-      @side = 'orf' if @player.id == @board.owner_id
-      @side = 'wulf' if @player.id == @board.opponent_id
+      if @player.id == @board.owner_id
+        @side, @opponent = SIDES
+      else
+        @side, @opponent = SIDES.reverse
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
