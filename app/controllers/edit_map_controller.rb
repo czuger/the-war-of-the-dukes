@@ -52,7 +52,7 @@ class EditMapController < ApplicationController
     if params[:color] == ''
       map.cclear( params[:q].to_i, params[:r].to_i )
     else
-      map.cset( params[:q].to_i, params[:r].to_i, color: params[:color] )
+      map.cset( params[:q].to_i, params[:r].to_i, data:{ color: params[:color] } )
     end
 
     map.to_json_file( top_layer_file )
