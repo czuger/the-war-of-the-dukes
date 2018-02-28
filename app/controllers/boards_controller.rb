@@ -22,7 +22,7 @@ class BoardsController < ApplicationController
 
   def movement
     set_map
-    @pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side )
+    @pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :has_moved )
     @pawns = @pawns.to_json
   end
 

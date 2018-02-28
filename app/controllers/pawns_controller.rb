@@ -9,7 +9,7 @@ class PawnsController < ApplicationController
 
   def update
     p = Pawn.find( params[:id])
-    p.update!( q: params[:q], r: params[:r] )
+    p.update!( q: params[:q], r: params[:r], has_moved: params[:has_moved] )
     head :ok
   end
 

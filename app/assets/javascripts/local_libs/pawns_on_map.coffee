@@ -25,9 +25,10 @@ class @PawnsOnMap
 
 # Load the pawns on screen load
   load_pawns: ( pawns_grid ) ->
-    pawns = JSON.parse( $('#pawns').val() )
-    for pawn in pawns
-      pawn = new Pawn( pawn.q, pawn.r, pawn.pawn_type, pawn.side, pawn.id )
+    json_pawns = JSON.parse( $('#pawns').val() )
+    for json_pawn in json_pawns
+      pawn = new Pawn( json_pawn.q, json_pawn.r, json_pawn.pawn_type, json_pawn.side, json_pawn.id )
+      pawn.set_has_moved() if json_pawn.has_moved
       new_object = @place_on_screen_map( pawn )
       @pawns[pawn.css_id()] = pawn
     null

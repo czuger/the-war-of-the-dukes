@@ -30,6 +30,10 @@ class @Pawn
     @q = parseInt(q)
     @r = parseInt(r)
 
+  # Set that the pawn has moved this turn
+  set_has_moved: () ->
+    @has_moved = true
+
   # Clone a pawn
   shallow_clone: () ->
     new Pawn( @q, @r, @pawn_type, @side, @database_id )
@@ -61,7 +65,7 @@ class @Pawn
   db_update: ( error_callback_function, success_callback_function ) ->
     request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{@database_id}",
       type: 'PATCH'
-      data: "q=#{@q}&r=#{@r}"
+      data: "q=#{@q}&r=#{@r}&has_moved=#{@has_moved}"
     @db_call_callbacks(request, error_callback_function, success_callback_function)
 
   db_create: ( error_callback_function, success_callback_function ) ->

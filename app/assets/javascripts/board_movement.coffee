@@ -44,6 +44,7 @@ manage_movement = () ->
     old_pawn = pawns_on_map.get(last_selected_pawn_id)
     new_pawn = old_pawn.shallow_clone()
     new_pawn.reposition( new_q, new_r )
+    new_pawn.set_has_moved()
 
     new_pawn.db_update( on_error_put_pawn_on_map,
       (data) ->
@@ -55,8 +56,8 @@ manage_movement = () ->
 
         $('.pawn_phantom').remove()
 
-        new_pawn.jquery_object.click (event) ->
-          on_pawn_click(event, $(this))
+#        new_pawn.get_jquery_object().click (event) ->
+#          on_pawn_click(event, $(this))
     )
 
 load = () ->
@@ -66,7 +67,11 @@ load = () ->
 
   pawns_on_map.load_pawns()
 
-  $(".#{side}").click (event) ->
+  $(".#{side}").each ->
+    id = $(this).attr('id')
+    $(this).addClass('can_move') unless pawns_on_map.get(id).has_moved
+
+  $(".can_move").click (event) ->
     on_pawn_click(event, $(this))
 
 
