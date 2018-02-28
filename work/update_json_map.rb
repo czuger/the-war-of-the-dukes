@@ -16,5 +16,5 @@ end
 
 map.to_json_file( '../data/map.json' )
 
-`ruby build_movement_hash.rb`
+`ruby sub/build_movement_hash.rb`
 
