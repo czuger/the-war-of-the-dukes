@@ -12,8 +12,6 @@ class @PawnFight
     defender_hex = defender.get_hex()
     attacker_hex = attacker.get_hex()
     dist = defender_hex.distance( attacker_hex )
-    terrain_value = terrain_map.map_hexes.hget( attacker_hex ).data.color
-#    atm = if ATTACK_TERAIN_MODIFIER[terrain_value] then ATTACK_TERAIN_MODIFIER[terrain_value] else 0
 
     if ( attacker.pawn_type == 'cav' || attacker.pawn_type == 'inf' ) && dist == 1
       if movement_hash[ [ defender_hex.hex_key(), attacker_hex.hex_key() ].join( '_' ) ] <= 2
@@ -42,17 +40,22 @@ class @PawnFight
       return '1-' + Math.round( defence_value/attack_value )
 
   # A basic fight for tests
-  @basic_fight: ( attack_value, defence_value ) ->
-    ratio = null
-    if attack_value > defence_value
-      ratio = Math.round( attack_value/defence_value )
-    else
-      ratio = - Math.round( defence_value/attack_value )
-    bonus_dice = ratio
-    $('#bonus_dice').html(bonus_dice)
-    roll = @getRandomIntInclusive( 1, 6 ) + bonus_dice
+  @basic_fight: ( defender, attack_value, defence_value, result_table, terrain_map ) ->
+
+    defender_hex = defender.get_hex()
+    terrain_value = terrain_map.map_hexes.hget( defender_hex ).data.color
+    roll_modifier = if DEFENCE_TERRAIN_DICE_MODIFIER[terrain_value] then DEFENCE_TERRAIN_DICE_MODIFIER[terrain_value] else 0
+    $('#bonus_dice').html(roll_modifier)
+
+    ratio_string = @attack_defence_ratio_string( attack_value, defence_value )
+    roll = @getRandomIntInclusive( 1, 6 )
     $('#final_roll').html(roll)
-    result = if roll > 3 then 'DR' else 'AR'
+    $('#modified_roll').html(roll+roll_modifier)
+
+    roll=roll+roll_modifier
+    roll = 6 if roll > 6
+
+    result = result_table[roll.toString()][ratio_string]
     $('#fight_result').html(result)
 
   @getRandomIntInclusive: (min, max) ->
