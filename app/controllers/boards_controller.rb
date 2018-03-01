@@ -30,6 +30,7 @@ class BoardsController < ApplicationController
     set_map
     @pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side )
     @pawns = @pawns.to_json
+    @result_table = File.open( 'data/result_table.json', 'r' ).read
   end
 
   # GET /boards
