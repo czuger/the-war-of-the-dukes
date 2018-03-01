@@ -14,8 +14,13 @@ on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
   $('#error_area').html(errorThrown)
   $('#error_area').show().delay(3000).fadeOut(3000);
 
-on_pawn_click = (event, jquery_object) ->
+on_cant_move = (event, jquery_object) ->
+  message = 'Ce pion a déjà bougé ce tour ci'
+  $('#pawn_info').html(message)
 
+on_can_move = (event, jquery_object) ->
+
+  $('#pawn_info').html('')
   $('.pawn_phantom').remove()
 
   pawn = pawns_on_map.get(jquery_object.attr('id'))
@@ -69,11 +74,14 @@ load = () ->
 
   $(".#{side}").each ->
     id = $(this).attr('id')
-    $(this).addClass('can_move') unless pawns_on_map.get(id).has_moved
+    movement_class = if pawns_on_map.get(id).has_moved then 'cant_move' else 'can_move'
+    $(this).addClass(movement_class)
 
   $(".can_move").click (event) ->
-    on_pawn_click(event, $(this))
+    on_can_move(event, $(this))
 
+  $(".cant_move").click (event) ->
+    on_cant_move(event, $(this))
 
 $ ->
   if window.location.pathname.match( /players\/\d+\/boards\/\d+\/movement/ )
