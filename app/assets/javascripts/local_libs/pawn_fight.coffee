@@ -40,3 +40,22 @@ class @PawnFight
     else
       return '-' if attack_value == 0
       return '1-' + Math.round( defence_value/attack_value )
+
+  # A basic fight for tests
+  @basic_fight: ( attack_value, defence_value ) ->
+    ratio = null
+    if attack_value > defence_value
+      ratio = Math.round( attack_value/defence_value )
+    else
+      ratio = - Math.round( defence_value/attack_value )
+    bonus_dice = ratio
+    $('#bonus_dice').html(bonus_dice)
+    roll = @getRandomIntInclusive( 1, 6 ) + bonus_dice
+    $('#final_roll').html(roll)
+    result = if roll > 3 then 'DR' else 'AR'
+    $('#fight_result').html(result)
+
+  @getRandomIntInclusive: (min, max) ->
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    Math.floor(Math.random() * (max - min + 1)) + min

@@ -10,6 +10,9 @@ pawns_on_map = null
 opponent_selected = null
 side = null
 
+attack_value = null
+defence_value = null
+
 update_fight_infos = (jquery_object) ->
   if opponent_selected == 1
     defender_pawn = pawns_on_map.get( $('.defender').first().attr('id') )
@@ -60,6 +63,9 @@ on_opponent_click = (event, jquery_object) ->
   update_fight_infos(jquery_object)
   null
 
+on_fight_button_clicked = () ->
+  PawnFight.basic_fight( attack_value, defence_value )
+
 load = () ->
   terrain_map = new Map()
   pawns_on_map = new PawnsOnMap( terrain_map )
@@ -74,6 +80,9 @@ load = () ->
 
   $(".#{opponent}").click (event) ->
     on_opponent_click(event, $(this))
+
+  $('#fight_button').click () ->
+    on_fight_button_clicked()
 
 $ ->
   if window.location.pathname.match( /players\/\d+\/boards\/\d+\/fight/ )
