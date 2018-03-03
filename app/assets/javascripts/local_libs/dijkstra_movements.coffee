@@ -1,6 +1,11 @@
 class @DijkstraMovements
 
-  @compute_movements: ( map, current_pawn, hex_key_exclusion_hash ) ->
+  @compute_movements: ( map, pawns_on_map, current_pawn, controlled_hexes ) ->
+
+    @controlled_hexes_keys = _.object( _.map( controlled_hexes, (hex) -> [ hex.hex_key(), true ] ) )
+    hex_key_exclusion_hash = pawns_on_map.build_hex_keys_hash()
+
+
     max_distance = current_pawn.movement()
     frontier = new PriorityQueue()
     frontier.push(current_pawn.get_hex(), 0)
@@ -32,6 +37,10 @@ class @DijkstraMovements
 
           unless new_cost > max_distance
             if ( not cost_so_far[ n.hex_key() ] ) or new_cost < cost_so_far[ n.hex_key() ]
+
+              # We can enter the control area, but then we are stuck in it
+              new_cost +=  @control_area_cost( n )
+
               cost_so_far[ n.hex_key() ] = new_cost
               priority = new_cost
               frontier.push( n, priority )
@@ -41,3 +50,7 @@ class @DijkstraMovements
 
     frontier_history.shift()
     frontier_history
+
+  @control_area_cost: ( dest_hex ) ->
+    return 99 if @controlled_hexes_keys[ dest_hex.hex_key() ]
+    0

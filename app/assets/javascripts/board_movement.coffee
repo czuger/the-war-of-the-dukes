@@ -8,6 +8,7 @@ terrain_map = null
 pawns_on_map = null
 
 side = null
+opposite_side = { 'orf': 'wulf', 'wulf': 'orf' }
 
 
 # On server communication error method
@@ -26,10 +27,10 @@ on_can_move = (event, jquery_object) ->
 
   pawn = pawns_on_map.get(jquery_object.attr('id'))
 
-  controlled_hexes = pawns_on_map.controlled_hexes( terrain_map, pawn.side )
-  console.log( controlled_hexes )
+  controlled_hexes = pawns_on_map.controlled_hexes( terrain_map, opposite_side[ pawn.side ] )
+#  console.log( controlled_hexes )
 
-  results = DijkstraMovements.compute_movements( terrain_map, pawn, pawns_on_map.build_hex_keys_hash() )
+  results = DijkstraMovements.compute_movements( terrain_map, pawns_on_map, pawn, controlled_hexes )
 #  console.log( results )
   last_selected_pawn = pawn
 
