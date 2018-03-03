@@ -14,7 +14,7 @@ class @PawnFight
     dist = defender_hex.distance( attacker_hex )
 
     if ( attacker.pawn_type == 'cav' || attacker.pawn_type == 'inf' ) && dist == 1
-      if movement_hash[ [ defender_hex.hex_key(), attacker_hex.hex_key() ].join( '_' ) ] <= 2
+      if movement_hash.cost( defender_hex, attacker_hex ) <= 2
         return PAWNS_ATTACK[attacker.pawn_type]
 
     if ( attacker.pawn_type == 'art' ) && dist <= 2
