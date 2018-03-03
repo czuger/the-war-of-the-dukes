@@ -60,14 +60,19 @@ class @PawnsOnMap
     new_object
 
 
+  # Return all the controlled hexes for the given side
+  controlled_hexes: (terrain_map, side) ->
+    controlled_pawns = _.map(@pawns, (pawn) -> pawn.control_area(terrain_map) if pawn.side == side)
+    _.unique( _.flatten( _.compact( controlled_pawns ) ) )
 
-# Position a pawn on the map
-#
-# @param pawn_object [Object] the pawn to position
-# @param q [Int] the q position where we want to place the pawn
-# @param r [Int] the r position where we want to place the pawn
-# @param opacity [Float] the opacity of the pawn (0 -> 1)
-# @param clone [Boolean] true if the pawn will be cloned, false if will be moved
+
+  # Position a pawn on the map
+  #
+  # @param pawn_object [Object] the pawn to position
+  # @param q [Int] the q position where we want to place the pawn
+  # @param r [Int] the r position where we want to place the pawn
+  # @param opacity [Float] the opacity of the pawn (0 -> 1)
+  # @param clone [Boolean] true if the pawn will be cloned, false if will be moved
   position: ( pawn, jquery_object, position_on_svg=false ) ->
 
     [ x, y ] = @map.get_xy_hex_position( pawn.get_hex() )

@@ -61,17 +61,9 @@ class @Pawn
   # Check if two pawns can attack themselves and return the attack_amount
   control_area: (terrain_map) ->
     self_hex = @get_hex()
-    attacker_hex = attacker.get_hex()
-    dist = self_hex.distance( attacker_hex )
-
-    if ( attacker.pawn_type == 'cav' || attacker.pawn_type == 'inf' ) && dist == 1
-      if movement_hash[ [ self_hex.hex_key(), attacker_hex.hex_key() ].join( '_' ) ] <= 2
-        return PAWNS_ATTACK[attacker.pawn_type]
-
-    if ( attacker.pawn_type == 'art' ) && dist <= 2
-      return PAWNS_ATTACK[attacker.pawn_type]
-
-    return 0
+    mg = terrain_map.movement_graph
+    surrounding_hexes = terrain_map.h_surrounding_hexes(self_hex)
+    _.filter( surrounding_hexes, (s_hex) -> mg.can_move( self_hex, s_hex ) )
 
 
   # Return the defence value of the unit

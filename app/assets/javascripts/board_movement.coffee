@@ -9,6 +9,7 @@ pawns_on_map = null
 
 side = null
 
+
 # On server communication error method
 on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
   $('#error_area').html(errorThrown)
@@ -24,6 +25,9 @@ on_can_move = (event, jquery_object) ->
   $('.pawn_phantom').remove()
 
   pawn = pawns_on_map.get(jquery_object.attr('id'))
+
+  controlled_hexes = pawns_on_map.controlled_hexes( terrain_map, pawn.side )
+  console.log( controlled_hexes )
 
   results = DijkstraMovements.compute_movements( terrain_map, pawn, pawns_on_map.build_hex_keys_hash() )
 #  console.log( results )

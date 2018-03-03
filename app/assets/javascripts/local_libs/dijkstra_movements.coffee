@@ -1,8 +1,5 @@
 class @DijkstraMovements
 
-  @movement_key: ( from, to ) ->
-    [ from.hex_key(), to.hex_key() ].join( '_' )
-
   @compute_movements: ( map, current_pawn, hex_key_exclusion_hash ) ->
     max_distance = current_pawn.movement()
     frontier = new PriorityQueue()
@@ -31,7 +28,7 @@ class @DijkstraMovements
 
         if not hex_key_exclusion_hash[ n.hex_key() ]
 #        console.log( n )
-          new_cost = cost_so_far[ current.hex_key() ] + map.movement_graph[ @movement_key( current, n ) ]
+          new_cost = cost_so_far[ current.hex_key() ] + map.movement_graph.cost( current, n )
 
           unless new_cost > max_distance
             if ( not cost_so_far[ n.hex_key() ] ) or new_cost < cost_so_far[ n.hex_key() ]

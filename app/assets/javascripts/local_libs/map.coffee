@@ -17,15 +17,10 @@ class @Map extends AxialGrid
       if map_json.length != 0
         map_json_string = map_json.val()
 
-    unless movement_graph_json_string?
-      movement_graph_json = $('#movement_hash')
-      if movement_graph_json.length != 0
-        movement_graph_json_string = movement_graph_json.val()
-
     super( 26.1 )
     @from_json( map_json_string )
 
-    @movement_graph = JSON.parse( movement_graph_json_string )
+    @movement_graph = new MovementGraph( movement_graph_json_string )
 
 
 
