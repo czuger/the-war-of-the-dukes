@@ -25,7 +25,7 @@ class @PawnFight
   # Return the defence value of the unit
   @defence_value: ( defender, terrain_map ) ->
     defender_hex = defender.get_hex()
-    terrain_value = terrain_map.map_hexes.hget( defender_hex ).data.color
+    terrain_value = terrain_map.hget( defender_hex ).data.color
     dtm = if DEFENCE_TERRAIN_MODIFIER[terrain_value] then DEFENCE_TERRAIN_MODIFIER[terrain_value] else 1
 
     PAWNS_ATTACK[defender.pawn_type] * dtm
@@ -43,7 +43,7 @@ class @PawnFight
   @basic_fight: ( defender, attack_value, defence_value, result_table, terrain_map ) ->
 
     defender_hex = defender.get_hex()
-    terrain_value = terrain_map.map_hexes.hget( defender_hex ).data.color
+    terrain_value = terrain_map.hget( defender_hex ).data.color
     roll_modifier = if DEFENCE_TERRAIN_DICE_MODIFIER[terrain_value] then DEFENCE_TERRAIN_DICE_MODIFIER[terrain_value] else 0
     $('#bonus_dice').html(roll_modifier)
 

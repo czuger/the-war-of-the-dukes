@@ -18,7 +18,7 @@ result_table = null
 update_fight_infos = (jquery_object) ->
   if opponent_selected == 1
     defender_pawn = pawns_on_map.get( $('.defender').first().attr('id') )
-    surrounding_hexes = terrain_map.map_hexes.hexes_at_range( defender_pawn.get_hex(), 2 )
+    surrounding_hexes = terrain_map.hexes_at_range( defender_pawn.get_hex(), 2 )
 
     attack_value = 0
     attacking_units = []
