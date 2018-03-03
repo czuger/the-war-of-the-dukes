@@ -6,6 +6,8 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (4.12.3)
+      concurrent-ruby (~> 1.0)
     actioncable (5.1.4)
       actionpack (= 5.1.4)
       nio4r (~> 2.0)
@@ -216,6 +218,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm
   algorithms
   byebug
   capybara (~> 2.13)

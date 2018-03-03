@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180228171347) do
+ActiveRecord::Schema.define(version: 20180303121152) do
 
   create_table "boards", force: :cascade do |t|
     t.integer "owner_id", null: false
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20180228171347) do
     t.integer "turn", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "aasm_state"
     t.index ["opponent_id"], name: "index_boards_on_opponent_id"
     t.index ["owner_id"], name: "index_boards_on_owner_id"
   end

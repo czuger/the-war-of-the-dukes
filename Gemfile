@@ -62,3 +62,4 @@ gem 'rhex', path: '../rhex'
 gem 'jquery-rails'
 
 gem 'algorithms'
+gem 'aasm'
