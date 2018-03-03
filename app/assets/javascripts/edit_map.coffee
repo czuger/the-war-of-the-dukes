@@ -31,7 +31,7 @@ root.load_map = () ->
   color = searchParams.get('color')
   color = color.toUpperCase() if color
 
-  for _, hex of root.current_map.map_hexes.hexes
+  for _, hex of root.current_map.hexes
 
     if color == hex.data.color.toUpperCase()
       set_letter( hex )
@@ -56,7 +56,7 @@ manage_changes = () ->
 
     console.log( hex )
 
-    root.current_map.map_hexes.hset( hex )
+    root.current_map.hset( hex )
 
     $.post '/edit_map/update_hexes',
       q: hex.q

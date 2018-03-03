@@ -2,12 +2,13 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-map = null
+terrain_map = null
+pawns_on_map = null
 
 print_mouse_info = () ->
   $('#board').mousemove (event) ->
 
-    hex_info = map.get_current_hex_info(event)
+    hex_info = terrain_map.get_current_hex_info(event)
 
     html = ''
     for info in hex_info
@@ -18,16 +19,17 @@ print_mouse_info = () ->
 load = () ->
   show_center = ($('#show_centers').val() == 'true')
 
-  map = new Map()
+  terrain_map = new Map()
+  pawns_on_map = new PawnsOnMap( terrain_map )
   print_mouse_info()
 
   for q in [0..31]
     for r in [-9..22]
-      if map.in_border( new AxialHex( q, r ) )
+      if terrain_map.in_border( new AxialHex( q, r ) )
         if show_center
-          map.show_hex_center( q, r )
+          terrain_map.show_hex_center( q, r )
         else
-          map.pawn_module.place_on_screen_map( new AxialHex( q, r, { side: 'orf', pawn_type: 'inf' } ), true )
+          pawns_on_map.place_on_screen_map( new Pawn( q, r, 'inf', 'orf' ), true )
 
   # Required to show svg elements
   $("body").html($("body").html()) if show_center

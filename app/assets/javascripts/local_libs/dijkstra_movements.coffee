@@ -22,7 +22,7 @@ class @DijkstraMovements
       frontier_history.push( current.hex_key() ) unless current.hex_key() in frontier_history
 
 #      console.log( "map.h_surrounding_hexes( current ) = ", map.map_hexes.h_surrounding_hexes( current ) )
-      for n in map.map_hexes.h_surrounding_hexes( current )
+      for n in map.h_surrounding_hexes( current )
 
         max_iterations += 1
         if max_iterations > 10000

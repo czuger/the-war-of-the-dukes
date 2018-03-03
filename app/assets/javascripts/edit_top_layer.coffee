@@ -25,11 +25,11 @@ manage_changes = ( layer ) ->
     if hex.data.color == 'R' || hex.data.color == 'B'
       hex.data.color = null
       root.clear_letter( hex )
-      root.current_map.map_hexes.hclear( hex )
+      root.current_map.hclear( hex )
     else
       hex.data.color = ( if layer == 'orf_border' then 'B' else 'R' )
       root.set_letter( hex )
-      root.current_map.map_hexes.hset( hex )
+      root.current_map.hset( hex )
 
     $.post '/edit_map/update_top_layer',
       q: hex.q

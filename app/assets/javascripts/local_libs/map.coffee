@@ -5,7 +5,7 @@
 # @author Cédric ZUGER
 #
 
-class @Map
+class @Map extends AxialGrid
 
   # Create a map
   #
@@ -22,10 +22,12 @@ class @Map
       if movement_graph_json.length != 0
         movement_graph_json_string = movement_graph_json.val()
 
-    @map_hexes = new AxialGrid( 26.1 )
-    @map_hexes.from_json( map_json_string )
+    super( 26.1 )
+    @from_json( map_json_string )
 
     @movement_graph = JSON.parse( movement_graph_json_string )
+
+
 
   # Draw a point on the centre of an hex
   #
@@ -43,15 +45,15 @@ class @Map
 #    console.log( @map_hexes )
 
     o = $('#board').offset()
-    @nx = Math.round( event.pageX - o.left - @map_hexes.hex_ray )
-    @ny = Math.round( event.pageY - o.top - @map_hexes.hex_ray )
+    @nx = Math.round( event.pageX - o.left - @hex_ray )
+    @ny = Math.round( event.pageY - o.top - @hex_ray )
 
     [ x_decal, y_decal ] = MapDecal.hex_to_xy_decal( @nx, @ny )
     @nx -= x_decal
     @ny -= y_decal
 
     #    console.log( nx, ny )
-    @map_hexes.pixel_to_hex_flat_topped( @nx, @ny )
+    @pixel_to_hex_flat_topped( @nx, @ny )
 
 
   get_current_hex_info: (event) ->
@@ -95,16 +97,9 @@ class @Map
   # @return an [x, y] array containing the x, y positions
   get_xy_hex_position: (hex) ->
 
-    [ x, y ] = @map_hexes.hex_to_pixel_flat_topped(hex)
+    [ x, y ] = @hex_to_pixel_flat_topped(hex)
     [ x_decal, y_decal ] = MapDecal.hex_to_xy_decal( x, y )
     x += x_decal
     y += y_decal
 
     [ x, y ]
-
-  # shortcuts
-  hget: ( hex ) ->
-    @map_hexes.hget( hex )
-
-
-
