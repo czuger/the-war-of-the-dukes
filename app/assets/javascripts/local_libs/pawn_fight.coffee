@@ -15,6 +15,7 @@ class @PawnFight
 
     if ( attacker.pawn_type == 'cav' || attacker.pawn_type == 'inf' ) && dist == 1
       if movement_hash.cost( defender_hex, attacker_hex ) <= 2
+#        console.log( movement_hash.cost( defender_hex, attacker_hex ) )
         return PAWNS_ATTACK[attacker.pawn_type]
 
     if ( attacker.pawn_type == 'art' ) && dist <= 2
@@ -57,6 +58,7 @@ class @PawnFight
 
     result = result_table[roll.toString()][ratio_string]
     $('#fight_result').html(result)
+    result
 
   @getRandomIntInclusive: (min, max) ->
     min = Math.ceil(min);
