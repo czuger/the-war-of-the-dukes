@@ -11,11 +11,6 @@ side = null
 
 requested_places_count = null
 
-# On server communication error method
-on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
-  $('#error_area').html(errorThrown)
-  $('#error_area').show().delay(3000).fadeOut(3000);
-
 check_map_validity = () ->
   cities_count = 0
   bastions_count = 0
@@ -34,7 +29,7 @@ put_pawn_on_map = ( new_pawn ) ->
   if pawns_count[new_pawn.pawn_type] < 10
     pawns_on_map.place_on_screen_map( new_pawn )
     new_pawn.get_jquery_object().hide()
-    new_pawn.db_create(  on_error_put_pawn_on_map,
+    new_pawn.db_create(
       (data) ->
         pawns_count[new_pawn.pawn_type] += 1
         $( "#nb_#{new_pawn.pawn_type}" ).html( "#{pawns_count[new_pawn.pawn_type]} / 10" )
@@ -47,7 +42,7 @@ put_pawn_on_map = ( new_pawn ) ->
 # Remove a pawn from the map
 remove_pawn_from_map = ( pawn_hex ) ->
   pawn_html_object = '#' + pawn_hex.css_id()
-  pawn_hex.db_delete( on_error_put_pawn_on_map,
+  pawn_hex.db_delete(
     (data) ->
       pawns_count[pawn_hex.pawn_type] -= 1
       $( "#nb_#{pawn_hex.pawn_type}" ).html( "#{pawns_count[pawn_hex.pawn_type]} / 10" )

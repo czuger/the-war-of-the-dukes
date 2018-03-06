@@ -15,11 +15,6 @@ defence_value = null
 
 result_table = null
 
-# On server communication error method
-on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
-  $('#error_area').html(errorThrown)
-  $('#error_area').show().delay(3000).fadeOut(3000);
-
 update_fight_infos = (jquery_object) ->
   if opponent_selected == 1
     defender_pawn = pawns_on_map.get( $('.defender').first().attr('id') )
@@ -77,7 +72,7 @@ board_db_update = ( pawn, error_callback_function, success_callback_function ) -
     type: 'PATCH'
     data: JSON.stringify( board:{ fight_data:{ q: pawn.q, r: pawn.r }, switch_board_state: 'wulf_retreat_pawn' } )
     contentType: "application/json; charset=utf-8"
-  db_call_callbacks(request, error_callback_function, success_callback_function)
+  db_call_callbacks(request, Errors.basic_handler, success_callback_function)
 
 db_call_callbacks = (request, error_callback_function, success_callback_function) ->
   request.success (data) -> success_callback_function(data)
