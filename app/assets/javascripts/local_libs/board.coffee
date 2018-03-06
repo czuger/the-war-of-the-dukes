@@ -1,31 +1,15 @@
 # This class represents a pawn on the map.
 
-class @Board
+class @Board extends DbCalls
 
   constructor: () ->
     @board_id = parseInt( $('#board_id').val() )
 
-# Call the server to update a pawn position
-  db_update: ( error_callback_function, success_callback_function ) ->
-    request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{@database_id}",
+
+  # Call the server to update the board status
+  db_update: ( switch_board_state, fight_data, success_callback_function, error_callback_function ) ->
+    request = $.ajax "/players/#{$('#player_id').val()}/boards/#{board_id}",
       type: 'PATCH'
-      data: "q=#{@q}&r=#{@r}&has_moved=#{@has_moved}"
-    @db_call_callbacks(request, error_callback_function, success_callback_function)
-
-  db_create: ( error_callback_function, success_callback_function ) ->
-    request = $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
-      q: @q
-      r: @r
-      pawn_type: @pawn_type
-      side: @side
-    @db_call_callbacks(request, error_callback_function, success_callback_function)
-
-  db_delete: ( error_callback_function, success_callback_function ) ->
-    request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{@database_id}",
-      type: 'DELETE'
-    @db_call_callbacks(request, error_callback_function, success_callback_function)
-
-  db_call_callbacks: (request, error_callback_function, success_callback_function) ->
-    request.success (data) -> success_callback_function(data)
-    request.error (jqXHR, textStatus, errorThrown) -> error_callback_function(jqXHR, textStatus, errorThrown)
-    request
+    data: JSON.stringify( board:{ fight_data: fight_data, switch_board_state: switch_board_state } )
+    contentType: "application/json; charset=utf-8"
+    @db_call_callbacks(request, success_callback_function, error_callback_function)

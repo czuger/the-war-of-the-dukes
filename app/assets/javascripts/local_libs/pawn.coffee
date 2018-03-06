@@ -1,6 +1,6 @@
 # This class represents a pawn on the map.
 
-class @Pawn
+class @Pawn extends DbCalls
 
   PAWNS_TYPES = { 'inf' : 'infantry', 'art' : 'artillery', 'cav' : 'cavalry' }
   PAWNS_MOVEMENTS = { 'art': 3, 'cav': 6, 'inf': 3 }
@@ -75,7 +75,7 @@ class @Pawn
     request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{@database_id}",
       type: 'PATCH'
       data: "q=#{@q}&r=#{@r}&has_moved=#{@has_moved}"
-    @db_call_callbacks(request, error_callback_function, success_callback_function)
+    @db_call_callbacks(request, success_callback_function, error_callback_function)
 
   db_create: ( success_callback_function, error_callback_function ) ->
     request = $.post "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns",
@@ -83,18 +83,9 @@ class @Pawn
       r: @r
       pawn_type: @pawn_type
       side: @side
-    @db_call_callbacks(request, error_callback_function, success_callback_function)
+    @db_call_callbacks(request, success_callback_function, error_callback_function)
 
   db_delete: ( success_callback_function, error_callback_function ) ->
     request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{@database_id}",
       type: 'DELETE'
-    @db_call_callbacks(request, error_callback_function, success_callback_function)
-
-  db_call_callbacks: (request, error_callback_function, success_callback_function) ->
-    request.success (data) -> success_callback_function(data)
-    request.error (jqXHR, textStatus, errorThrown) ->
-      if error_callback_function
-        error_callback_function(jqXHR, textStatus, errorThrown)
-      else
-        Errors.basic_handler(jqXHR, textStatus, errorThrown)
-    request
+    @db_call_callbacks(request, success_callback_function, error_callback_function)
