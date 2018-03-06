@@ -13,11 +13,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require rails-ujs
+//= require underscore
 
 //= require hex_lib/base_hex.coffee
 //= require hex_lib/axial_hex.coffee
 //= require hex_lib/cube_hex.coffee
 //= require hex_lib/axial_grid.coffee
 //= require hex_lib/square_grid.coffee
+
+//= require local_libs/db_calls.coffee
 
 //= require_tree .

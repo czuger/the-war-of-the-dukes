@@ -15,6 +15,8 @@ defence_value = null
 
 result_table = null
 
+board = null
+
 update_fight_infos = (jquery_object) ->
   if opponent_selected == 1
     defender_pawn = pawns_on_map.get( $('.defender').first().attr('id') )
@@ -65,24 +67,10 @@ on_opponent_click = (event, jquery_object) ->
   update_fight_infos(jquery_object)
   null
 
-
-# Call the server to update a pawn position
-board_db_update = ( pawn, error_callback_function, success_callback_function ) ->
-  request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}",
-    type: 'PATCH'
-    data: JSON.stringify( board:{ fight_data:{ q: pawn.q, r: pawn.r }, switch_board_state: 'wulf_retreat_pawn' } )
-    contentType: "application/json; charset=utf-8"
-  db_call_callbacks(request, Errors.basic_handler, success_callback_function)
-
-db_call_callbacks = (request, error_callback_function, success_callback_function) ->
-  request.success (data) -> success_callback_function(data)
-  request.error (jqXHR, textStatus, errorThrown) -> error_callback_function(jqXHR, textStatus, errorThrown)
-  request
-
 on_fight_button_clicked = () ->
   defender_pawn = pawns_on_map.get( $('.defender').first().attr('id') )
   PawnFight.basic_fight( defender_pawn, attack_value, defence_value, result_table, terrain_map )
-  board_db_update( defender_pawn, on_error_put_pawn_on_map,
+  board.defender_retreat( defender_pawn
     () -> )
 
 load = () ->
@@ -92,6 +80,7 @@ load = () ->
   opponent = $('#opponent').val()
   opponent_selected = 0
   result_table = JSON.parse( $('#result_table').val() )
+  board = new Board()
 
   pawns_on_map.load_pawns()
 

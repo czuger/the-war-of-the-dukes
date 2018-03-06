@@ -1,6 +1,4 @@
-#=require test_data.js
 #=require mocha-suite
-#=require spec-helper
 
 describe 'DijkstraMovements', ->
 

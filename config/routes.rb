@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount MochaRails::Engine => 'mocha' unless Rails.env.production?
   get 'welcome/show'
 
    # mount MochaRails::Engine => 'mocha' unless Rails.env.production?
