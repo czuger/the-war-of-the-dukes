@@ -2,7 +2,8 @@ assert = require('assert')
 assert = require('assert')
 
 require './test_helper'
-{ PriorityQueue } = require "../../app/assets/javascripts/local_libs/priority_queue"
+
+{ PriorityQueue } = require( "../../app/assets/javascripts/local_libs/priority_queue" )
 
 describe 'PriorityQueue', ->
 
@@ -14,7 +15,6 @@ describe 'PriorityQueue', ->
     it 'should return the right value', ->
 
       @pq.push("bob", 1)
-      console.log( @pq );
       @pq.push("rob", 16)
       @pq.push("martin", 5)
 
