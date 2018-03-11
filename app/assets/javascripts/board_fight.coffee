@@ -16,6 +16,7 @@ defence_value = null
 result_table = null
 
 board = null
+board_state = null
 
 update_fight_infos = (jquery_object) ->
   if opponent_selected == 1
@@ -81,6 +82,7 @@ load = () ->
   opponent_selected = 0
   result_table = JSON.parse( $('#result_table').val() )
   board = new Board()
+  board_state = $('#board_state').val()
 
   pawns_on_map.load_pawns()
 

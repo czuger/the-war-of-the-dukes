@@ -30,7 +30,7 @@ class BoardsControllerTest < ActionDispatch::IntegrationTest
     @board.orf_fight_turn!
     patch player_board_url( @player1, @board ), params: { board: { fight_data: { q: 11, r: 4, foo: :bar }, turn: 3, switch_board_state: 'wulf_retreat_pawn'} }
 
-    p @board.reload
+    # p @board.reload
     assert @board.fight_data['q'] == '11'
     assert @board.turn == 3
     assert @board.wulf_retreat?
