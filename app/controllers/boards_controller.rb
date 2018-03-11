@@ -66,7 +66,8 @@ class BoardsController < ApplicationController
   # POST /boards
   # POST /boards.json
   def update
-    if @board.update(update_board_params) && @board.send( params[ :switch_board_state ] )
+    if @board.update(update_board_params) && @board.send( params[ :board ][ :switch_board_state ] )
+      @board.save!
       head :ok
     else
       render json: @board.errors, status: :unprocessable_entity
@@ -101,7 +102,7 @@ class BoardsController < ApplicationController
     end
 
     def update_board_params
-      params.require(:board).permit(:fight_data, :turn)
+      params.require(:board).permit( { fight_data: [ :q, :r ] }, :turn )
     end
 
 end
