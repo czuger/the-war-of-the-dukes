@@ -1,4 +1,4 @@
-# The war of the duke
+# The war of the dukes
  
 A long time ago, we were playing game boards from a revue called "Jeux & Stratégie". 
 
