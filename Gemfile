@@ -63,3 +63,5 @@ gem 'jquery-rails'
 
 # gem 'algorithms'
 gem 'aasm'
+
+gem 'omniauth-discord'
