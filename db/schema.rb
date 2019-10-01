@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191001165020) do
+ActiveRecord::Schema.define(version: 20191001180413) do
 
   create_table "boards", force: :cascade do |t|
     t.integer "owner_id", null: false
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20191001165020) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "aasm_state"
+    t.string "fight_data"
     t.index ["opponent_id"], name: "index_boards_on_opponent_id"
     t.index ["owner_id"], name: "index_boards_on_owner_id"
   end
@@ -37,18 +38,12 @@ ActiveRecord::Schema.define(version: 20191001165020) do
   end
 
   create_table "players", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "provider", null: false
-    t.string "uid", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["uid"], name: "index_users_on_uid", unique: true
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.index ["uid"], name: "index_players_on_uid", unique: true
   end
 
 end

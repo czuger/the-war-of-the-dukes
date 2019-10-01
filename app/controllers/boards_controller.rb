@@ -42,7 +42,8 @@ class BoardsController < ApplicationController
   # GET /boards/new
   def new
     @board = Board.new
-    @opponents = Player.where.not( id: @player.id ).all
+    # @opponents = Player.where.not( id: @player.id ).all
+    @opponents = Player.all
   end
 
   # POST /boards
