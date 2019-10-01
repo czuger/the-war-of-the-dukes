@@ -1,4 +1,7 @@
-#=require test_data.js
+#=require mocha-suite
+
+{ BaseHex } = require( "../../app/assets/javascripts/hex_lib/base_hex" )
+{ AxialHex } = require( "../../app/assets/javascripts/hex_lib/axial_hex" )
 
 describe 'DijkstraMovements', ->
 

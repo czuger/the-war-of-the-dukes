@@ -15,6 +15,9 @@ defence_value = null
 
 result_table = null
 
+board = null
+board_state = null
+
 update_fight_infos = (jquery_object) ->
   if opponent_selected == 1
     defender_pawn = pawns_on_map.get( $('.defender').first().attr('id') )
@@ -68,6 +71,8 @@ on_opponent_click = (event, jquery_object) ->
 on_fight_button_clicked = () ->
   defender_pawn = pawns_on_map.get( $('.defender').first().attr('id') )
   PawnFight.basic_fight( defender_pawn, attack_value, defence_value, result_table, terrain_map )
+  board.defender_retreat( defender_pawn
+    () -> )
 
 load = () ->
   terrain_map = new Map()
@@ -76,6 +81,8 @@ load = () ->
   opponent = $('#opponent').val()
   opponent_selected = 0
   result_table = JSON.parse( $('#result_table').val() )
+  board = new Board()
+  board_state = $('#board_state').val()
 
   pawns_on_map.load_pawns()
 

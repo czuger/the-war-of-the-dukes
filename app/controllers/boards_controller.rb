@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
   before_action :set_player
-  before_action :set_board, only: [:movement, :setup, :fight ]
+  before_action :set_board, only: [:movement, :setup, :fight, :update ]
   before_action :set_side, only: [:movement, :setup, :fight ]
 
   include MapHandler
@@ -48,7 +48,7 @@ class BoardsController < ApplicationController
   # POST /boards
   # POST /boards.json
   def create
-    @board = Board.new(board_params)
+    @board = Board.new(create_board_params)
 
     respond_to do |format|
       if @board.save
@@ -63,10 +63,21 @@ class BoardsController < ApplicationController
     end
   end
 
+  # POST /boards
+  # POST /boards.json
+  def update
+    if @board.update(update_board_params) && @board.send( params[ :board ][ :switch_board_state ] )
+      @board.save!
+      head :ok
+    else
+      render json: @board.errors, status: :unprocessable_entity
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_board
-      @board = Board.find(params[:board_id])
+      @board = Board.find(params[:board_id] || params[:id])
     end
 
     def set_player
@@ -82,17 +93,16 @@ class BoardsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def board_params
-      params.require(:board).permit(:opponent_id, :turn).merge(
+    def create_board_params
+      params.require(:board).permit(:opponent_id).merge(
         {
             owner_id: @player.id
         }
       )
     end
 
-    # def place_pawns_on_board
-    #   @board.pawns.create!( q: 27, r: 8, pawn_type: 'inf', side: 'orf' )
-    #   @board.pawns.create!( q: 30, r: 1, pawn_type: 'art', side: 'orf' )
-    #   @board.pawns.create!( q: 28, r: 5, pawn_type: 'cav', side: 'orf' )
-    # end
+    def update_board_params
+      params.require(:board).permit( { fight_data: [ :q, :r ] }, :turn )
+    end
+
 end

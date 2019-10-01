@@ -6,6 +6,8 @@ class Board < ApplicationRecord
 
   has_many :pawns, dependent: :destroy
 
+  serialize :fight_data
+
   aasm do
     state :setup, :initial => true
     state :orf_move, :orf_fight, :orf_advance, :orf_retreat, :wulf_move, :wulf_fight, :wulf_advance, :wulf_retreat

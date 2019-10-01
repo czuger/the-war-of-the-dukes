@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount MochaRails::Engine => 'mocha' unless Rails.env.production?
   get 'welcome/show'
 
    # mount MochaRails::Engine => 'mocha' unless Rails.env.production?
@@ -7,12 +8,12 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
 
   resources :players, only: [ :index, :new, :create ] do
-    resources :boards, only: [ :index, :new, :create ] do
+    resources :boards, only: [ :index, :new, :create, :update ] do
       resources :pawns, only: [ :create, :update, :destroy ]
       get 'setup'
       get 'movement'
       get 'fight'
-      post 'store_pawn_position'
+      # post 'store_pawn_position'
     end
   end
 

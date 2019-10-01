@@ -10,12 +10,6 @@ pawns_on_map = null
 side = null
 opposite_side = { 'orf': 'wulf', 'wulf': 'orf' }
 
-
-# On server communication error method
-on_error_put_pawn_on_map = (jqXHR, textStatus, errorThrown) ->
-  $('#error_area').html(errorThrown)
-  $('#error_area').show().delay(3000).fadeOut(3000);
-
 on_cant_move = (event, jquery_object) ->
   message = 'Ce pion a déjà bougé ce tour ci'
   $('#pawn_info').html(message)
@@ -56,7 +50,7 @@ manage_movement = () ->
     new_pawn.reposition( new_q, new_r )
     new_pawn.set_has_moved()
 
-    new_pawn.db_update( on_error_put_pawn_on_map,
+    new_pawn.db_update(
       (data) ->
         pawns_on_map.clear( old_pawn )
         $('#'+last_selected_pawn_id).remove()

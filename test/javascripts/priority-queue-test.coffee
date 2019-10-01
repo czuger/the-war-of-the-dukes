@@ -1,6 +1,9 @@
-#assert = require('assert')
+assert = require('assert')
+assert = require('assert')
 
-##=require 'local_libs/priority_queue.coffee'
+require './test_helper'
+
+{ PriorityQueue } = require( "../../app/assets/javascripts/local_libs/priority_queue" )
 
 describe 'PriorityQueue', ->
 

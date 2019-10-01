@@ -14,4 +14,4 @@
 //= require priority-queue-test
 //= require test_data
 //= require dijkstra-movements-test
-//= require axial_grid_test
+//= require axial-grid-test
