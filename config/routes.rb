@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
    # mount MochaRails::Engine => 'mocha' unless Rails.env.production?
 
+  get '/auth/:provider/callback', to: 'sessions#create'
+
   resources :players, only: [ :index, :new, :create ] do
     resources :boards, only: [ :index, :new, :create ] do
       resources :pawns, only: [ :create, :update, :destroy ]
