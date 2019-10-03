@@ -47,7 +47,7 @@ class @Map extends AxialGrid
     @nx -= x_decal
     @ny -= y_decal
 
-    #    console.log( nx, ny )
+#    console.log( @nx, @ny )
     @pixel_to_hex_flat_topped( @nx, @ny )
 
 

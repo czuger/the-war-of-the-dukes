@@ -65,9 +65,16 @@ load = () ->
     $('#board').click (event) ->
 
 #      console.log( pawns_count )
+#      console.log(event)
       terrain_hex = terrain_map.get_current_hex(event)
+
+#      console.log( terrain_hex )
+
       if terrain_hex.data.color != 'w' && terrain_hex.data.side == side
         new_pawn = new Pawn( terrain_hex.q, terrain_hex.r, null, side)
+
+#        console.log( new_pawn )
+
         pawn_hex = pawns_on_map.get( new_pawn.css_id() )
         if pawn_hex
           remove_pawn_from_map( pawn_hex )
