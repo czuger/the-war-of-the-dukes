@@ -68,7 +68,7 @@ load = () ->
 #      console.log(event)
       terrain_hex = terrain_map.get_current_hex(event)
 
-#      console.log( terrain_hex )
+      console.log( terrain_hex )
 
       if terrain_hex.data.color != 'w' && terrain_hex.data.side == side
         new_pawn = new Pawn( terrain_hex.q, terrain_hex.r, null, side)
