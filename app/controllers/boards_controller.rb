@@ -1,7 +1,7 @@
 class BoardsController < ApplicationController
   before_action :set_player
   before_action :set_board, only: [:movement, :setup, :fight, :update ]
-  before_action :set_side, only: [:movement, :setup, :fight ]
+  before_action :set_side, only: [:movement, :fight ]
 
   include MapHandler
 
@@ -10,6 +10,8 @@ class BoardsController < ApplicationController
   def setup
     set_map
     @pawns = @board.pawns
+
+		@side = params[:side]
 
     side_pawns = @board.pawns.where( side: @side )
     @pawns_count = { inf: 0, cav: 0 , art: 0 }
