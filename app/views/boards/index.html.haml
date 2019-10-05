@@ -7,11 +7,6 @@
       %th Orf
       %th Wulf
       %th Turn
-      -#%th
-      -#%th
-      -#%th
-      %th
-      %th
 
   %tbody
     - @boards.each do |board|
@@ -20,11 +15,7 @@
         %td= board.orf.name
         %td= board.wulf.name
         %td= board.turn
-        -#%td= link_to 'Orf setup', player_board_setup_path( @player, board, side: :orf )
-        -#%td= link_to 'Wulf setup', player_board_setup_path( @player, board, side: :wulf )
-        -#%td= link_to 'setup', board_setup_path( board )
-        %td= link_to 'mouvement', board_movement_path( board )
-        %td= link_to 'fight', board_fight_path( board )
+        %td= current_action_link( board )
 
 %br
 
