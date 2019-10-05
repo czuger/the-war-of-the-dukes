@@ -25,3 +25,5 @@
 .idea
 
 npm-debug.log
+
+coverage
