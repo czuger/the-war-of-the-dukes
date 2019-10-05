@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191001180413) do
+ActiveRecord::Schema.define(version: 20191005084233) do
 
   create_table "boards", force: :cascade do |t|
     t.integer "owner_id", null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20191001180413) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "has_moved", default: false, null: false
-    t.index ["board_id", "q", "r"], name: "index_pawns_on_board_id_and_q_and_r", unique: true
+    t.index ["board_id", "q", "r"], name: "index_pawns_on_board_id_and_q_and_r"
     t.index ["board_id"], name: "index_pawns_on_board_id"
   end
 
