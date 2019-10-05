@@ -23,7 +23,7 @@ class BoardsController < ApplicationController
 
   def movement
     set_map
-    @pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :has_moved )
+    @pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :remaining_movement )
     @pawns = @pawns.to_json
   end
 
@@ -60,26 +60,29 @@ class BoardsController < ApplicationController
 
 		# pp create_board_params
 
-    @board = Board.new(build_new_board_hash)
+		Board.transaction do
+			@board = Board.new(build_new_board_hash)
 
-    respond_to do |format|
-      if @board.save
-        # place_pawns_on_board
+			respond_to do |format|
+				if @board.save
+					# place_pawns_on_board
 
-				board_auto_place_pawns
+					board_auto_place_pawns
 
-        format.html { redirect_to boards_path, notice: 'Board was successfully created.' }
-        format.json { render :show, status: :created, location: @board }
-      else
-        # @opponents = Player.where.not( id: @player.id ).all
+					format.html { redirect_to boards_path, notice: 'Board was successfully created.' }
+					format.json { render :show, status: :created, location: @board }
+				else
+					# @opponents = Player.where.not( id: @player.id ).all
 
-				@player = Player.find( current_player['id'] )
-				@opponents = Player.all
+					@player = Player.find( current_player['id'] )
+					@opponents = Player.all
 
-        format.html { render :new }
-        format.json { render json: @board.errors, status: :unprocessable_entity }
-      end
-    end
+					format.html { render :new }
+					format.json { render json: @board.errors, status: :unprocessable_entity }
+				end
+			end
+		end
+
   end
 
   # POST /boards
@@ -131,7 +134,10 @@ class BoardsController < ApplicationController
 
 		Board.transaction do
 			data_array.each do |pawn|
-				@board.pawns.create!( q: pawn['q'], r: pawn['r'], pawn_type: pawn['type'], side: pawn['side'] )
+
+				p pawn
+				@board.pawns.create!( q: pawn['q'], r: pawn['r'], pawn_type: pawn['type'], side: pawn['side'],
+															remaining_movement: Pawn::MOVEMENTS[ pawn['type'] ]  )
 			end
 		end
 	end

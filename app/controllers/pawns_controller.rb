@@ -5,7 +5,7 @@ class PawnsController < ApplicationController
   # Update is for movement only
   def update
     p = Pawn.find( params[:id])
-    p.update!( q: params[:q], r: params[:r], has_moved: params[:has_moved] )
+    p.update!( q: params[:q], r: params[:r], remaining_movement: params[:remaining_movement] )
     head :ok
   end
 
@@ -18,7 +18,7 @@ class PawnsController < ApplicationController
 
 	def set_and_check_pawn
 		@pawn = Pawn.find( params[:id])
-		@board = pawn.board
+		@board = @pawn.board
 
 		unless @board.send( "#{@pawn.side}_id" ) == current_player.id
 			raise "Pawn moved by player that is not the owner. Pawn : #{@pawn.inspect}, board : #{@board.inspect}"

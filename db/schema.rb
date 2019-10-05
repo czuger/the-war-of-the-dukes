@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191005092932) do
+ActiveRecord::Schema.define(version: 20191005120150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20191005092932) do
     t.bigint "board_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "has_moved", default: false, null: false
+    t.float "remaining_movement", null: false
     t.index ["board_id", "q", "r"], name: "index_pawns_on_board_id_and_q_and_r"
     t.index ["board_id"], name: "index_pawns_on_board_id"
   end

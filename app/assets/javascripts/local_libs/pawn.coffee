@@ -18,9 +18,6 @@ class @Pawn extends DbCalls
   css_id: () ->
     "pawn_#{@q}_#{@r}"
 
-  css_phantom_id: () ->
-    "phantom_pawn_#{@q}_#{@r}"
-
   # Set the jquery object associated to the pawn
   get_jquery_object: () ->
     $( '#' + @css_id() )
@@ -31,10 +28,14 @@ class @Pawn extends DbCalls
     @r = parseInt(r)
 
   # Set that the pawn has moved this turn
-  set_has_moved: () ->
-    @has_moved = true
+#  set_has_moved: () ->
+#    @has_moved = true
 
-  # Clone a pawn
+  # Set how many movement points the pawn still has
+  set_remaining_movement: ( remaining_movement ) ->
+    @remaining_movement = remaining_movement
+
+# Clone a pawn
   shallow_clone: () ->
     new Pawn( @q, @r, @pawn_type, @side, @database_id )
 
@@ -72,9 +73,9 @@ class @Pawn extends DbCalls
 
   # Call the server to update a pawn position
   db_update: ( success_callback_function, error_callback_function ) ->
-    request = $.ajax "/players/#{$('#player_id').val()}/boards/#{$('#board_id').val()}/pawns/#{@database_id}",
+    request = $.ajax "/pawns/#{@database_id}",
       type: 'PATCH'
-      data: "q=#{@q}&r=#{@r}&has_moved=#{@has_moved}"
+      data: "q=#{@q}&r=#{@r}&movement_cost=#{@movement_cost}"
     @db_call_callbacks(request, success_callback_function, error_callback_function)
 
   db_create: ( success_callback_function, error_callback_function ) ->

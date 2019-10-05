@@ -1,6 +1,8 @@
 class Pawn < ApplicationRecord
   belongs_to :board
 
+  MOVEMENTS = { 'cav' => 6, 'inf' => 3, 'art' => 3 }
+
   def remove_dates
     remove_instance_variable(:@created_at)
     self

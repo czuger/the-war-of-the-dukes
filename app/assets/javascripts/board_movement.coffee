@@ -25,14 +25,14 @@ on_can_move = (event, jquery_object) ->
 #  console.log( controlled_hexes )
 
   [results, results_costs] = DijkstraMovements.compute_movements( terrain_map, pawns_on_map, pawn, controlled_hexes )
-  console.log( results )
-  console.log( results_costs )
+#  console.log( results )
+#  console.log( results_costs )
   last_selected_pawn = pawn
 
   for key in results
     [q, r] = AxialHex.parse_hex_key( key )
 
-    tmp_pawn = pawn.shallow_clone()
+    tmp_pawn = new PawnMovementPhantom( pawn )
     tmp_pawn.reposition( parseInt(q), parseInt(r) )
 
 #    console.log( results_costs[key] )
@@ -51,7 +51,7 @@ manage_movement = () ->
     old_pawn = pawns_on_map.get(last_selected_pawn_id)
     new_pawn = old_pawn.shallow_clone()
     new_pawn.reposition( new_q, new_r )
-    new_pawn.set_has_moved()
+#    new_pawn.set_has_moved()
 
     new_pawn.db_update(
       (data) ->

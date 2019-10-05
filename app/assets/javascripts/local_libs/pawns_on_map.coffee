@@ -27,8 +27,8 @@ class @PawnsOnMap
   load_pawns: ( pawns_grid ) ->
     json_pawns = JSON.parse( $('#pawns').val() )
     for json_pawn in json_pawns
-      pawn = new Pawn( json_pawn.q, json_pawn.r, json_pawn.pawn_type, json_pawn.side, json_pawn.id )
-      pawn.set_has_moved() if json_pawn.has_moved
+      pawn = new Pawn( json_pawn.q, json_pawn.r, json_pawn.pawn_type, json_pawn.side, json_pawn.id, json_pawn.remaining_movement )
+#      pawn.set_has_moved() if json_pawn.has_moved
       new_object = @place_on_screen_map( pawn )
       @pawns[pawn.css_id()] = pawn
     null
@@ -38,6 +38,7 @@ class @PawnsOnMap
     new_object = $('<div>')
 #    pawn.set_jquery_object(new_object)
     new_object.attr( 'id', pawn.css_id() )
+    new_object.attr( 'remaining_movement', pawn.css_id() )
     new_object.addClass( pawn.css_class() )
     new_object.addClass( 'pawn' )
     new_object.addClass( pawn.side )
@@ -49,12 +50,16 @@ class @PawnsOnMap
   create_phantom: (pawn, old_pawn_id, movement_cost ) ->
     new_object = $('<div>')
 #    pawn.set_jquery_object(new_object)
-    new_object.attr( 'id', pawn.css_phantom_id() )
+    new_object.attr( 'id', pawn.css_id() )
     new_object.attr( 'old_pawn_id', old_pawn_id )
     new_object.attr( 'q', pawn.q )
     new_object.attr( 'r', pawn.r )
+    new_object.attr( 'movement_cost', movement_cost )
     new_object.addClass('pawn_phantom')
     new_object.addClass( pawn.css_class() )
+
+    console.log( pawn.css_class() )
+
     @position( pawn, new_object )
 
     movement_cost_span = $('<span>')
