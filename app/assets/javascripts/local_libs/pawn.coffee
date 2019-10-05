@@ -16,7 +16,7 @@ class @Pawn extends DbCalls
     "#{@side}_#{PAWNS_TYPES[@pawn_type]}_1"
 
   css_id: () ->
-    "pawn_#{@q}_#{@r}"
+    "pawn-#{@side}-#{@pawn_type}-#{@q}-#{@r}"
 
   # Set the jquery object associated to the pawn
   get_jquery_object: () ->
