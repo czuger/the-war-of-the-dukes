@@ -38,6 +38,9 @@ class BoardsController < ApplicationController
   # GET /boards.json
   def index
 		current_player_id = current_player['id']
+
+		# pp current_player
+
     @boards = Board.where( owner_id: current_player_id ).or( Board.where( opponent_id: current_player_id ) )
   end
 
