@@ -11,50 +11,26 @@ class Board < ApplicationRecord
 
   aasm do
     state :setup
-    state :orf_move, initial: true
-		state :orf_fight, :orf_advance, :orf_retreat
-    state :wulf_move, :wulf_fight, :wulf_advance, :wulf_retreat
+    state :orf_turn, initial: true
+		state :orf_retreat
+    state :wulf_turn, :wulf_retreat
 
-    event :orf_move_turn do
-      transitions :from => [ :setup, :wulf_fight ], :to => :orf_move
+    event :next_to_orf_turn do
+      transitions :from => [ :setup, :wulf_turn, :wulf_retreat ], :to => :orf_turn
+		end
+
+    event :next_to_wulf_turn do
+      transitions :from => [ :setup, :orf_turn, :orf_retreat ], :to => :wulf_turn
     end
 
-    event :orf_fight_turn do
-      transitions :from => :orf_move, :to => :orf_fight
-    end
+		event :next_to_orf_retreat do
+			transitions :from => [ :wulf_turn ], :to => :orf_retreat
+		end
 
-    event :orf_advance_pawn do
-      transitions :from => :orf_fight, :to => :orf_advance
-    end
+		event :next_to_wulf_retreat do
+			transitions :from => [ :orf_turn ], :to => :wulf_retreat
+		end
 
-    event :wulf_retreat_pawn do
-      transitions :from => :orf_fight, :to => :wulf_retreat
-    end
-
-    event :orf_back_to_fight do
-      transitions :from => [ :orf_advance, :wulf_retreat ], :to => :orf_fight
-    end
-
-    event :wulf_move_turn do
-      transitions :from => :orf_fight, :to => :wulf_move
-    end
-
-    event :wulf_fight_turn do
-      transitions :from => :wulf_move, :to => :wulf_fight
-    end
-
-    event :wulf_advance_pawn do
-      transitions :from => :wulf_fight, :to => :wulf_advance
-    end
-
-    event :orf_retreat_pawn do
-      transitions :from => :wulf_fight, :to => :orf_retreat
-    end
-
-    event :wulf_back_to_fight do
-      transitions :from => [ :wulf_advance, :orf_retreat ], :to => :wulf_fight
-    end
-
-  end
+	end
 
 end

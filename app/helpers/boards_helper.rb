@@ -2,7 +2,7 @@ module BoardsHelper
 
 	def current_action_link( board )
 		case board.aasm_state
-			when 'orf_move'
+			when 'orf_turn'
 
 				if @current_player.id == board.orf_id
 					link_to 'Orf move', board_movement_path( board )
@@ -10,7 +10,7 @@ module BoardsHelper
 					'Wait for your opponent to move'
 				end
 
-			when 'wulf_move'
+			when 'wulf_turn'
 
 				if @current_player.id == board.wulf_id
 					link_to 'Wulf move', board_movement_path( board )

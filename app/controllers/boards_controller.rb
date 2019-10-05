@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  before_action :set_board, only: [:movement, :setup, :fight, :update ]
+  before_action :set_board, only: [:movement, :setup, :fight, :update, :phase_finished ]
   before_action :set_side, only: [:movement, :fight ]
 
   include MapHandler
@@ -38,8 +38,17 @@ class BoardsController < ApplicationController
 				render json: data
 			end
 		end
+	end
 
-  end
+	def phase_finished
+		if @board.aasm_state == 'orf_turn'
+			@board.next_to_wulf_turn!
+		else
+			@board.next_to_orf_turn!
+		end
+
+		redirect_to board_movement_path( @board )
+	end
 
   def fight
     set_map
@@ -117,11 +126,8 @@ class BoardsController < ApplicationController
     end
 
     def set_side
-      if current_player.id == @board.orf_id
-        @side, @opponent = SIDES
-      else
-        @side, @opponent = SIDES.reverse
-			end
+      @side = @board.aasm_state.gsub( '_turn', '' )
+      @opponent = (SIDES - [@side]).first
 			@player = current_player
     end
 

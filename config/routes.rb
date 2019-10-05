@@ -13,10 +13,10 @@ Rails.application.routes.draw do
 	resources :pawns, only: [ :update, :destroy ]
 
 	resources :boards, only: [ :index, :new, :create, :update ] do
-
 		get 'setup'
 		get 'movement'
 		get 'fight'
+		get 'phase_finished'
 
 		# post 'store_pawn_position'
 	end
