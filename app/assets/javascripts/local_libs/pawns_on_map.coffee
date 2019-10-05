@@ -32,10 +32,12 @@ class @PawnsOnMap
 #      pawn.set_has_moved() if json_pawn.has_moved
       pawn.set_remaining_movement( json_pawn.remaining_movement )
 
-      console.log( pawn )
+#      console.log( pawn )
 
       new_object = @place_on_screen_map( pawn )
       @pawns[pawn.css_id()] = pawn
+
+    $('#pawns').remove()
     null
 
 
@@ -59,33 +61,6 @@ class @PawnsOnMap
     new_object
 
 
-  create_phantom: (pawn, old_pawn_id ) ->
-    new_object = $('<div>')
-#    pawn.set_jquery_object(new_object)
-    new_object.attr( 'id', pawn.css_id() )
-    new_object.attr( 'old_pawn_id', old_pawn_id )
-    new_object.attr( 'q', pawn.q )
-    new_object.attr( 'r', pawn.r )
-    new_object.attr( 'movement_cost', pawn.movement_cost )
-    new_object.attr( 'remaining_movement', pawn.remaining_movement )
-    new_object.addClass('pawn_phantom')
-    new_object.addClass( pawn.css_class() )
-
-#    console.log( pawn.css_class() )
-
-    @position( pawn, new_object )
-
-    movement_cost_span = $('<span>')
-    movement_cost_span.text( pawn.movement_cost )
-
-#    console.log( movement_cost_span )
-    movement_cost_span.addClass('pawn-movement-cost')
-
-    movement_cost_span.appendTo( new_object )
-
-    new_object.appendTo( '#board' )
-    new_object
-
 
   # Return all the controlled hexes for the given side
   controlled_hexes: (terrain_map, side) ->
@@ -102,6 +77,7 @@ class @PawnsOnMap
   # @param clone [Boolean] true if the pawn will be cloned, false if will be moved
   position: ( pawn, jquery_object, position_on_svg=false ) ->
 
+#    console.log( pawn )
     [ x, y ] = @map.get_xy_hex_position( pawn.get_hex() )
     x -= 15
     y -= 16

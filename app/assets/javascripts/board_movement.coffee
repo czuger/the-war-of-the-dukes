@@ -2,10 +2,15 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+root = exports ? this
+
 # A map for the terrain
 terrain_map = null
 # A map for the pawns
 pawns_on_map = null
+
+# A phantom pawns DB
+root.phantom_pawn_db = {}
 
 side = null
 opposite_side = { 'orf': 'wulf', 'wulf': 'orf' }
@@ -32,11 +37,10 @@ on_can_move = (event, jquery_object) ->
   for key in results
     [q, r] = AxialHex.parse_hex_key( key )
 
-    tmp_pawn = new PawnMovementPhantom( pawn, results_costs[key] )
-    tmp_pawn.reposition( parseInt(q), parseInt(r) )
-
-#    console.log( results_costs[key] )
-    pawns_on_map.create_phantom( tmp_pawn, pawn.css_id() )
+    phantom_pawn = new PawnMovementPhantom( pawn, results_costs[key] )
+    phantom_pawn.reposition( parseInt(q), parseInt(r) )
+    phantom_pawn.show_on_map( pawns_on_map, pawn.css_id() )
+    root.phantom_pawn_db[phantom_pawn.css_id()] = phantom_pawn
 
   manage_movement()
   null
@@ -44,9 +48,12 @@ on_can_move = (event, jquery_object) ->
 manage_movement = () ->
   $('.pawn_phantom').click ->
 
-    last_selected_pawn_id = $(this).attr('old_pawn_id')
-    new_q = $(this).attr('q')
-    new_r = $(this).attr('r')
+    phantom_pawn_id = $(this).attr('id')
+    phantom_pawn = root.phantom_pawn_db[phantom_pawn_id]
+
+    last_selected_pawn_id = phantom_pawn.origin_pawn_id
+    new_q = phantom_pawn.q
+    new_r = phantom_pawn.r
 
     old_pawn = pawns_on_map.get(last_selected_pawn_id)
     new_pawn = old_pawn.shallow_clone()
@@ -62,6 +69,7 @@ manage_movement = () ->
         pawns_on_map.place_on_screen_map(new_pawn)
 
         $('.pawn_phantom').remove()
+        root.phantom_pawn_db = {}
 
         new_pawn.get_jquery_object().click (event) ->
           on_can_move(event, $(this))

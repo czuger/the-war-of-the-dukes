@@ -16,6 +16,7 @@ class @Map extends AxialGrid
       map_json = $('#map')
       if map_json.length != 0
         map_json_string = map_json.val()
+        $('#map').remove()
 
     super( 26.1 )
     @from_json( map_json_string )
