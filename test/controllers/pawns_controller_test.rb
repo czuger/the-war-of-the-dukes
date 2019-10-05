@@ -2,15 +2,8 @@ require 'test_helper'
 
 class PawnsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @player1 = create( :player )
-    @player2 = create( :player )
-    @board = create( :board, owner: @player1, opponent: @player2 )
+		discord_fake_login_and_board_create
 		@pawn = create( :pawn, board: @board )
-  end
-
-  test 'should get create' do
-    post board_pawns_url( @board ), params: { q: 1, r: 1, pawn_type: :cav, side: :orf }
-    assert_response :success
   end
 
   test 'should get update' do

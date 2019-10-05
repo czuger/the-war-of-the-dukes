@@ -16,7 +16,7 @@ class ActiveSupport::TestCase
 
     @player1 = create( :player )
 		@player2 = create( :player )
-		@board = create( :board, owner: @player1, opponent: @player2 )
+		@board = create( :board, owner: @player1, orf: @player2, wulf: @player1 )
 
     discord_auth_hash =
       {

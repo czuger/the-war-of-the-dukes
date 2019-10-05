@@ -17,7 +17,7 @@ class BoardsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create a board' do
     assert_difference('Board.count') do
-      post boards_url, params: { board: { opponent_id: @board.opponent_id, owner_id: @board.owner_id, turn: @board.turn } }
+      post boards_url, params: { side: :wulf, opponent_id: @player1.id, owner_id: @player2.id }
     end
 
     assert_redirected_to boards_url
