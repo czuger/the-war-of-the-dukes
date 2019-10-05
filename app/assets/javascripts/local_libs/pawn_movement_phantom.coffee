@@ -19,24 +19,16 @@ class @PawnMovementPhantom extends Pawn
   show_on_map: (pawns_on_map_object, old_pawn_id) ->
 
     new_object = $('<div>')
-    #    pawn.set_jquery_object(new_object)
     new_object.attr( 'id', @css_id() )
-#    new_object.attr( 'old_pawn_id', old_pawn_id )
-#    new_object.attr( 'q', @q )
-#    new_object.attr( 'r', @r )
-#    new_object.attr( 'movement_cost', @movement_cost )
-#    new_object.attr( 'remaining_movement', @remaining_movement )
+
     new_object.addClass('pawn_phantom')
     new_object.addClass( @css_class() )
-
-    #    console.log( pawn.css_class() )
 
     pawns_on_map_object.position( this, new_object )
 
     movement_cost_span = $('<span>')
     movement_cost_span.text( @movement_cost )
 
-    #    console.log( movement_cost_span )
     movement_cost_span.addClass('pawn-movement-cost')
 
     movement_cost_span.appendTo( new_object )

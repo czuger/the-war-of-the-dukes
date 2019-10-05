@@ -6,15 +6,9 @@
 class @MovementGraph
 
   # Build the movement graph
-  constructor: (movement_graph_json_string = null) ->
+  constructor: ( loaded_data ) ->
 
-    unless movement_graph_json_string?
-      movement_graph_json = $('#movement_hash')
-      if movement_graph_json.length != 0
-        movement_graph_json_string = movement_graph_json.val()
-        $('#movement_hash').remove()
-
-    @movement_graph = JSON.parse( movement_graph_json_string )
+    @movement_graph = loaded_data.json_movement_graph
 
 
   # Build the key for the movement graph

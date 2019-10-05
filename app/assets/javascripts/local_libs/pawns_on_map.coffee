@@ -24,8 +24,8 @@ class @PawnsOnMap
 
 
 # Load the pawns on screen load
-  load_pawns: ( pawns_grid ) ->
-    json_pawns = JSON.parse( $('#pawns').val() )
+  load_pawns: ( loaded_data ) ->
+    json_pawns = loaded_data.pawns
     for json_pawn in json_pawns
 
       pawn = new Pawn( json_pawn.q, json_pawn.r, json_pawn.pawn_type, json_pawn.side, json_pawn.id )

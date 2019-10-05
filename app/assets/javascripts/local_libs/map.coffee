@@ -10,18 +10,15 @@ class @Map extends AxialGrid
   # Create a map
   #
   # @param hex_ray [Integer] the size of an hexagon. Please read : http://www.redblobgames.com/grids/hexagons/#basics for information about the size of an hexagon
-  constructor: ( map_json_string = null, movement_graph_json_string = null ) ->
-
-    unless map_json_string?
-      map_json = $('#map')
-      if map_json.length != 0
-        map_json_string = map_json.val()
-        $('#map').remove()
+  constructor: ( loaded_data ) ->
 
     super( 26.1 )
-    @from_json( map_json_string )
 
-    @movement_graph = new MovementGraph( movement_graph_json_string )
+    for je in loaded_data.json_map
+      je.data.color = je.data.color.toLowerCase()
+      this.cset( je['q'], je['r'], je.data )
+
+    @movement_graph = new MovementGraph( loaded_data )
 
 
 

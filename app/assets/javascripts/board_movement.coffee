@@ -79,22 +79,25 @@ manage_movement = () ->
     )
 
 load = () ->
-  terrain_map = new Map()
-  pawns_on_map = new PawnsOnMap( terrain_map )
-  side = $('#side').val()
 
-  pawns_on_map.load_pawns()
+  $.getJSON window.location.pathname + '.json', (data) ->
 
-  $(".#{side}").each ->
-    id = $(this).attr('id')
-    movement_class = if pawns_on_map.get(id).has_moved then 'cant_move' else 'can_move'
-    $(this).addClass(movement_class)
+    terrain_map = new Map( data )
+    pawns_on_map = new PawnsOnMap( terrain_map )
+    pawns_on_map.load_pawns( data )
 
-  $(".can_move").click (event) ->
-    on_can_move(event, $(this))
+    side = data.side
 
-  $(".cant_move").click (event) ->
-    on_cant_move(event, $(this))
+    $(".#{side}").each ->
+      id = $(this).attr('id')
+      movement_class = if pawns_on_map.get(id).has_moved then 'cant_move' else 'can_move'
+      $(this).addClass(movement_class)
+
+    $(".can_move").click (event) ->
+      on_can_move(event, $(this))
+
+    $(".cant_move").click (event) ->
+      on_cant_move(event, $(this))
 
 $ ->
   if window.location.pathname.match( /boards\/\d+\/movement/ )

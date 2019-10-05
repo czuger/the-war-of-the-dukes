@@ -22,9 +22,23 @@ class BoardsController < ApplicationController
   end
 
   def movement
-    set_map
-    @pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :remaining_movement )
-    @pawns = @pawns.to_json
+		respond_to do |format|
+			format.html {}
+			format.json do
+				set_map
+				@pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :remaining_movement )
+
+				data = {
+					json_movement_graph: @json_movement_graph,
+					json_map: @json_map,
+					pawns: @pawns,
+					player_id: @player.id, board_id: @board.id, side: @side, pawns: @pawns
+				}
+
+				render json: data
+			end
+		end
+
   end
 
   def fight
