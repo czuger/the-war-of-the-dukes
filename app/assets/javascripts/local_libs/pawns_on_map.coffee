@@ -48,6 +48,13 @@ class @PawnsOnMap
     new_object.addClass( 'pawn' )
     new_object.addClass( pawn.side )
     @position( pawn, new_object, position_on_svg )
+
+    movement_remaining_span = $('<span>')
+    movement_remaining_span.text( pawn.remaining_movement )
+    #    console.log( movement_remaining_span )
+    movement_remaining_span.addClass('pawn-remaining-movement')
+    movement_remaining_span.appendTo( new_object )
+
     new_object.appendTo( '#board' )
     new_object
 
@@ -64,14 +71,14 @@ class @PawnsOnMap
     new_object.addClass('pawn_phantom')
     new_object.addClass( pawn.css_class() )
 
-    console.log( pawn.css_class() )
+#    console.log( pawn.css_class() )
 
     @position( pawn, new_object )
 
     movement_cost_span = $('<span>')
     movement_cost_span.text( pawn.movement_cost )
 
-    console.log( movement_cost_span )
+#    console.log( movement_cost_span )
     movement_cost_span.addClass('pawn-movement-cost')
 
     movement_cost_span.appendTo( new_object )

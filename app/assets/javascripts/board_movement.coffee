@@ -63,6 +63,9 @@ manage_movement = () ->
 
         $('.pawn_phantom').remove()
 
+        new_pawn.get_jquery_object().click (event) ->
+          on_can_move(event, $(this))
+
 #        new_pawn.get_jquery_object().click (event) ->
 #          on_pawn_click(event, $(this))
     )

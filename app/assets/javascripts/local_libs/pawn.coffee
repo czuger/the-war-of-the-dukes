@@ -3,7 +3,7 @@
 class @Pawn extends DbCalls
 
   PAWNS_TYPES = { 'inf' : 'infantry', 'art' : 'artillery', 'cav' : 'cavalry' }
-  PAWNS_MOVEMENTS = { 'art': 3, 'cav': 6, 'inf': 3 }
+#  PAWNS_MOVEMENTS = { 'art': 3, 'cav': 6, 'inf': 3 }
   PAWNS_ATTACK = { 'art': 3, 'cav': 2, 'inf': 5 }
 
   constructor: ( @q, @r, @pawn_type, @side, @database_id ) ->
@@ -41,7 +41,7 @@ class @Pawn extends DbCalls
 
   # Return the movement amount of a pawn
   movement: () ->
-    PAWNS_MOVEMENTS[@pawn_type]
+    @remaining_movement
 
   # Check if two pawns can attack themselves and return the attack_amount
   check_attack_value: ( attacker, movement_hash ) ->
