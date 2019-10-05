@@ -100,11 +100,12 @@ class BoardsController < ApplicationController
     end
 
     def set_side
-      if @player.id == @board.owner_id
+      if current_player.id == @board.orf_id
         @side, @opponent = SIDES
       else
         @side, @opponent = SIDES.reverse
-      end
+			end
+			@player = current_player
     end
 
     def update_board_params

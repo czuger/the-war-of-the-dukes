@@ -83,5 +83,5 @@ load = () ->
     on_cant_move(event, $(this))
 
 $ ->
-  if window.location.pathname.match( /players\/\d+\/boards\/\d+\/movement/ )
+  if window.location.pathname.match( /boards\/\d+\/movement/ )
     load()
