@@ -9,8 +9,10 @@ class Board < ApplicationRecord
   serialize :fight_data
 
   aasm do
-    state :setup, :initial => true
-    state :orf_move, :orf_fight, :orf_advance, :orf_retreat, :wulf_move, :wulf_fight, :wulf_advance, :wulf_retreat
+    state :setup
+    state :orf_move, initial: true
+		state :orf_fight, :orf_advance, :orf_retreat
+    state :wulf_move, :wulf_fight, :wulf_advance, :wulf_retreat
 
     event :orf_move_turn do
       transitions :from => [ :setup, :wulf_fight ], :to => :orf_move

@@ -10,18 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191005084233) do
+ActiveRecord::Schema.define(version: 20191005092932) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "boards", force: :cascade do |t|
-    t.integer "owner_id", null: false
-    t.integer "opponent_id", null: false
+    t.bigint "owner_id", null: false
     t.integer "turn", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "aasm_state"
     t.string "fight_data"
-    t.index ["opponent_id"], name: "index_boards_on_opponent_id"
+    t.integer "orf_id"
+    t.integer "wulf_id"
+    t.index ["orf_id"], name: "index_boards_on_orf_id"
     t.index ["owner_id"], name: "index_boards_on_owner_id"
+    t.index ["wulf_id"], name: "index_boards_on_wulf_id"
   end
 
   create_table "pawns", force: :cascade do |t|
@@ -29,7 +34,7 @@ ActiveRecord::Schema.define(version: 20191005084233) do
     t.integer "r", null: false
     t.string "pawn_type", null: false
     t.string "side", null: false
-    t.integer "board_id", null: false
+    t.bigint "board_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "has_moved", default: false, null: false
@@ -46,4 +51,8 @@ ActiveRecord::Schema.define(version: 20191005084233) do
     t.index ["uid"], name: "index_players_on_uid", unique: true
   end
 
+  add_foreign_key "boards", "players", column: "orf_id"
+  add_foreign_key "boards", "players", column: "owner_id"
+  add_foreign_key "boards", "players", column: "wulf_id"
+  add_foreign_key "pawns", "boards"
 end
