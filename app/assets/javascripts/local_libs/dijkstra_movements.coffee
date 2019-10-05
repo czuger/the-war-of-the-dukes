@@ -10,6 +10,7 @@ class @DijkstraMovements
     frontier = new PriorityQueue()
     frontier.push(current_pawn.get_hex(), 0)
     frontier_history = []
+    frontier_history_costs = {}
     came_from = {}
     cost_so_far = {}
     came_from[ current_pawn.get_hex().hex_key() ] = null
@@ -33,6 +34,11 @@ class @DijkstraMovements
 
         if not hex_key_exclusion_hash[ n.hex_key() ]
 #        console.log( n )
+
+          current_cost = frontier_history_costs[ current.hex_key() ]
+          current_cost = Infinity unless current_cost
+          frontier_history_costs[ current.hex_key() ] = Math.min( cost_so_far[ current.hex_key() ], current_cost )
+
           new_cost = cost_so_far[ current.hex_key() ] + map.movement_graph.cost( current, n )
 
           unless new_cost > max_distance
@@ -49,7 +55,7 @@ class @DijkstraMovements
 #    console.log( frontier_history.sort() )
 
     frontier_history.shift()
-    frontier_history
+    [frontier_history, frontier_history_costs]
 
   @control_area_cost: ( dest_hex ) ->
     return 99 if @controlled_hexes_keys[ dest_hex.hex_key() ]

@@ -46,7 +46,7 @@ class @PawnsOnMap
     new_object
 
 
-  create_phantom: (pawn, old_pawn_id ) ->
+  create_phantom: (pawn, old_pawn_id, movement_cost ) ->
     new_object = $('<div>')
 #    pawn.set_jquery_object(new_object)
     new_object.attr( 'id', pawn.css_phantom_id() )
@@ -56,6 +56,15 @@ class @PawnsOnMap
     new_object.addClass('pawn_phantom')
     new_object.addClass( pawn.css_class() )
     @position( pawn, new_object )
+
+    movement_cost_span = $('<span>')
+    movement_cost_span.text( movement_cost )
+
+    console.log( movement_cost_span )
+    movement_cost_span.addClass('pawn-movement-cost')
+
+    movement_cost_span.appendTo( new_object )
+
     new_object.appendTo( '#board' )
     new_object
 
