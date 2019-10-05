@@ -10,8 +10,9 @@ Rails.application.routes.draw do
 	# Player are created by login
   # resources :players, only: [ :index, :new, :create ]
 
+	resources :pawns, only: [ :update, :destroy ]
+
 	resources :boards, only: [ :index, :new, :create, :update ] do
-		resources :pawns, only: [ :create, :update, :destroy ]
 
 		get 'setup'
 		get 'movement'

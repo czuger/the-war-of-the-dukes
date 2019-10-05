@@ -1,12 +1,8 @@
 class PawnsController < ApplicationController
 
-  before_action :set_board, only: [ :create ]
+	before_action :set_and_check_pawn
 
-  def create
-    @pawn = @board.pawns.create!( pawn_params )
-    render json: { pawn_id: @pawn.id }
-  end
-
+  # Update is for movement only
   def update
     p = Pawn.find( params[:id])
     p.update!( q: params[:q], r: params[:r], has_moved: params[:has_moved] )
@@ -14,19 +10,20 @@ class PawnsController < ApplicationController
   end
 
   def destroy
-    Pawn.destroy( params[:id] )
+		@pawn.destroy!
     head :ok
   end
 
   private
 
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def pawn_params
-    params.permit(:q, :r, :pawn_type, :side)
-  end
+	def set_and_check_pawn
+		@pawn = Pawn.find( params[:id])
+		@board = pawn.board
 
-  def set_board
-    @board = Board.find(params[:board_id])
-  end
+		unless @board.send( "#{@pawn.side}_id" ) == current_player.id
+			raise "Pawn moved by player that is not the owner. Pawn : #{@pawn.inspect}, board : #{@board.inspect}"
+		end
+
+	end
 
 end
