@@ -55,7 +55,7 @@ class BoardsController < ApplicationController
   # POST /boards.json
   def create
 
-		pp create_board_params
+		# pp create_board_params
 
     @board = Board.new(create_board_params)
 
@@ -121,7 +121,7 @@ class BoardsController < ApplicationController
 
 		data_array = JSON.parse(File.open('data/setup.json','r').read)
 
-		pp data_array
+		# pp data_array
 
 		Board.transaction do
 			data_array.each do |pawn|

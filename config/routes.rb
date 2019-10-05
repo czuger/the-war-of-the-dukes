@@ -7,7 +7,8 @@ Rails.application.routes.draw do
 
   get '/auth/:provider/callback', to: 'sessions#create'
 
-  resources :players, only: [ :index, :new, :create ]
+	# Player are created by login
+  # resources :players, only: [ :index, :new, :create ]
 
 	resources :boards, only: [ :index, :new, :create, :update ] do
 		resources :pawns, only: [ :create, :update, :destroy ]

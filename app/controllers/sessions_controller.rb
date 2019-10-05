@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 	def create
 		@player = Player.find_or_create_from_auth_hash(auth_hash)
 		session['current_player'] = @player
-		redirect_to player_boards_path(@player)
+		redirect_to boards_path(@player)
 	end
 
 	protected

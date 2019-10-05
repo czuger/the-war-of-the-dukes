@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def current_player
 		@current_player ||= session['current_player']
-		pp @current_player
+		# pp @current_player
 	end
 
 end
