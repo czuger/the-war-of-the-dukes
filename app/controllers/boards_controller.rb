@@ -42,9 +42,15 @@ class BoardsController < ApplicationController
 
 	def phase_finished
 		if @board.aasm_state == 'orf_turn'
-			@board.next_to_wulf_turn!
+			Board.transaction do
+				@board.next_to_wulf_turn!
+			end
 		else
-			@board.next_to_orf_turn!
+			Board.transaction do
+				@board.next_to_orf_turn!
+				@board.turn += 1
+				@board.save!
+			end
 		end
 
 		redirect_to board_movement_path( @board )
@@ -142,7 +148,8 @@ class BoardsController < ApplicationController
 		{
 			owner_id: current_player.id,
 			orf_id: (params['side'] == 'orf') ? me_id : opponent_id,
-			wulf_id: (params['side'] == 'wulf') ? me_id : opponent_id
+			wulf_id: (params['side'] == 'wulf') ? me_id : opponent_id,
+			turn: 1
 		}
 	end
 

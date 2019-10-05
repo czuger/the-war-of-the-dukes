@@ -21,4 +21,12 @@ module BoardsHelper
 		end
 	end
 
+	def turn_pawn_position
+		top = 414
+		left = 1255
+
+		top += (455 - 414) * ( @board.turn-1 )
+		"top:#{top}px; left:#{left}px"
+	end
+
 end
