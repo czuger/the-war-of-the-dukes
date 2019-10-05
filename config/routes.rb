@@ -7,15 +7,17 @@ Rails.application.routes.draw do
 
   get '/auth/:provider/callback', to: 'sessions#create'
 
-  resources :players, only: [ :index, :new, :create ] do
-    resources :boards, only: [ :index, :new, :create, :update ] do
-      resources :pawns, only: [ :create, :update, :destroy ]
-      get 'setup'
-      get 'movement'
-      get 'fight'
-      # post 'store_pawn_position'
-    end
-  end
+  resources :players, only: [ :index, :new, :create ]
+
+	resources :boards, only: [ :index, :new, :create, :update ] do
+		resources :pawns, only: [ :create, :update, :destroy ]
+
+		get 'setup'
+		get 'movement'
+		get 'fight'
+
+		# post 'store_pawn_position'
+	end
 
   namespace :edit_map do
     get 'edit_hexes'

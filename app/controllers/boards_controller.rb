@@ -1,5 +1,4 @@
 class BoardsController < ApplicationController
-  before_action :set_player
   before_action :set_board, only: [:movement, :setup, :fight, :update ]
   before_action :set_side, only: [:movement, :fight ]
 
@@ -38,12 +37,16 @@ class BoardsController < ApplicationController
   # GET /boards
   # GET /boards.json
   def index
-    @boards = Board.all
+		current_player_id = current_player['id']
+    @boards = Board.where( owner_id: current_player_id ).or( Board.where( opponent_id: current_player_id ) )
   end
 
   # GET /boards/new
   def new
     @board = Board.new
+
+		@player = Player.find( current_player['id'] )
+
     # @opponents = Player.where.not( id: @player.id ).all
     @opponents = Player.all
   end
@@ -51,15 +54,25 @@ class BoardsController < ApplicationController
   # POST /boards
   # POST /boards.json
   def create
+
+		pp create_board_params
+
     @board = Board.new(create_board_params)
 
     respond_to do |format|
       if @board.save
         # place_pawns_on_board
-        format.html { redirect_to player_boards_path( @player.id ), notice: 'Board was successfully created.' }
+
+				fixed_setup
+
+        format.html { redirect_to boards_path, notice: 'Board was successfully created.' }
         format.json { render :show, status: :created, location: @board }
       else
-        @opponents = Player.where.not( id: @player.id ).all
+        # @opponents = Player.where.not( id: @player.id ).all
+
+				@player = Player.find( current_player['id'] )
+				@opponents = Player.all
+
         format.html { render :new }
         format.json { render json: @board.errors, status: :unprocessable_entity }
       end
@@ -83,10 +96,6 @@ class BoardsController < ApplicationController
       @board = Board.find(params[:board_id] || params[:id])
     end
 
-    def set_player
-      @player = Player.find(params[:player_id])
-    end
-
     def set_side
       if @player.id == @board.owner_id
         @side, @opponent = SIDES
@@ -99,13 +108,26 @@ class BoardsController < ApplicationController
     def create_board_params
       params.require(:board).permit(:opponent_id).merge(
         {
-            owner_id: @player.id
+            owner_id: current_player['id']
         }
       )
     end
 
     def update_board_params
       params.require(:board).permit( { fight_data: [ :q, :r ] }, :turn )
-    end
+		end
+
+	def fixed_setup
+
+		data_array = JSON.parse(File.open('data/setup.json','r').read)
+
+		pp data_array
+
+		Board.transaction do
+			data_array.each do |pawn|
+				@board.pawns.create!( q: pawn['q'], r: pawn['r'], pawn_type: pawn['type'], side: pawn['side'] )
+			end
+		end
+	end
 
 end
