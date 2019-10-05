@@ -32,11 +32,11 @@ on_can_move = (event, jquery_object) ->
   for key in results
     [q, r] = AxialHex.parse_hex_key( key )
 
-    tmp_pawn = new PawnMovementPhantom( pawn )
+    tmp_pawn = new PawnMovementPhantom( pawn, results_costs[key] )
     tmp_pawn.reposition( parseInt(q), parseInt(r) )
 
 #    console.log( results_costs[key] )
-    pawns_on_map.create_phantom( tmp_pawn, pawn.css_id(), results_costs[key] )
+    pawns_on_map.create_phantom( tmp_pawn, pawn.css_id() )
 
   manage_movement()
   null
@@ -51,7 +51,7 @@ manage_movement = () ->
     old_pawn = pawns_on_map.get(last_selected_pawn_id)
     new_pawn = old_pawn.shallow_clone()
     new_pawn.reposition( new_q, new_r )
-#    new_pawn.set_has_moved()
+    new_pawn.set_remaining_movement( parseFloat( $(this).attr('remaining_movement') ) )
 
     new_pawn.db_update(
       (data) ->

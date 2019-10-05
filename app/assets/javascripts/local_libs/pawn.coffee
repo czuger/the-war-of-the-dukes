@@ -75,7 +75,7 @@ class @Pawn extends DbCalls
   db_update: ( success_callback_function, error_callback_function ) ->
     request = $.ajax "/pawns/#{@database_id}",
       type: 'PATCH'
-      data: "q=#{@q}&r=#{@r}&movement_cost=#{@movement_cost}"
+      data: "q=#{@q}&r=#{@r}&remaining_movement=#{@remaining_movement}"
     @db_call_callbacks(request, success_callback_function, error_callback_function)
 
   db_create: ( success_callback_function, error_callback_function ) ->
