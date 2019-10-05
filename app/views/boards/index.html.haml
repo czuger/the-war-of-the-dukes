@@ -4,7 +4,8 @@
   %thead
     %tr
       %th Owner
-      %th Opponent
+      %th Orf
+      %th Wulf
       %th Turn
       -#%th
       -#%th
@@ -16,7 +17,8 @@
     - @boards.each do |board|
       %tr
         %td= board.owner.name
-        %td= board.opponent.name
+        %td= board.orf.name
+        %td= board.wulf.name
         %td= board.turn
         -#%td= link_to 'Orf setup', player_board_setup_path( @player, board, side: :orf )
         -#%td= link_to 'Wulf setup', player_board_setup_path( @player, board, side: :wulf )

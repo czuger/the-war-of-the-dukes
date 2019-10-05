@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20191005092932) do
     t.datetime "updated_at", null: false
     t.string "aasm_state"
     t.string "fight_data"
-    t.integer "orf_id"
-    t.integer "wulf_id"
+    t.integer "orf_id", null: false
+    t.integer "wulf_id", null: false
     t.index ["orf_id"], name: "index_boards_on_orf_id"
     t.index ["owner_id"], name: "index_boards_on_owner_id"
     t.index ["wulf_id"], name: "index_boards_on_wulf_id"

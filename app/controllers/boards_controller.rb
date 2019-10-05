@@ -41,7 +41,7 @@ class BoardsController < ApplicationController
 
 		# pp current_player
 
-    @boards = Board.where( owner_id: current_player_id ).or( Board.where( opponent_id: current_player_id ) )
+    @boards = Board.where( orf_id: current_player_id ).or( Board.where( wulf_id: current_player_id ) )
   end
 
   # GET /boards/new
@@ -60,13 +60,13 @@ class BoardsController < ApplicationController
 
 		# pp create_board_params
 
-    @board = Board.new(create_board_params)
+    @board = Board.new(build_new_board_hash)
 
     respond_to do |format|
       if @board.save
         # place_pawns_on_board
 
-				fixed_setup
+				board_auto_place_pawns
 
         format.html { redirect_to boards_path, notice: 'Board was successfully created.' }
         format.json { render :show, status: :created, location: @board }
@@ -107,20 +107,22 @@ class BoardsController < ApplicationController
       end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def create_board_params
-      params.require(:board).permit(:opponent_id).merge(
-        {
-            owner_id: current_player['id']
-        }
-      )
-    end
-
     def update_board_params
       params.require(:board).permit( { fight_data: [ :q, :r ] }, :turn )
 		end
 
-	def fixed_setup
+	def build_new_board_hash
+		me_id = current_player.id
+		opponent_id = params['opponent_id']
+
+		{
+			owner_id: current_player.id,
+			orf_id: (params['side'] == 'orf') ? me_id : opponent_id,
+			wulf_id: (params['side'] == 'wulf') ? me_id : opponent_id
+		}
+	end
+
+	def board_auto_place_pawns
 
 		data_array = JSON.parse(File.open('data/setup.json','r').read)
 

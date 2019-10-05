@@ -2,7 +2,8 @@ class Board < ApplicationRecord
   include AASM
 
   belongs_to :owner, class_name: 'Player'
-  belongs_to :opponent, class_name: 'Player'
+  belongs_to :orf, class_name: 'Player'
+	belongs_to :wulf, class_name: 'Player'
 
   has_many :pawns, dependent: :destroy
 
