@@ -11,7 +11,6 @@ class @PawnMovementPhantom extends Pawn
     # On river crossing movement is high or infinite
     @movement_cost = movement_cost
     @remaining_movement = pawn.remaining_movement - movement_cost
-
 #    console.log( @remaining_movement )
 
   css_id: () ->

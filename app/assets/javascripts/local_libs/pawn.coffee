@@ -37,7 +37,10 @@ class @Pawn extends DbCalls
 
 # Clone a pawn
   shallow_clone: () ->
-    new Pawn( @q, @r, @pawn_type, @side, @database_id )
+    p = new Pawn( @q, @r, @pawn_type, @side, @database_id )
+    p.set_remaining_movement( @remaining_movement )
+#    console.log( p )
+    p
 
   # Return the movement amount of a pawn
   movement: () ->

@@ -58,7 +58,7 @@ manage_movement = () ->
     old_pawn = pawns_on_map.get(last_selected_pawn_id)
     new_pawn = old_pawn.shallow_clone()
     new_pawn.reposition( new_q, new_r )
-    new_pawn.set_remaining_movement( parseFloat( $(this).attr('remaining_movement') ) )
+    new_pawn.set_remaining_movement( phantom_pawn.remaining_movement )
 
     new_pawn.db_update(
       (data) ->

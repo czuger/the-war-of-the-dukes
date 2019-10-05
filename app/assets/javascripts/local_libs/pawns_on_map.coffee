@@ -45,7 +45,7 @@ class @PawnsOnMap
     new_object = $('<div>')
 #    pawn.set_jquery_object(new_object)
     new_object.attr( 'id', pawn.css_id() )
-    new_object.attr( 'remaining_movement', pawn.css_id() )
+    new_object.attr( 'remaining_movement', pawn.remaining_movement )
     new_object.addClass( pawn.css_class() )
     new_object.addClass( 'pawn' )
     new_object.addClass( pawn.side )
