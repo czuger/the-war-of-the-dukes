@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 		# post 'store_pawn_position'
 	end
 
+	get '/board/map_data', to: 'boards#map_data'
+
   namespace :edit_map do
     get 'edit_hexes'
     post 'update_hexes'

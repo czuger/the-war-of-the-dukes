@@ -6,6 +6,34 @@ class BoardsController < ApplicationController
 
   SIDES = %w( orf wulf )
 
+	def map_data
+		respond_to do |format|
+			format.json do
+				set_map
+
+				data = {
+					json_movement_graph: @json_movement_graph,
+					json_map: @json_map
+				}
+
+				if params[:board_id]
+					set_board
+					set_side
+
+					@pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :remaining_movement )
+
+					data[:board] = @board.id
+					data[:pawns] = @pawns
+					data[:side] = @side
+					data[:player_id] = @player.id
+				end
+
+				render json: data
+			end
+		end
+
+	end
+
   def setup
     set_map
     @pawns = @board.pawns
@@ -22,22 +50,6 @@ class BoardsController < ApplicationController
   end
 
   def movement
-		respond_to do |format|
-			format.html {}
-			format.json do
-				set_map
-				@pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :remaining_movement )
-
-				data = {
-					json_movement_graph: @json_movement_graph,
-					json_map: @json_map,
-					pawns: @pawns,
-					player_id: @player.id, board_id: @board.id, side: @side, pawns: @pawns
-				}
-
-				render json: data
-			end
-		end
 	end
 
 	def phase_finished

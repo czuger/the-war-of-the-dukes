@@ -2,12 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-root = exports ? this
-
-root.current_map = null
-
-root.set_letter = ( hex ) ->
-  [ x, y ] = root.current_map.get_xy_hex_position( hex )
+set_letter = ( terrain_map, hex ) ->
+  [ x, y ] = terrain_map.get_xy_hex_position( hex )
 
   $("#edit_letter_#{hex.q}_#{hex.r}").remove()
 
@@ -19,44 +15,42 @@ root.set_letter = ( hex ) ->
   div.css( 'color', 'red' ) if hex.color == 'r' || hex.color == 'R'
   $('#board').append( div )
 
-root.clear_letter = ( hex ) ->
+
+clear_letter = ( hex ) ->
   $("#edit_letter_#{hex.q}_#{hex.r}").remove()
 
-root.load_map = () ->
-  root.current_map = new Map()
 
-#  console.log( root.current_map )
 
+set_map_letters = ( terrain_map ) ->
   searchParams = new URLSearchParams(window.location.search)
   color = searchParams.get('color')
   color = color.toUpperCase() if color
 
-  for _, hex of root.current_map.hexes
+  for _, hex of terrain_map.hexes
 
     if color == hex.data.color.toUpperCase()
-      set_letter( hex )
+      set_letter( terrain_map, hex )
 
-  return null
 
-manage_changes = () ->
+manage_changes = ( board ) ->
 
-  load_map()
+  set_map_letters( board.terrain_map )
 
   $('#board').mousedown (event) ->
 
-    hex = root.current_map.get_current_hex(event)
+    hex = board.terrain_map.get_current_hex(event)
 
     searchParams = new URLSearchParams(window.location.search)
     color = searchParams.get('color').toUpperCase()
 
-    console.log( color )
+#    console.log( color )
     hex.data.color = color
 
     set_letter( hex )
 
-    console.log( hex )
+#    console.log( hex )
 
-    root.current_map.hset( hex )
+    board.terrain_map.hset( hex )
 
     $.post '/edit_map/update_hexes',
       q: hex.q
@@ -67,4 +61,4 @@ manage_changes = () ->
 $(window).load ->
 #  console.log( window.location.pathname )
   if window.location.pathname == '/edit_map/edit_hexes'
-    manage_changes()
+    Board.load_map( manage_changes )
