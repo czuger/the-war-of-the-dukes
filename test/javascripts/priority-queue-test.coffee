@@ -3,7 +3,7 @@ assert = require('assert')
 
 require './test_helper'
 
-{ PriorityQueue } = require( "../../app/assets/javascripts/local_libs/priority_queue" )
+{ PriorityQueue } = require( "../../app/assets/javascripts/local_libs/misc/priority_queue" )
 
 describe 'PriorityQueue', ->
 

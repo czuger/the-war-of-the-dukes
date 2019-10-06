@@ -2,6 +2,9 @@
 class @Board extends DbCalls
 
   constructor: ( loaded_data ) ->
+
+    @top_layer = loaded_data.json_top_layer
+
     @terrain_map = new Map( loaded_data )
     @pawns_on_map = new PawnsOnMap( @terrain_map )
 
@@ -9,9 +12,15 @@ class @Board extends DbCalls
       @pawns_on_map.load_pawns( loaded_data )
 
 
-  @load_map: ( callback ) ->
+  @load_map: ( callback, params ) ->
+
+    params_string = $.param( params )
+
     # $.getJSON window.location.pathname + '.json', (data) ->
-    $.getJSON '/board/map_data.json', ( data ) ->
+    $.getJSON "/board/map_data.json?#{params_string}", ( data ) ->
+
+      console.log( data )
+
       callback( new Board( data ) )
 
 

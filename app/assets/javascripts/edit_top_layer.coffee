@@ -2,25 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-root = exports ? this
+manage_changes = ( board ) ->
 
-layer = null
-
-load_top_layer = () ->
-
-  for hex in JSON.parse( $('#json_top_layer').val() )
-    hex = new AxialHex( parseInt(hex['q']), parseInt(hex['r']), { color: hex.data.color } )
-    root.set_letter( hex )
-
-
-manage_changes = ( layer ) ->
-
-  root.load_map()
-  load_top_layer()
+  eme = new EditMapEngine( board )
+  eme.load_top_layer()
 
   $('#board').mousedown (event) ->
 
-    hex = root.current_map.get_current_hex(event)
+    hex = board.terrain_map.get_current_hex(event)
 
     if hex.data.color == 'R' || hex.data.color == 'B'
       hex.data.color = null
@@ -41,6 +30,8 @@ manage_changes = ( layer ) ->
 $ ->
 #  console.log( window.location.pathname )
   if window.location.pathname == '/edit_map/edit_top_layer'
+
     searchParams = new URLSearchParams(window.location.search)
     layer = searchParams.get('layer')
-    manage_changes( layer )
+
+    Board.load_map( manage_changes, { layer: layer } )

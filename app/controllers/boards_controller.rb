@@ -9,33 +9,12 @@ class BoardsController < ApplicationController
 	def map_data
 		respond_to do |format|
 			format.json do
-				set_map
-
-				data = {
-					json_movement_graph: @json_movement_graph,
-					json_map: @json_map
-				}
-
-				if params[:board_id]
-					set_board
-					set_side
-
-					@pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :remaining_movement )
-
-					data[:board] = @board.id
-					data[:pawns] = @pawns
-					data[:side] = @side
-					data[:player_id] = @player.id
-				end
-
-				render json: data
+				render json: get_map_data
 			end
 		end
-
 	end
 
   def setup
-    set_map
     @pawns = @board.pawns
 
 		@side = params[:side]

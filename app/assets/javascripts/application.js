@@ -21,6 +21,6 @@
 //= require hex_lib/axial_grid.coffee
 //= require hex_lib/square_grid.coffee
 
-//= require local_libs/db_calls.coffee
+//= require local_libs/misc/db_calls.coffee
 
 //= require_tree .
