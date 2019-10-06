@@ -2,10 +2,13 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+root = exports ? this
+root.eme = null
+
 manage_changes = ( board ) ->
 
-  eme = new EditMapEngine( board )
-  eme.set_map_letters()
+  root.eme = new EditMapEngine( board )
+  root.eme.set_map_letters()
 
   $('#board').mousedown (event) ->
 
@@ -15,7 +18,7 @@ manage_changes = ( board ) ->
     color = searchParams.get('color').toUpperCase()
 
     hex.data.color = color
-    eme.set_letter( hex )
+    root.eme.set_letter( hex )
 
     $.post '/edit_map/update_hexes',
       q: hex.q

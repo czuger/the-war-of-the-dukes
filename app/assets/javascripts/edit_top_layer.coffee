@@ -2,10 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+root = exports ? this
+root.eme = null
+root.layer = null
+
 manage_changes = ( board ) ->
 
-  eme = new EditMapEngine( board )
-  eme.load_top_layer()
+  root.eme = new EditMapEngine( board )
+  root.eme.load_top_layer()
 
   $('#board').mousedown (event) ->
 
@@ -13,18 +17,16 @@ manage_changes = ( board ) ->
 
     if hex.data.color == 'R' || hex.data.color == 'B'
       hex.data.color = null
-      root.clear_letter( hex )
-      root.current_map.hclear( hex )
+      root.eme.clear_letter( hex )
     else
-      hex.data.color = ( if layer == 'orf_border' then 'B' else 'R' )
-      root.set_letter( hex )
-      root.current_map.hset( hex )
+      hex.data.color = ( if root.layer == 'orf_border' then 'B' else 'R' )
+      root.eme.set_letter( hex )
 
     $.post '/edit_map/update_top_layer',
       q: hex.q
       r: hex.r
       color: hex.data.color
-      layer: layer
+      layer: root.layer
 
 
 $ ->
@@ -32,6 +34,6 @@ $ ->
   if window.location.pathname == '/edit_map/edit_top_layer'
 
     searchParams = new URLSearchParams(window.location.search)
-    layer = searchParams.get('layer')
+    root.layer = searchParams.get('layer')
 
     Board.load_map( manage_changes, { layer: layer } )

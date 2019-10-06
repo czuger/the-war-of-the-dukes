@@ -34,7 +34,7 @@ class @EditMapEngine
     for _, hex of @terrain_map.hexes
 
       if color == hex.data.color.toUpperCase()
-        set_letter( hex, true )
+        @set_letter( hex, true )
 
   load_top_layer: () ->
     for hex in @top_layer

@@ -4,6 +4,21 @@ module MapHandler
 		'roads' => 'data/roads.json', 'rivers' => 'data/rivers.json', 'orf_border' => 'data/orf_border.json'
 	}
 
+	def set_map_data
+		top_layer_file = FILES[params[:layer]]
+
+		map = AxialGrid.from_json_file( top_layer_file )
+		# puts params[:q].inspect
+
+		if params[:color] == ''
+			map.cclear( params[:q].to_i, params[:r].to_i )
+		else
+			map.cset( params[:q].to_i, params[:r].to_i, data:{ color: params[:color] } )
+		end
+
+		map.to_json_file( top_layer_file )
+	end
+
   def get_map_data
 
 		data = {
@@ -29,7 +44,7 @@ module MapHandler
 
 		top_layer_file = FILES[params[:layer]]
 
-		if File.exist?( top_layer_file )
+		if top_layer_file && File.exist?( top_layer_file )
 			File.open( top_layer_file, 'r' ) do |f|
 				data[:json_top_layer] = JSON.parse( f.read )
 			end

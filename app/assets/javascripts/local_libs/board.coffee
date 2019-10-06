@@ -12,7 +12,7 @@ class @Board extends DbCalls
       @pawns_on_map.load_pawns( loaded_data )
 
 
-  @load_map: ( callback, params ) ->
+  @load_map: ( callback, params= {} ) ->
 
     params_string = $.param( params )
 

@@ -1,5 +1,7 @@
 class EditMapController < ApplicationController
 
+	include MapHandler
+
   def full_hex_map
     @show_centers = params[:show_centers]
   end
@@ -20,18 +22,7 @@ class EditMapController < ApplicationController
   end
 
   def update_top_layer
-    top_layer_file = FILES[params[:layer]]
-
-    map = AxialGrid.from_json_file( top_layer_file )
-    # puts params[:q].inspect
-
-    if params[:color] == ''
-      map.cclear( params[:q].to_i, params[:r].to_i )
-    else
-      map.cset( params[:q].to_i, params[:r].to_i, data:{ color: params[:color] } )
-    end
-
-    map.to_json_file( top_layer_file )
+		set_map_data
     head :ok
   end
 
