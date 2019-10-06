@@ -8,10 +8,10 @@ class @DbCalls
       if error_callback_function
         error_callback_function(jqXHR, textStatus, errorThrown)
       else
-        basic_error_handler(jqXHR, textStatus, errorThrown)
+        DbCalls.basic_error_handler(jqXHR, textStatus, errorThrown)
     request
 
   # basic error handler
-  basic_error_handler: (jqXHR, textStatus, errorThrown) ->
+  @basic_error_handler: (jqXHR, textStatus, errorThrown) ->
     $('#error_area').html(errorThrown)
     $('#error_area').show().delay(3000).fadeOut(3000);

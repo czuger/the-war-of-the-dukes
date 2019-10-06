@@ -4,6 +4,7 @@ class PawnsController < ApplicationController
 
   # Update is for movement only
   def update
+		raise
     p = Pawn.find( params[:id])
     p.update!( q: params[:q], r: params[:r], remaining_movement: params[:remaining_movement] )
     head :ok
