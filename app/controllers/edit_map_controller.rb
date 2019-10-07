@@ -19,11 +19,14 @@ class EditMapController < ApplicationController
   def edit_top_layer
     # @map = AxialGrid.from_json_file( top_layer_file )
     render :edit_hexes
-  end
+	end
 
-  def update_top_layer
+	def edit_rivers
+	end
+
+	def update_top_layer
 		set_map_data
-    head :ok
-  end
+		head :ok
+	end
 
 end

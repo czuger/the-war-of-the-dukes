@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     get 'edit_top_layer'
     post 'update_top_layer'
 
+		get 'edit_rivers'
+
     get 'full_hex_map'
     get '/', action: 'full_hex_map'
   end

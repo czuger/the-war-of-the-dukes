@@ -39,6 +39,10 @@ class BoardsController < ApplicationController
 		else
 			Board.transaction do
 				@board.next_to_orf_turn!
+
+				@board.pawns.where( pawn_type: :art ).or( Pawn.where( pawn_type: :inf ) ).update_all( remaining_movement: 3 )
+				@board.pawns.where( pawn_type: :cav ).update_all( remaining_movement: 6 )
+
 				@board.turn += 1
 				@board.save!
 			end
