@@ -63,5 +63,5 @@ class @DijkstraMovements
     [frontier_history, frontier_history_costs]
 
   @control_area_cost: ( dest_hex ) ->
-    return 99 if @controlled_hexes_keys[ dest_hex.hex_key() ]
+    return 15 if @controlled_hexes_keys[ dest_hex.hex_key() ]
     0
