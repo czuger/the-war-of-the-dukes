@@ -26,15 +26,14 @@ module MapHandler
 		}
 
 		if params[:movement]
-			@json_movement_graph = JSON.parse( File.open( 'data/movement_graph.json' ).read )
+			data[:json_movement_graph] = JSON.parse( File.open( 'data/movement_graph.json' ).read )
 		end
 
-		if @board
+		if params[:board_id]
+			set_board
+			set_side
 			data[:board] = @board.id
 			data[:pawns] = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :remaining_movement )
-		end
-
-		if @side
 			data[:side] = @side
 		end
 

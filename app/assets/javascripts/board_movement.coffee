@@ -4,10 +4,8 @@
 
 root = exports ? this
 
-# A map for the terrain
-terrain_map = null
-# A map for the pawns
-pawns_on_map = null
+# An object to store all board related information
+root.board = null
 
 # A phantom pawns DB
 root.phantom_pawn_db = {}
@@ -23,6 +21,9 @@ on_can_move = (event, jquery_object) ->
 
   $('#pawn_info').html('')
   $('.pawn_phantom').remove()
+
+  pawns_on_map = root.board.pawns_on_map
+  terrain_map = root.board.terrain_map
 
   pawn = pawns_on_map.get(jquery_object.attr('id'))
 
@@ -47,6 +48,8 @@ on_can_move = (event, jquery_object) ->
 
 manage_movement = () ->
   $('.pawn_phantom').click ->
+
+    pawns_on_map = root.board.pawns_on_map
 
     phantom_pawn_id = $(this).attr('id')
     phantom_pawn = root.phantom_pawn_db[phantom_pawn_id]
@@ -78,15 +81,12 @@ manage_movement = () ->
 #          on_pawn_click(event, $(this))
     )
 
-load = () ->
+load = ( board ) ->
 
-  $.getJSON window.location.pathname + '.json', (data) ->
+    root.board = board
+    pawns_on_map = board.pawns_on_map
 
-    terrain_map = new Map( data )
-    pawns_on_map = new PawnsOnMap( terrain_map )
-    pawns_on_map.load_pawns( data )
-
-    side = data.side
+    side = board.side
 
     $(".#{side}").each ->
       id = $(this).attr('id')
@@ -101,4 +101,8 @@ load = () ->
 
 $ ->
   if window.location.pathname.match( /boards\/\d+\/movement/ )
-    load()
+
+    board_id_regex = RegExp('\\d+');
+    board_id = board_id_regex.exec( window.location.pathname )[0]
+
+    Board.load_map( load, { board_id: board_id, movement: true } )

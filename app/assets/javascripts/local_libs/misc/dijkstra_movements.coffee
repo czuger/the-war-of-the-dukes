@@ -32,13 +32,13 @@ class @DijkstraMovements
           return
 
         if not hex_key_exclusion_hash[ n.hex_key() ]
-          console.log( n )
+#          console.log( n )
 
           current_cost = frontier_history_costs[ current.hex_key() ]
           current_cost = Infinity unless current_cost
           frontier_history_costs[ current.hex_key() ] = Math.min( cost_so_far[ current.hex_key() ], current_cost )
 
-          console.log( map.movement_graph.cost( current, n ) )
+#          console.log( map.movement_graph.cost( current, n ) )
           new_cost = cost_so_far[ current.hex_key() ] + map.movement_graph.cost( current, n )
 
           unless new_cost > max_distance

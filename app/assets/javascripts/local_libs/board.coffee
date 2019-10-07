@@ -4,6 +4,8 @@ class @Board extends DbCalls
   constructor: ( loaded_data ) ->
 
     @top_layer = loaded_data.json_top_layer
+    @side = loaded_data.side
+    @movement_graph = loaded_data.json_movement_graph
 
     @terrain_map = new Map( loaded_data )
     @pawns_on_map = new PawnsOnMap( @terrain_map )
