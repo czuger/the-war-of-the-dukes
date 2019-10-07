@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191005120150) do
+ActiveRecord::Schema.define(version: 20191007171747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "board_histories", force: :cascade do |t|
+    t.bigint "board_id", null: false
+    t.integer "turn", limit: 2, null: false
+    t.integer "movements_increments", default: 1, null: false
+    t.jsonb "pawns_positions", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_board_histories_on_board_id"
+  end
 
   create_table "boards", force: :cascade do |t|
     t.bigint "owner_id", null: false
@@ -51,6 +61,7 @@ ActiveRecord::Schema.define(version: 20191005120150) do
     t.index ["uid"], name: "index_players_on_uid", unique: true
   end
 
+  add_foreign_key "board_histories", "boards"
   add_foreign_key "boards", "players", column: "orf_id"
   add_foreign_key "boards", "players", column: "owner_id"
   add_foreign_key "boards", "players", column: "wulf_id"

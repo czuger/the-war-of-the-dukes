@@ -5,7 +5,17 @@ class PawnsController < ApplicationController
   # Update is for movement only
   def update
     p = Pawn.find( params[:id])
-    p.update!( q: params[:q], r: params[:r], remaining_movement: params[:remaining_movement] )
+
+		Pawn.transaction do
+			p.update!( q: params[:q], r: params[:r], remaining_movement: params[:remaining_movement] )
+
+			new_increment = @board.board_histories.maximum( :movements_increments ) || 0
+
+			@board.board_histories.create!( turn: @board.turn, movements_increments: new_increment+1,
+				 pawns_positions: @board.pawns.map{ |e| e.minimal_hash }
+			)
+		end
+
     head :ok
   end
 

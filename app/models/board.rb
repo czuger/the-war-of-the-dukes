@@ -6,6 +6,7 @@ class Board < ApplicationRecord
 	belongs_to :wulf, class_name: 'Player'
 
   has_many :pawns, dependent: :destroy
+	has_many :board_histories, dependent: :destroy
 
   serialize :fight_data
 
