@@ -31,6 +31,7 @@ class BoardsController < ApplicationController
   def movement
 	end
 
+
 	def phase_finished
 		if @board.aasm_state == 'orf_turn'
 			Board.transaction do

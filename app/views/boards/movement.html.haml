@@ -1,9 +1,5 @@
-#board
-  = image_tag 'board_cut_transformed.png'
-
-  #turn_pawn.pawn{ style: turn_pawn_position }
-
 = link_to 'Finish turn', board_phase_finished_path( @board )
 
--##pawn_info
+= render partial: 'boards/show_map'
 
+#turn_pawn.pawn{ style: turn_pawn_position }

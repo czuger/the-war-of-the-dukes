@@ -1,0 +1,2 @@
+module BoardHistoriesHelper
+end

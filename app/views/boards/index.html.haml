@@ -7,6 +7,7 @@
       %th Orf
       %th Wulf
       %th Turn
+      %th History
 
   %tbody
     - @boards.each do |board|
@@ -16,6 +17,7 @@
         %td= board.wulf.name
         %td= board.turn
         %td= current_action_link( board )
+        %td= link_to 'History', board_history_path( board )
 
 %br
 

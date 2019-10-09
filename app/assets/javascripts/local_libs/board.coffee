@@ -7,6 +7,9 @@ class @Board extends DbCalls
     @side = loaded_data.side
     @movement_graph = loaded_data.json_movement_graph
 
+    @history = loaded_data.history
+    @max_history_iteration = loaded_data.max_history_iteration
+
     @terrain_map = new Map( loaded_data )
     @pawns_on_map = new PawnsOnMap( @terrain_map )
 
@@ -21,7 +24,7 @@ class @Board extends DbCalls
     # $.getJSON window.location.pathname + '.json', (data) ->
     $.getJSON "/board/map_data.json?#{params_string}", ( data ) ->
 
-      console.log( data )
+      console.log( "Data lodaded from server = ", data )
 
       callback( new Board( data ) )
 

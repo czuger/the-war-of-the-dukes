@@ -1,1 +1,11 @@
 = render partial: 'boards/show_map'
+
+%div
+  = label_tag 'river_R', 'R'
+  = radio_button_tag 'river', 'R', true
+
+  = label_tag 'river_S', 'S'
+  = radio_button_tag 'river', 'S'
+
+  = label_tag 'river_T', 'T'
+  = radio_button_tag 'river', 'T'
