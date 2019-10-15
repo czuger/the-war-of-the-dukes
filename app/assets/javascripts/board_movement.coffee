@@ -10,14 +10,15 @@ root.board = null
 # A phantom pawns DB
 root.phantom_pawn_db = {}
 
-side = null
+root.combat_engine = null
+
 opposite_side = { 'orf': 'wulf', 'wulf': 'orf' }
 
-on_cant_move = (event, jquery_object) ->
-  message = 'Ce pion a déjà bougé ce tour ci'
-  $('#pawn_info').html(message)
+#on_cant_move = (event, jquery_object) ->
+#  message = 'Ce pion a déjà bougé ce tour ci'
+#  $('#pawn_info').html(message)
 
-on_can_move = (event, jquery_object) ->
+on_can_move = (jquery_object) ->
 
   $('#pawn_info').html('')
   $('.pawn_phantom').remove()
@@ -81,23 +82,32 @@ manage_movement = () ->
 #          on_pawn_click(event, $(this))
     )
 
+
+set_movement = () ->
+
+  side = root.board.side
+
+  $(".#{side}").unbind()
+
+  $(".#{side}").click ->
+    on_can_move($(this))
+
 load = ( board ) ->
+  root.board = board
+  pawns_on_map = board.pawns_on_map
 
-    root.board = board
-    pawns_on_map = board.pawns_on_map
+  root.combat_engine = new CombatEngine( board )
 
-    side = board.side
+  $('input[type=radio][name=action]').change () ->
+    switch $(this).val()
+      when 'move'
+        set_movement()
+      when 'combat'
+        root.combat_engine.combat_on()
+    return
 
-    $(".#{side}").each ->
-      id = $(this).attr('id')
-      movement_class = if pawns_on_map.get(id).has_moved then 'cant_move' else 'can_move'
-      $(this).addClass(movement_class)
 
-    $(".can_move").click (event) ->
-      on_can_move(event, $(this))
 
-    $(".cant_move").click (event) ->
-      on_cant_move(event, $(this))
 
 $ ->
   if window.location.pathname.match( /boards\/\d+\/movement/ )
