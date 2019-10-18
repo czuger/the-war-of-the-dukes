@@ -1,13 +1,34 @@
-# This class is used handle combats
+# This class is used to handle combats
 class @CombatEngine
 
-  constructor: ( board, side ) ->
-    @board = board
+  OPPOSED_SIDE: { 'orf': 'wulf', 'wulf': 'orf' }
 
-  combat_on: () ->
+  constructor: ( board ) ->
+    @board = board
+    @side = board.side
+    @opponent = @OPPOSED_SIDE[@side] if @side
+
+  combat_on: ->
     console.log( 'Combat on' )
 
-    $(".#{@board.side}").unbind()
+    $(".#{@side}").unbind()
+    $(".#{@side}").attr( 'who', 'me' )
+    $(".#{@side}").click () ->
+      CombatEngine.side_selected( $(this) )
+
+    $(".#{@opponent}").unbind()
+    $(".#{@opponent}").attr( 'who', 'opponent' )
+    $(".#{@opponent}").click ->
+      CombatEngine.opponent_selected( $(this) )
+
+
+  @opponent_selected: ( pawn ) ->
+    $( "div[who='opponent']" ).removeClass('defender')
+    pawn.addClass('defender')
+
+
+  @side_selected: ( pawn ) ->
+    pawn.addClass('attacker')
 
 
 #  constructor: () ->
