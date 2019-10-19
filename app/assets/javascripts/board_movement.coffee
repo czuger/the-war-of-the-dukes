@@ -97,14 +97,14 @@ load = ( board ) ->
   pawns_on_map = board.pawns_on_map
 
   root.combat_engine = new CombatEngine( board )
-  root.combat_engine.combat_on()
+  root.combat_engine.combat_on( root.combat_engine )
 
   $('input[type=radio][name=action]').change () ->
     switch $(this).val()
       when 'move'
         set_movement()
       when 'combat'
-        root.combat_engine.combat_on()
+        root.combat_engine.combat_on( root.combat_engine )
     return
 
 

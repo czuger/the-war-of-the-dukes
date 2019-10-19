@@ -10,7 +10,7 @@ class @PawnsOnMap
   get: ( css_id ) ->
     @pawns[ css_id ]
 
-  # Return a pawn from it's css id
+  # Return a pawn from it's hex position
   get_from_hex: ( hex ) ->
     @get( 'pawn_' + hex.hex_key() )
 

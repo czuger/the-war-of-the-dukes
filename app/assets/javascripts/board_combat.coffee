@@ -1,3 +1,5 @@
+
+
 # This class is used to handle combats
 class @CombatEngine
 
@@ -8,34 +10,40 @@ class @CombatEngine
     @side = board.side
     @opponent = @OPPOSED_SIDE[@side] if @side
 
-  combat_on: ->
+  combat_on: ( global_combat_engine ) ->
     console.log( 'Combat on' )
 
     $(".#{@side}").unbind()
     $(".#{@side}").attr( 'who', 'me' )
     $(".#{@side}").click () ->
-      CombatEngine.side_selected( $(this) )
+      global_combat_engine.side_selected( $(this) )
 
     $(".#{@opponent}").unbind()
     $(".#{@opponent}").attr( 'who', 'opponent' )
     $(".#{@opponent}").click ->
-      CombatEngine.opponent_selected( $(this) )
+      global_combat_engine.opponent_selected( $(this) )
 
 
-  @opponent_selected: ( pawn ) ->
+  opponent_selected: ( pawn ) ->
     $( "div[who='opponent']" ).removeClass('defender')
     pawn.addClass('defender')
 
 
-  @side_selected: ( pawn ) ->
+  side_selected: ( jquery_pawn ) ->
 
     if $('.defender').length > 0
-      if pawn.hasClass('attacker')
-        pawn.removeClass('attacker')
+      if jquery_pawn.hasClass('attacker')
+        jquery_pawn.removeClass('attacker')
       else
-        pawn.addClass('attacker')
+        jquery_pawn.addClass('attacker')
     else
       alert( 'Sélectionnez votre cible avant de sélectionner les attaquants' )
+
+  # Private part
+  @validate_target: ( jquery_pawn ) ->
+    pawn = @board
+
+
 
 
 #  constructor: () ->
