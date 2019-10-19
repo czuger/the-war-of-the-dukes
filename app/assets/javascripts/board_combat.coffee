@@ -28,7 +28,14 @@ class @CombatEngine
 
 
   @side_selected: ( pawn ) ->
-    pawn.addClass('attacker')
+
+    if $('.defender').length > 0
+      if pawn.hasClass('attacker')
+        pawn.removeClass('attacker')
+      else
+        pawn.addClass('attacker')
+    else
+      alert( 'Sélectionnez votre cible avant de sélectionner les attaquants' )
 
 
 #  constructor: () ->
