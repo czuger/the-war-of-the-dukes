@@ -23,12 +23,15 @@ module MapHandler
 
 		# Reading base map data
 		data = {
-			json_map: JSON.parse( File.open( 'data/map.json' ).read )
+			# json_map: JSON.parse( File.open( 'data/map.json' ).read )
+			json_map: []
 		}
 
 		# Reading movement graph
 		if params[:movement]
-			data[:json_movement_graph] = JSON.parse( File.open( 'data/movement_graph.json' ).read )
+			# data[:json_movement_graph] = JSON.parse( File.open( 'data/movement_graph.json' ).read )
+			data[:json_movement_graph] = []
+			replace_movement = true
 		end
 
 		# Reading current pawns position
@@ -51,6 +54,16 @@ module MapHandler
 			File.open( top_layer_file, 'r' ) do |f|
 				data[:json_top_layer] = JSON.parse( f.read )
 			end
+		end
+
+		data = data.to_json
+
+		map_data = File.open( 'data/map.json' ).read
+		data.gsub!( '"json_map":[]', "\"json_map\":#{map_data}" )
+
+		if replace_movement
+			movement_data = File.open( 'data/movement_graph.json' ).read
+			data.gsub!( '"json_movement_graph":[]', "\"json_movement_graph\":#{movement_data}" )
 		end
 
 		data

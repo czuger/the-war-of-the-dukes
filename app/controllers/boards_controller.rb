@@ -9,7 +9,7 @@ class BoardsController < ApplicationController
 	def map_data
 		respond_to do |format|
 			format.json do
-				render json: get_map_data
+				render plain: get_map_data
 			end
 		end
 	end
