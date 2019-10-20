@@ -1,6 +1,3 @@
-root = exports ? this
-root.board = null
-
 describe 'DijkstraMovements', ->
 
   beforeEach ->
@@ -9,15 +6,10 @@ describe 'DijkstraMovements', ->
 
     @pawn = @board.pawns_on_map.get( 'pawn-orf-cav-13-4' )
 
-    console.log( @board.pawns_on_map.pawns )
-    console.log( @pawn )
-
   describe '#compute_movements()', ->
 
     it 'should reach target', ->
       [result, dummy ] = DijkstraMovements.compute_movements( @board, @pawn, [] )
-
-      console.log( result )
 
       result.should.include('12_4')
       result.should.include('13_5')
