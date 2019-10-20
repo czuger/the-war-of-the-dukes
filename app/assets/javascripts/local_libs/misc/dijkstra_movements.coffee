@@ -1,5 +1,6 @@
 class @DijkstraMovements
 
+  # This method is used to compute available movement for a pawn
   @compute_movements: ( board, current_pawn, controlled_hexes ) ->
     @board = board
     @map = board.terrain_map
@@ -9,6 +10,8 @@ class @DijkstraMovements
 
     @core()
 
+  # This method is used to check if a target can be reached by a pawn
+  # (use to check if the target is allowed to attack)
   @target_distance: ( board, current_pawn, dest_pawn ) ->
     @board = board
     @map = board.terrain_map
@@ -17,7 +20,11 @@ class @DijkstraMovements
     @current_pawn = current_pawn
     @dest_pawn = dest_pawn
 
-    @core()
+    result = @core()
+
+    # If we find the result and the distance to the result is == 1
+    # Then we are good
+    result[ 1 ][ dest_pawn.get_hex().hex_key() ] <= 1
 
 
   @core: ->
@@ -38,11 +45,11 @@ class @DijkstraMovements
 
 #    console.log( "frontier =", frontier )
 
-    while not frontier.empty() # && (!current || (current.hex_key() != destination_key))
+    while not frontier.empty() && (!current || (current.hex_key() != destination_key))
       current = frontier.pop()
-      console.log( "frontier.pop() =", current )
+#      console.log( "frontier.pop() =", current )
 
-      console.log( current.hex_key(), destination_key )
+#      console.log( current.hex_key(), destination_key )
 #      break if
 
       frontier_history.push( current.hex_key() ) unless current.hex_key() in frontier_history
@@ -62,11 +69,11 @@ class @DijkstraMovements
 
           frontier_history_costs[ current.hex_key() ] = Math.min( cost_so_far[ current.hex_key() ], current_cost )
 
-          if n.hex_key() == '19_-2'
-            console.log( 'Current hex', current )
-            console.log( 'Surrounding hex', n )
-            console.log( 'current cost', current_cost )
-            console.log( 'movement_graph cost', @map.movement_graph.cost( current, n ) )
+#          if n.hex_key() == '19_-2'
+#            console.log( 'Current hex', current )
+#            console.log( 'Surrounding hex', n )
+#            console.log( 'current cost', current_cost )
+#            console.log( 'movement_graph cost', @map.movement_graph.cost( current, n ) )
 
           new_cost = cost_so_far[ current.hex_key() ] + @map.movement_graph.cost( current, n )
 
