@@ -46,17 +46,17 @@ class @CombatEngine
       alert( 'Sélectionnez votre cible avant de sélectionner les attaquants' )
 
   # Private part
+
+  # This method is used to check if a pawn can attack another
   validate_target: ( jquery_pawn ) ->
     pawn = @board.pawns_on_map.get( jquery_pawn.attr( 'id' ) )
-#    console.log( pawn )
-
     jquery_defender_pawn = $( $('.defender')[0] )
-#    console.log( jquery_defender_pawn )
-
     defender_pawn = @board.pawns_on_map.get( jquery_defender_pawn.attr( 'id' ) )
-#    console.log( defender_pawn )
 
-    DijkstraMovements.target_distance( @board, pawn, defender_pawn )
+    if pawn.pawn_type == 'art'
+      pawn.get_hex().distance( defender_pawn.get_hex() ) <= 2
+    else
+      DijkstraMovements.target_distance( @board, pawn, defender_pawn )
 
 
 
