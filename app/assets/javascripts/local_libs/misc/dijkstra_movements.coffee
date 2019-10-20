@@ -4,6 +4,10 @@ class @DijkstraMovements
   @compute_movements: ( board, current_pawn, controlled_hexes ) ->
     @board = board
     @map = board.terrain_map
+
+#    console.log( controlled_hexes )
+
+    # TODO : controlled hexes are wrong, other side of rivers are controlled areas
     @controlled_hexes_keys = _.object( _.map( controlled_hexes, (hex) -> [ hex.hex_key(), true ] ) )
     @hex_key_exclusion_hash = board.pawns_on_map.build_hex_keys_hash()
     @current_pawn = current_pawn

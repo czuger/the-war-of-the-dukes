@@ -1,3 +1,5 @@
+= render partial: 'boards/show_map'
+
 = link_to 'Finish turn', board_phase_finished_path( @board )
 
 %div
@@ -6,7 +8,5 @@
 
   = label_tag 'action_combat', 'Combat'
   = radio_button_tag 'action', 'combat', true
-
-= render partial: 'boards/show_map'
 
 #turn_pawn.pawn{ style: turn_pawn_position }

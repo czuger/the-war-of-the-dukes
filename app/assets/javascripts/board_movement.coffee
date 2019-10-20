@@ -31,7 +31,7 @@ on_can_move = (jquery_object) ->
   controlled_hexes = pawns_on_map.controlled_hexes( terrain_map, opposite_side[ pawn.side ] )
 #  console.log( controlled_hexes )
 
-  [results, results_costs] = DijkstraMovements.compute_movements( terrain_map, pawns_on_map, pawn, controlled_hexes )
+  [results, results_costs] = DijkstraMovements.compute_movements( board, pawn ,controlled_hexes )
 #  console.log( results )
 #  console.log( results_costs )
   last_selected_pawn = pawn
