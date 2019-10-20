@@ -32,16 +32,32 @@ class @CombatEngine
   side_selected: ( jquery_pawn ) ->
 
     if $('.defender').length > 0
-      if jquery_pawn.hasClass('attacker')
-        jquery_pawn.removeClass('attacker')
-      else
-        jquery_pawn.addClass('attacker')
+
+      if @validate_target( jquery_pawn )
+        if jquery_pawn.hasClass('attacker')
+          jquery_pawn.removeClass('attacker')
+        else
+          jquery_pawn.addClass('attacker')
+
     else
       alert( 'Sélectionnez votre cible avant de sélectionner les attaquants' )
 
   # Private part
-  @validate_target: ( jquery_pawn ) ->
-    pawn = @board
+  validate_target: ( jquery_pawn ) ->
+    pawn = @board.pawns_on_map.get( jquery_pawn.attr( 'id' ) )
+#    console.log( pawn )
+
+    jquery_defender_pawn = $( $('.defender')[0] )
+#    console.log( jquery_defender_pawn )
+    defender_pawn = @board.pawns_on_map.get( jquery_defender_pawn.attr( 'id' ) )
+#    console.log( defender_pawn )
+
+    [results, results_costs] = DijkstraMovements.target_distance( @board, pawn, defender_pawn )
+
+    console.log( results, results_costs )
+
+
+
 
 
 

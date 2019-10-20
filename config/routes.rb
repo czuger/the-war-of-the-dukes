@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   # mount MochaRails::Engine => 'mocha' unless Rails.env.production?
   get 'welcome/show'
 

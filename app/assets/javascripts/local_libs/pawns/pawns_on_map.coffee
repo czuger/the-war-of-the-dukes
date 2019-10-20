@@ -81,10 +81,10 @@ class @PawnsOnMap
     x -= 15
     y -= 16
 
-    unless position_on_svg
-      offset = $('#board').offset()
-      x += offset.left
-      y += offset.top
+#    unless position_on_svg
+#      offset = $('#board').offset()
+#      x += offset.left
+#      y += offset.top
 
     jquery_object.css('top', y )
     jquery_object.css('left', x )
