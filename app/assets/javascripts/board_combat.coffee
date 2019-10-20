@@ -26,6 +26,7 @@ class @CombatEngine
 
   opponent_selected: ( pawn ) ->
     $( "div[who='opponent']" ).removeClass('defender')
+    $( "div[who='me']" ).removeClass('attacker')
     pawn.addClass('defender')
 
 
@@ -38,6 +39,8 @@ class @CombatEngine
           jquery_pawn.removeClass('attacker')
         else
           jquery_pawn.addClass('attacker')
+      else
+        alert( 'Ce pion ne peut pas attaquer la cible' )
 
     else
       alert( 'Sélectionnez votre cible avant de sélectionner les attaquants' )
@@ -49,12 +52,11 @@ class @CombatEngine
 
     jquery_defender_pawn = $( $('.defender')[0] )
 #    console.log( jquery_defender_pawn )
+
     defender_pawn = @board.pawns_on_map.get( jquery_defender_pawn.attr( 'id' ) )
 #    console.log( defender_pawn )
 
-    [results, results_costs] = DijkstraMovements.target_distance( @board, pawn, defender_pawn )
-
-    console.log( results, results_costs )
+    DijkstraMovements.target_distance( @board, pawn, defender_pawn )
 
 
 
