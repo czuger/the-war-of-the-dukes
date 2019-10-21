@@ -1,4 +1,5 @@
-
+root = exports ? this
+root.board = null
 
 # This class is used to handle combats
 class @CombatEngine
@@ -7,6 +8,8 @@ class @CombatEngine
 
   constructor: ( board ) ->
     @board = board
+    root.board = board
+
     @side = board.side
     @opponent = @OPPOSED_SIDE[@side] if @side
 
@@ -22,6 +25,14 @@ class @CombatEngine
     $(".#{@opponent}").attr( 'who', 'opponent' )
     $(".#{@opponent}").click ->
       global_combat_engine.opponent_selected( $(this) )
+
+    $('#combat').click ->
+
+      attackers = $('.attacker').toArray().map (a) -> root.board.pawns_on_map.get( $(a).attr('id') )
+      defender = root.board.pawns_on_map.get( $( $('.defender')[0] ).attr('id') )
+
+      pf = new PawnFight( root.board, attackers, defender )
+      pf.resolve_fight()
 
 
   opponent_selected: ( pawn ) ->
