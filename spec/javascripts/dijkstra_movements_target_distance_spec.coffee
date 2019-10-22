@@ -41,4 +41,17 @@ describe 'DijkstraMovements', ->
 #      result = DijkstraMovements.target_distance( @board, @bad_attacker, @good_defender_1 )
 #      result.should.be.false
 
+    it 'cavalery should be able to attack', ->
+      fixtures = fixture.load('dijkstra_movement_target_distance_2.json')
+      board = new Board( fixtures[0] )
 
+      good_attacker_1 = board.pawns_on_map.get( 'pawn-wulf-cav-7-4' )
+      good_attacker_2 = board.pawns_on_map.get( 'pawn-wulf-cav-8-4' )
+
+      good_defender_1 = board.pawns_on_map.get( 'pawn-orf-inf-7-5' )
+
+      result = DijkstraMovements.target_distance( board, good_attacker_1, good_defender_1, false )
+      result.should.be.true
+
+      result = DijkstraMovements.target_distance( board, good_attacker_2, good_defender_1 )
+      result.should.be.true
