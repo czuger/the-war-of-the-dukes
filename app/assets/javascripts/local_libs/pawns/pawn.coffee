@@ -3,8 +3,10 @@
 class @Pawn extends DbCalls
 
   PAWNS_TYPES = { 'inf' : 'infantry', 'art' : 'artillery', 'cav' : 'cavalry' }
-#  PAWNS_MOVEMENTS = { 'art': 3, 'cav': 6, 'inf': 3 }
   PAWNS_ATTACK = { 'art': 3, 'cav': 2, 'inf': 5 }
+
+  PAWNS_MOVEMENTS = { 'art': 3, 'cav': 6, 'inf': 3 }
+  @pawns_movements: PAWNS_MOVEMENTS
 
   constructor: ( @q, @r, @pawn_type, @side, @database_id ) ->
 

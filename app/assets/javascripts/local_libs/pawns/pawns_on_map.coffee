@@ -51,8 +51,12 @@ class @PawnsOnMap
     @position( pawn, new_object, position_on_svg )
 
     movement_remaining_span = $('<span>')
-    movement_remaining_span.text( pawn.remaining_movement )
-    #    console.log( movement_remaining_span )
+
+    remaining_movement_text = pawn.remaining_movement
+    remaining_movement_text = 'C' if pawn.remaining_movement <= -1
+    
+    movement_remaining_span.text( remaining_movement_text )
+
     movement_remaining_span.addClass('pawn-remaining-movement')
     movement_remaining_span.appendTo( new_object )
 

@@ -27,7 +27,10 @@ class @PawnMovementPhantom extends Pawn
     pawns_on_map_object.position( this, new_object )
 
     movement_cost_span = $('<span>')
-    movement_cost_span.text( @movement_cost )
+
+    movement_cost_text = @movement_cost
+    movement_cost_text = 'C' if @movement_cost > Pawn.pawns_movements[ @pawn_type ]
+    movement_cost_span.text( movement_cost_text )
 
     movement_cost_span.addClass('pawn-movement-cost')
 
