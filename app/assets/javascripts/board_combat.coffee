@@ -26,6 +26,7 @@ class @CombatEngine
     $(".#{@opponent}").click ->
       global_combat_engine.opponent_selected( $(this) )
 
+    $('#combat').unbind()
     $('#combat').click ->
 
       attackers = $('.attacker').toArray().map (a) -> root.board.pawns_on_map.get( $(a).attr('id') )
