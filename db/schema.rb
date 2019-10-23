@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191007171747) do
+ActiveRecord::Schema.define(version: 20191023115637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20191007171747) do
     t.string "fight_data"
     t.integer "orf_id", null: false
     t.integer "wulf_id", null: false
+    t.string "current_side", null: false
+    t.string "retreating_pawn", null: false
     t.index ["orf_id"], name: "index_boards_on_orf_id"
     t.index ["owner_id"], name: "index_boards_on_owner_id"
     t.index ["wulf_id"], name: "index_boards_on_wulf_id"

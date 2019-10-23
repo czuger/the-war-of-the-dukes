@@ -1,8 +1,8 @@
 module BoardsHelper
 
 	def current_action_link( board )
-		case board.aasm_state
-			when 'orf_turn'
+		case board.current_side
+			when Board::ORF
 
 				if @current_player.id == board.orf_id
 					link_to 'Orf phase', board_game_actions_path( board )
@@ -10,7 +10,7 @@ module BoardsHelper
 					'Wait for your opponent to move'
 				end
 
-			when 'wulf_turn'
+			when Board::WULF
 
 				if @current_player.id == board.wulf_id
 					link_to 'Wulf phase', board_game_actions_path( board )

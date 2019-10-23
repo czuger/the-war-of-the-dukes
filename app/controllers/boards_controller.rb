@@ -106,8 +106,10 @@ class BoardsController < ApplicationController
 
 			{
 				owner_id: current_player.id,
-				orf_id: (params['side'] == 'orf') ? me_id : opponent_id,
-				wulf_id: (params['side'] == 'wulf') ? me_id : opponent_id,
+				orf_id: (params['side'] == Board::ORF) ? me_id : opponent_id,
+				wulf_id: (params['side'] == Board::WULF) ? me_id : opponent_id,
+				current_side: Board::ORF,
+				retreating_pawn: {},
 				turn: 1
 			}
 		end
@@ -123,7 +125,7 @@ class BoardsController < ApplicationController
 
 					p pawn
 					@board.pawns.create!( q: pawn['q'], r: pawn['r'], pawn_type: pawn['type'], side: pawn['side'],
-																remaining_action: Pawn::actionS[ pawn['type'] ]  )
+																remaining_movement: Pawn::MOVEMENTS[ pawn['type'] ]  )
 				end
 			end
 		end

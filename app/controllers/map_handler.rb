@@ -37,7 +37,6 @@ module MapHandler
 		# Reading current pawns position
 		if params[:board_id]
 			set_board
-			set_side
 			data[:pawns] = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :remaining_movement )
 			data[:side] = @side
 

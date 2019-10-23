@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 			raise "Another player is trying to access someone other's board. CurrentPlayer : #{current_player.inspect}, board : #{@board.inspect}"
 		end
 
-		@side = @board.aasm_state.gsub( '_turn', '' )
+		@side = @board.current_side
 	end
 
 

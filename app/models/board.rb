@@ -9,28 +9,23 @@ class Board < ApplicationRecord
 	has_many :board_histories, dependent: :destroy
 
   serialize :fight_data
+	serialize :retreating_pawn
+
+	ORF = 'orf'.freeze
+	WULF = 'wulf'.freeze
 
   aasm do
     state :setup
-    state :orf_turn, initial: true
-		state :orf_retreat
-    state :wulf_turn, :wulf_retreat
+    state :action_phase, initial: true
+		state :retreat
 
-    event :next_to_orf_turn do
-      transitions :from => [ :setup, :wulf_turn ], :to => :orf_turn
+    event :start_retreat do
+      transitions :from => :action_phase, :to => :retreat
 		end
 
-    event :next_to_wulf_turn do
-      transitions :from => [ :setup, :orf_turn ], :to => :wulf_turn
+    event :end_retreat do
+			transitions :from => :retreat, :to => :action_phase
     end
-
-		event :next_to_orf_retreat do
-			transitions :from => [ :wulf_turn, :orf_turn ], :to => :orf_retreat
-		end
-
-		event :next_to_wulf_retreat do
-			transitions :from => [ :wulf_turn, :orf_turn ], :to => :wulf_retreat
-		end
 
 	end
 

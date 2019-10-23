@@ -8,13 +8,13 @@ class GameActionsController < ApplicationController
 
 	# This action is used to finish the turn
 	def phase_finished
-		if @board.aasm_state == 'orf_turn'
+		if @board.current_side == Board::ORF
 			Board.transaction do
-				@board.next_to_wulf_turn!
+				@board.current_side = Board::WULF
 			end
 		else
 			Board.transaction do
-				@board.next_to_orf_turn!
+				@board.current_side = Board::ORF
 
 				@board.pawns.where( pawn_type: :art ).or( Pawn.where( pawn_type: :inf ) ).update_all( remaining_action: 3 )
 				@board.pawns.where( pawn_type: :cav ).update_all( remaining_action: 6 )
