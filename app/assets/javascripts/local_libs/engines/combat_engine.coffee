@@ -1,30 +1,26 @@
 root = exports ? this
-root.board = null
 
 # This class is used to handle combats
 class @CombatEngine
 
   OPPOSED_SIDE: { 'orf': 'wulf', 'wulf': 'orf' }
 
-  constructor: ( board ) ->
-    @board = board
-    root.board = board
-
-    @side = board.side
+  constructor: ->
+    @side = root.board.side
     @opponent = @OPPOSED_SIDE[@side] if @side
 
-  combat_on: ( global_combat_engine ) ->
+  combat_on:  ->
     console.log( 'Combat on' )
 
     $(".#{@side}").unbind()
     $(".#{@side}").attr( 'who', 'me' )
     $(".#{@side}").click () ->
-      global_combat_engine.side_selected( $(this) )
+      root.combat_engine.side_selected( $(this) )
 
     $(".#{@opponent}").unbind()
     $(".#{@opponent}").attr( 'who', 'opponent' )
     $(".#{@opponent}").click ->
-      global_combat_engine.opponent_selected( $(this) )
+      root.combat_engine.opponent_selected( $(this) )
 
     $('#combat').unbind()
     $('#combat').click ->
@@ -36,10 +32,14 @@ class @CombatEngine
       pf.resolve_fight()
 
 
-  opponent_selected: ( pawn ) ->
-    $( "div[who='opponent']" ).removeClass('defender')
+  opponent_selected: ( jquery_pawn ) ->
+    if jquery_pawn.hasClass('defender')
+      jquery_pawn.removeClass('defender')
+    else
+      $( "div[who='opponent']" ).removeClass('defender')
+      jquery_pawn.addClass('defender')
+
     $( "div[who='me']" ).removeClass('attacker')
-    pawn.addClass('defender')
 
 
   side_selected: ( jquery_pawn ) ->
@@ -55,20 +55,20 @@ class @CombatEngine
         alert( 'Ce pion ne peut pas attaquer la cible' )
 
     else
-      alert( 'Sélectionnez votre cible avant de sélectionner les attaquants' )
+      root.movement_engine.start_movement( jquery_pawn )
 
   # Private part
 
   # This method is used to check if a pawn can attack another
   validate_target: ( jquery_pawn ) ->
-    pawn = @board.pawns_on_map.get( jquery_pawn.attr( 'id' ) )
+    pawn = root.board.pawns_on_map.get( jquery_pawn.attr( 'id' ) )
     jquery_defender_pawn = $( $('.defender')[0] )
-    defender_pawn = @board.pawns_on_map.get( jquery_defender_pawn.attr( 'id' ) )
+    defender_pawn = root.board.pawns_on_map.get( jquery_defender_pawn.attr( 'id' ) )
 
     if pawn.pawn_type == 'art'
       pawn.get_hex().distance( defender_pawn.get_hex() ) <= 2
     else
-      DijkstraMovements.target_distance( @board, pawn, defender_pawn )
+      DijkstraMovements.target_distance( root.board, pawn, defender_pawn )
 
 
 
