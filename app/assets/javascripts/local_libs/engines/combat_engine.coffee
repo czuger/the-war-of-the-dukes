@@ -32,18 +32,25 @@ class @CombatEngine
       pf.resolve_fight()
 
 
+  # This happens when our opponent is selected
   opponent_selected: ( jquery_pawn ) ->
     if jquery_pawn.hasClass('defender')
       jquery_pawn.removeClass('defender')
+
+      # If we remove the defender pawn, then the combat can't happen
+      $('#combat').attr("disabled", 'disabled');
+
     else
       $( "div[who='opponent']" ).removeClass('defender')
       jquery_pawn.addClass('defender')
 
+      root.movement_engine.clear_phantoms()
+
     $( "div[who='me']" ).removeClass('attacker')
 
 
+  # This is what happens when our side is selected
   side_selected: ( jquery_pawn ) ->
-
     if $('.defender').length > 0
 
       if @validate_target( jquery_pawn )
@@ -51,8 +58,15 @@ class @CombatEngine
           jquery_pawn.removeClass('attacker')
         else
           jquery_pawn.addClass('attacker')
+
       else
         alert( 'Ce pion ne peut pas attaquer la cible' )
+
+      # We switch on or off the combat button regarding the number of attackers.
+      if $('.attacker').length > 0
+        $('#combat').removeAttr("disabled");
+      else
+        $('#combat').attr("disabled", 'disabled');
 
     else
       root.movement_engine.start_movement( jquery_pawn )

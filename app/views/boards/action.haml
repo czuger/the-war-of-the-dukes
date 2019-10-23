@@ -2,13 +2,6 @@
 
 = link_to 'Finish turn', board_phase_finished_path( @board )
 
-%div
-  = label_tag 'action_move', 'Mouvement'
-  = radio_button_tag 'action', 'move', true
-
-  = label_tag 'action_combat', 'Combat'
-  = radio_button_tag 'action', 'combat', true
-
-= button_tag 'Combat', {id: 'combat'}
+= button_tag 'Combat', { id: 'combat', disabled: true }
 
 #turn_pawn.pawn{ style: turn_pawn_position }
