@@ -5,7 +5,7 @@ module BoardsHelper
 			when 'orf_turn'
 
 				if @current_player.id == board.orf_id
-					link_to 'Orf move', board_movement_path( board )
+					link_to 'Orf phase', board_action_path( board )
 				else
 					'Wait for your opponent to move'
 				end
@@ -13,7 +13,7 @@ module BoardsHelper
 			when 'wulf_turn'
 
 				if @current_player.id == board.wulf_id
-					link_to 'Wulf move', board_movement_path( board )
+					link_to 'Wulf phase', board_action_path( board )
 				else
 					'Wait for your opponent to move'
 				end

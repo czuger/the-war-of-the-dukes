@@ -77,13 +77,10 @@ manage_movement = () ->
 
         new_pawn.get_jquery_object().click (event) ->
           on_can_move(event, $(this))
-
-#        new_pawn.get_jquery_object().click (event) ->
-#          on_pawn_click(event, $(this))
     )
 
 
-set_movement = () ->
+set_action = () ->
 
   side = root.board.side
 
@@ -102,7 +99,7 @@ load = ( board ) ->
   $('input[type=radio][name=action]').change () ->
     switch $(this).val()
       when 'move'
-        set_movement()
+        set_action()
       when 'combat'
         root.combat_engine.combat_on( root.combat_engine )
     return
@@ -111,7 +108,7 @@ load = ( board ) ->
 
 
 $ ->
-  if window.location.pathname.match( /boards\/\d+\/movement/ )
+  if window.location.pathname.match( /boards\/\d+\/action/ )
 
     board_id_regex = RegExp('\\d+');
     board_id = board_id_regex.exec( window.location.pathname )[0]

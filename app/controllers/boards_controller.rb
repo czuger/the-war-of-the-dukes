@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
-  before_action :set_board, only: [:movement, :setup, :fight, :update, :phase_finished ]
-  before_action :set_side, only: [:movement, :fight ]
+  before_action :set_board, only: [:action, :setup, :update, :phase_finished ]
+  before_action :set_side, only: [:action ]
 
   include MapHandler
 
@@ -28,7 +28,7 @@ class BoardsController < ApplicationController
     }
   end
 
-  def movement
+  def action
 	end
 
 
@@ -41,23 +41,16 @@ class BoardsController < ApplicationController
 			Board.transaction do
 				@board.next_to_orf_turn!
 
-				@board.pawns.where( pawn_type: :art ).or( Pawn.where( pawn_type: :inf ) ).update_all( remaining_movement: 3 )
-				@board.pawns.where( pawn_type: :cav ).update_all( remaining_movement: 6 )
+				@board.pawns.where( pawn_type: :art ).or( Pawn.where( pawn_type: :inf ) ).update_all( remaining_action: 3 )
+				@board.pawns.where( pawn_type: :cav ).update_all( remaining_action: 6 )
 
 				@board.turn += 1
 				@board.save!
 			end
 		end
 
-		redirect_to board_movement_path( @board )
+		redirect_to board_action_path( @board )
 	end
-
-  def fight
-    set_map
-    @pawns = @board.pawns.select( :id, :q, :r, :pawn_type, :side )
-    @pawns = @pawns.to_json
-    @result_table = File.open( 'data/result_table.json', 'r' ).read
-  end
 
   # GET /boards
   # GET /boards.json
@@ -66,7 +59,7 @@ class BoardsController < ApplicationController
 
 		# pp current_player
 
-    @boards = Board.where( orf_id: current_player_id ).or( Board.where( wulf_id: current_player_id ) )
+    @boards = Board.where( orf_id: current_player_id ).or( Board.where( wulf_id: current_player_id ) ).includes( :orf, :wulf, :owner )
   end
 
   # GET /boards/new
@@ -160,7 +153,7 @@ class BoardsController < ApplicationController
 
 				p pawn
 				@board.pawns.create!( q: pawn['q'], r: pawn['r'], pawn_type: pawn['type'], side: pawn['side'],
-															remaining_movement: Pawn::MOVEMENTS[ pawn['type'] ]  )
+															remaining_action: Pawn::actionS[ pawn['type'] ]  )
 			end
 		end
 	end
