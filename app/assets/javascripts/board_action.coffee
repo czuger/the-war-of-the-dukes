@@ -21,7 +21,7 @@ load = ( board ) ->
 
 
 $ ->
-  if window.location.pathname.match( /boards\/\d+\/action/ )
+  if window.location.pathname.match( /boards\/\d+\/game_actions/ )
 
     board_id_regex = RegExp('\\d+');
     board_id = board_id_regex.exec( window.location.pathname )[0]

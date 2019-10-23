@@ -1,6 +1,6 @@
 = render partial: 'boards/show_map'
 
-= link_to 'Finish turn', board_phase_finished_path( @board )
+= link_to 'Finish turn', phase_finished_board_game_actions_path( @board )
 
 = button_tag 'Combat', { id: 'combat', disabled: true }
 

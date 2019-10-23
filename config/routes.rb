@@ -17,10 +17,13 @@ Rails.application.routes.draw do
 
 	resources :boards, only: [ :index, :new, :create, :update ] do
 		get 'setup'
-		get 'action'
-		get 'phase_finished'
 
 		# post 'store_pawn_position'
+
+		resource :game_actions, only: [ :show ] do
+			get :phase_finished
+			post :set_retreat
+		end
 	end
 
 	get '/board/map_data', to: 'boards#map_data'

@@ -6,12 +6,20 @@ class BoardsController < ApplicationController
 
   SIDES = %w( orf wulf )
 
+	# Used by all scripts to read data
 	def map_data
 		respond_to do |format|
 			format.json do
 				render plain: get_map_data
 			end
 		end
+	end
+
+	def call_for_retreat
+
+
+
+		redirect_to boards_path
 	end
 
   def setup
@@ -27,30 +35,6 @@ class BoardsController < ApplicationController
         orf: { cities: 22, bastions: 3 }, wulf: { cities: 19, bastions: 4 },
     }
   end
-
-  def action
-	end
-
-
-	def phase_finished
-		if @board.aasm_state == 'orf_turn'
-			Board.transaction do
-				@board.next_to_wulf_turn!
-			end
-		else
-			Board.transaction do
-				@board.next_to_orf_turn!
-
-				@board.pawns.where( pawn_type: :art ).or( Pawn.where( pawn_type: :inf ) ).update_all( remaining_action: 3 )
-				@board.pawns.where( pawn_type: :cav ).update_all( remaining_action: 6 )
-
-				@board.turn += 1
-				@board.save!
-			end
-		end
-
-		redirect_to board_action_path( @board )
-	end
 
   # GET /boards
   # GET /boards.json
@@ -105,20 +89,24 @@ class BoardsController < ApplicationController
 
   # POST /boards
   # POST /boards.json
-  def update
-    if @board.update(update_board_params) && @board.send( params[ :board ][ :switch_board_state ] )
-      @board.save!
-      head :ok
-    else
-      render json: @board.errors, status: :unprocessable_entity
-    end
-  end
+  # def update
+  #   if @board.update(update_board_params) && @board.send( params[ :board ][ :switch_board_state ] )
+  #     @board.save!
+  #     head :ok
+  #   else
+  #     render json: @board.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_board
       @board = Board.find(params[:board_id] || params[:id])
-    end
+
+			unless [ @board.wulf_id, @board.orf_id, @board.owner_id ].include?( current_player.id )
+				raise "Another player is trying to access someone other's board. CurrentPlayer : #{current_player.inspect}, board : #{@board.inspect}"
+			end
+		end
 
     def set_side
       @side = @board.aasm_state.gsub( '_turn', '' )
@@ -126,36 +114,32 @@ class BoardsController < ApplicationController
 			@player = current_player
     end
 
-    def update_board_params
-      params.require(:board).permit( { fight_data: [ :q, :r ] }, :turn )
+		def build_new_board_hash
+			me_id = current_player.id
+			opponent_id = params['opponent_id']
+
+			{
+				owner_id: current_player.id,
+				orf_id: (params['side'] == 'orf') ? me_id : opponent_id,
+				wulf_id: (params['side'] == 'wulf') ? me_id : opponent_id,
+				turn: 1
+			}
 		end
 
-	def build_new_board_hash
-		me_id = current_player.id
-		opponent_id = params['opponent_id']
+		def board_auto_place_pawns
 
-		{
-			owner_id: current_player.id,
-			orf_id: (params['side'] == 'orf') ? me_id : opponent_id,
-			wulf_id: (params['side'] == 'wulf') ? me_id : opponent_id,
-			turn: 1
-		}
-	end
+			data_array = JSON.parse(File.open('data/setup.json','r').read)
 
-	def board_auto_place_pawns
+			# pp data_array
 
-		data_array = JSON.parse(File.open('data/setup.json','r').read)
+			Board.transaction do
+				data_array.each do |pawn|
 
-		# pp data_array
-
-		Board.transaction do
-			data_array.each do |pawn|
-
-				p pawn
-				@board.pawns.create!( q: pawn['q'], r: pawn['r'], pawn_type: pawn['type'], side: pawn['side'],
-															remaining_action: Pawn::actionS[ pawn['type'] ]  )
+					p pawn
+					@board.pawns.create!( q: pawn['q'], r: pawn['r'], pawn_type: pawn['type'], side: pawn['side'],
+																remaining_action: Pawn::actionS[ pawn['type'] ]  )
+				end
 			end
 		end
-	end
 
 end
