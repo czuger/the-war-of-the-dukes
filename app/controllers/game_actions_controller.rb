@@ -11,20 +11,21 @@ class GameActionsController < ApplicationController
 		if @board.current_side == Board::ORF
 			Board.transaction do
 				@board.current_side = Board::WULF
+				@board.save!
 			end
 		else
 			Board.transaction do
 				@board.current_side = Board::ORF
 
-				@board.pawns.where( pawn_type: :art ).or( Pawn.where( pawn_type: :inf ) ).update_all( remaining_action: 3 )
-				@board.pawns.where( pawn_type: :cav ).update_all( remaining_action: 6 )
+				@board.pawns.where( pawn_type: :art ).or( Pawn.where( pawn_type: :inf ) ).update_all( remaining_movement: 3 )
+				@board.pawns.where( pawn_type: :cav ).update_all( remaining_movement: 6 )
 
 				@board.turn += 1
 				@board.save!
 			end
 		end
 
-		redirect_to board_action_path( @board )
+		redirect_to boards_path
 	end
 
 end
