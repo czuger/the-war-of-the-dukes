@@ -1,6 +1,5 @@
 class BoardsController < ApplicationController
   before_action :set_board, only: [:action, :setup, :update, :phase_finished ]
-  before_action :set_side, only: [:action ]
 
   include MapHandler
 
@@ -100,19 +99,6 @@ class BoardsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_board
-      @board = Board.find(params[:board_id] || params[:id])
-
-			unless [ @board.wulf_id, @board.orf_id, @board.owner_id ].include?( current_player.id )
-				raise "Another player is trying to access someone other's board. CurrentPlayer : #{current_player.inspect}, board : #{@board.inspect}"
-			end
-		end
-
-    def set_side
-      @side = @board.aasm_state.gsub( '_turn', '' )
-      @opponent = (SIDES - [@side]).first
-			@player = current_player
-    end
 
 		def build_new_board_hash
 			me_id = current_player.id

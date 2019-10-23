@@ -17,19 +17,19 @@ class Board < ApplicationRecord
     state :wulf_turn, :wulf_retreat
 
     event :next_to_orf_turn do
-      transitions :from => [ :setup, :wulf_turn, :wulf_retreat ], :to => :orf_turn
+      transitions :from => [ :setup, :wulf_turn ], :to => :orf_turn
 		end
 
     event :next_to_wulf_turn do
-      transitions :from => [ :setup, :orf_turn, :orf_retreat ], :to => :wulf_turn
+      transitions :from => [ :setup, :orf_turn ], :to => :wulf_turn
     end
 
 		event :next_to_orf_retreat do
-			transitions :from => [ :wulf_turn ], :to => :orf_retreat
+			transitions :from => [ :wulf_turn, :orf_turn ], :to => :orf_retreat
 		end
 
 		event :next_to_wulf_retreat do
-			transitions :from => [ :orf_turn ], :to => :wulf_retreat
+			transitions :from => [ :wulf_turn, :orf_turn ], :to => :wulf_retreat
 		end
 
 	end

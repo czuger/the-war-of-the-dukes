@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 			get :phase_finished
 			post :set_retreat
 		end
+
+		resource :game_action_retreats, only: [ :show, :create, :update ]
 	end
 
 	get '/board/map_data', to: 'boards#map_data'

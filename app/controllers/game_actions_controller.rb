@@ -27,14 +27,4 @@ class GameActionsController < ApplicationController
 		redirect_to board_action_path( @board )
 	end
 
-	private
-
-	def set_board
-		@board = Board.find(params[:board_id] )
-
-		unless [ @board.wulf_id, @board.orf_id, @board.owner_id ].include?( current_player.id )
-			raise "Another player is trying to access someone other's board. CurrentPlayer : #{current_player.inspect}, board : #{@board.inspect}"
-		end
-	end
-
 end
