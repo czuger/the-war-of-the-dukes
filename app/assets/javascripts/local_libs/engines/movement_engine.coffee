@@ -17,7 +17,7 @@ class @MovementEngine
 
   start_movement: ( jquery_pawn ) ->
 
-    @clear_phantoms()
+    MovementEngine.clear_phantoms()
 
     pawns_on_map = root.board.pawns_on_map
     terrain_map = root.board.terrain_map
@@ -68,13 +68,12 @@ class @MovementEngine
           pawns_on_map.set( new_pawn )
           pawns_on_map.place_on_screen_map(new_pawn)
 
-          @clear_phantoms()
+          MovementEngine.clear_phantoms()
 
-          new_pawn.get_jquery_pawn().click ->
-            @start_movement( $(this) )
+          root.combat_engine.combat_on()
       )
 
   # This method clears all phantoms.
-  clear_phantoms: ->
+  @clear_phantoms: ->
     $('.pawn_phantom').remove()
     root.phantom_pawn_db = {}

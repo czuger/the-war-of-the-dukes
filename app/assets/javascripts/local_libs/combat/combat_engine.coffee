@@ -44,7 +44,7 @@ class @CombatEngine
       $( "div[who='opponent']" ).removeClass('defender')
       jquery_pawn.addClass('defender')
 
-      root.movement_engine.clear_phantoms()
+      MovementEngine.clear_phantoms()
 
     $( "div[who='me']" ).removeClass('attacker')
 
