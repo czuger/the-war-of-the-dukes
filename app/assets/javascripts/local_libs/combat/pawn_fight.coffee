@@ -99,7 +99,9 @@ class @PawnFight
 #    $('#fight_result').html(result)
 
     result_string = "Ratio : #{ratio_string}\n" + "Jet : #{roll} + #{@roll_modifier} = #{modified_roll}\n" + "Resultat : #{result}"
-    alert( result_string )
+#    alert( result_string )
+
+    @combat_result_dispatcher( result, result_string )
 
 
   # Set the attack and defense value for the combat
@@ -134,6 +136,7 @@ class @PawnFight
 
     return 0
 
+
   # Return the defence value of the unit
   defence_value: ( defender ) ->
     defender_hex = defender.get_hex()
@@ -141,6 +144,7 @@ class @PawnFight
     dtm = if DEFENCE_TERRAIN_MODIFIER[terrain_value] then DEFENCE_TERRAIN_MODIFIER[terrain_value] else 1
 
     PAWNS_ATTACK[defender.pawn_type] * dtm
+
 
   # Return the ratio string
   attack_defence_ratio_string:  ->
@@ -156,3 +160,11 @@ class @PawnFight
     min = Math.ceil(min);
     max = Math.floor(max);
     Math.floor(Math.random() * (max - min + 1)) + min
+
+
+  combat_result_dispatcher: ( result, result_string ) ->
+    switch result
+      # Need to strignify @defender and @attackers otherwise they are transformed in a callback where they are empty.
+      when 'DR' then new PawnRetreat( result, JSON.stringify(@defender), result_string ).set_retreat()
+      when 'AR' then  new PawnRetreat( result, JSON.stringify(@attackers), result_string ).set_retreat()
+      else alert( 'Unimplemented' )

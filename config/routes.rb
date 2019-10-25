@@ -22,7 +22,6 @@ Rails.application.routes.draw do
 
 		resource :game_actions, only: [ :show ] do
 			get :phase_finished
-			post :set_retreat
 		end
 
 		resource :game_action_retreats, only: [ :show, :create, :update ]

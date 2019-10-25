@@ -3,6 +3,8 @@ class @Board extends DbCalls
 
   constructor: ( loaded_data ) ->
 
+    @board_id = loaded_data.board_id
+
     @top_layer = loaded_data.json_top_layer
     @side = loaded_data.side
     @movement_graph = loaded_data.json_movement_graph

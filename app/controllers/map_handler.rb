@@ -39,6 +39,7 @@ module MapHandler
 			set_board
 			data[:pawns] = @board.pawns.select( :id, :q, :r, :pawn_type, :side, :remaining_movement )
 			data[:side] = @side
+			data[:board_id] = @board.id
 
 			# Reading history (in case we asked for history)
 			if params[:history]
