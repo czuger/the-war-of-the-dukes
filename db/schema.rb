@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191023115637) do
+ActiveRecord::Schema.define(version: 20191026093158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20191023115637) do
     t.integer "orf_id", null: false
     t.integer "wulf_id", null: false
     t.string "current_side", null: false
-    t.string "retreating_pawn", null: false
+    t.string "retreating_side"
     t.index ["orf_id"], name: "index_boards_on_orf_id"
     t.index ["owner_id"], name: "index_boards_on_owner_id"
     t.index ["wulf_id"], name: "index_boards_on_wulf_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20191023115637) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "remaining_movement", null: false
+    t.boolean "retreating", default: false, null: false
     t.index ["board_id", "q", "r"], name: "index_pawns_on_board_id_and_q_and_r"
     t.index ["board_id"], name: "index_pawns_on_board_id"
   end

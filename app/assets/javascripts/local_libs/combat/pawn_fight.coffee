@@ -165,6 +165,6 @@ class @PawnFight
   combat_result_dispatcher: ( result, result_string ) ->
     switch result
       # Need to strignify @defender and @attackers otherwise they are transformed in a callback where they are empty.
-      when 'DR' then new PawnRetreat( result, JSON.stringify(@defender), result_string ).set_retreat()
+      when 'DR' then new PawnRetreat( result, JSON.stringify([@defender]), result_string ).set_retreat()
       when 'AR' then  new PawnRetreat( result, JSON.stringify(@attackers), result_string ).set_retreat()
       else alert( 'Unimplemented' )

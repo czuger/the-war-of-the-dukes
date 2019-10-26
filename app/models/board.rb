@@ -8,8 +8,7 @@ class Board < ApplicationRecord
   has_many :pawns, dependent: :destroy
 	has_many :board_histories, dependent: :destroy
 
-  serialize :fight_data
-	serialize :retreating_pawn
+  # serialize :fight_data
 
 	ORF = 'orf'.freeze
 	WULF = 'wulf'.freeze
@@ -27,6 +26,10 @@ class Board < ApplicationRecord
 			transitions :from => :retreat, :to => :action_phase
     end
 
+	end
+
+	def self.opposite_side( side )
+		( [ ORF, WULF ] - [side.freeze] ).first
 	end
 
 end

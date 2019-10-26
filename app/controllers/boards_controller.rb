@@ -14,13 +14,6 @@ class BoardsController < ApplicationController
 		end
 	end
 
-	def call_for_retreat
-
-
-
-		redirect_to boards_path
-	end
-
   def setup
     @pawns = @board.pawns
 
@@ -109,7 +102,6 @@ class BoardsController < ApplicationController
 				orf_id: (params['side'] == Board::ORF) ? me_id : opponent_id,
 				wulf_id: (params['side'] == Board::WULF) ? me_id : opponent_id,
 				current_side: Board::ORF,
-				retreating_pawn: {},
 				turn: 1
 			}
 		end
