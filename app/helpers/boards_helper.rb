@@ -1,23 +1,26 @@
 module BoardsHelper
 
 	def current_action_link( board )
-		case board.current_side
-			when Board::ORF
+		if board.action_phase?
+			case board.current_side
+				when Board::ORF
 
-				if @current_player.id == board.orf_id
-					link_to 'Orf phase', board_game_actions_path( board )
-				else
-					'Wait for your opponent to move'
-				end
+					if @current_player.id == board.orf_id
+						link_to 'Orf phase', board_game_actions_path( board )
+					else
+						'Wait for your opponent to move'
+					end
 
-			when Board::WULF
+				when Board::WULF
 
-				if @current_player.id == board.wulf_id
-					link_to 'Wulf phase', board_game_actions_path( board )
-				else
-					'Wait for your opponent to move'
-				end
+					if @current_player.id == board.wulf_id
+						link_to 'Wulf phase', board_game_actions_path( board )
+					else
 
+					end
+			end
+		else
+			'Retreat phase'
 		end
 	end
 
